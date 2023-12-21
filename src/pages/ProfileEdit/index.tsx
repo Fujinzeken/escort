@@ -682,33 +682,35 @@ const ProfileEditPage: React.FC = () => {
               </div>
             </div>
             <div className="absolute bottom-[3%] flex flex-col font-roboto gap-4 inset-x-[0] items-center justify-start mx-auto py-2 w-[97%]">
-              <div className="flex flex-row items-center justify-start px-4 w-full">
-                <Img
-                  className="h-14 w-14"
-                  src="images/img_home.svg"
-                  alt="home"
-                />
-                <div className="flex flex-col items-center justify-start py-4 w-[79%]">
-                  <div className="flex flex-col items-start justify-start w-full">
-                    <div className="flex flex-col items-center justify-start">
-                      <Text
-                        className="text-base text-gray-600_01"
-                        size="txtRobotoRegular16"
-                      >
-                        Home page
-                      </Text>
+              <div className="  cursor-pointer hover:bg-gray-500 flex flex-row items-center justify-start px-4 w-full">
+                <Link to="/" className="flex">
+                  <Img
+                    className="h-14 w-14"
+                    src="images/img_home.svg"
+                    alt="home"
+                  />
+                  <div className="flex flex-col items-center justify-start py-4 w-[79%]">
+                    <div className="flex flex-col items-start justify-start w-full">
+                      <div className="flex flex-col items-center justify-start">
+                        <Text
+                          className="text-base text-gray-600_01"
+                          size="txtRobotoRegular16"
+                        >
+                          Home page
+                        </Text>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </Link>
               </div>
               <div className="flex flex-col items-center justify-start w-full">
-                <div className="h-14 relative w-full">
+                <div className="h-14 relative w-full hover:bg-gray-500 cursor-pointer">
                   <Img
                     className="absolute h-14 inset-y-[0] left-[6%] my-auto w-14"
                     src="images/img_divvlistitemiconmargin.svg"
                     alt="divvlistitemico"
                   />
-                  <div className="absolute flex flex-row h-max inset-y-[0] items-center justify-center my-auto right-[6%] w-[70%]">
+                  <div className="absolute flex flex-row h-max inset-y-[0] items-center justify-center my-auto right-[6%] w-[70%] ">
                     <div className="flex flex-col items-center justify-start py-4 w-[84%]">
                       <div className="flex flex-col items-start justify-start w-full">
                         <div className="flex flex-col items-center justify-start">
@@ -724,7 +726,7 @@ const ProfileEditPage: React.FC = () => {
                     <Img
                       className="h-4"
                       src="images/img_arrowdown_gray_600_01.svg"
-                      alt="arrowdown_Two"
+                      alt="arrowdown_One"
                     />
                   </div>
                   <Line className="absolute bg-black-900_1e border-gray-800_03 border-solid border-t h-px inset-x-[0] mx-auto top-[0] w-full" />
@@ -748,45 +750,43 @@ const ProfileEditPage: React.FC = () => {
                         </div>
                       </div>
                     </div> */}
-                    <div className="flex flex-1 flex-col items-end justify-start my-0 px-8 w-full">
+                    <div className="flex flex-1 flex-col items-end justify-start my-0 px-8 w-full cursor-pointer hover:bg-gray-500 py-3">
                       <div className="flex flex-col items-center justify-start w-[79%] md:w-full">
                         <div className="flex flex-col items-start justify-start w-full">
                           <div className="flex gap-3 items-center">
-                            <Img
-                              className="h-6 w-6"
-                              src="images/advert_logo.png"
-                              alt="advert icon"
-                            />
-                            <Text
-                              className="text-base text-gray-600_01"
-                              size="txtRobotoRegular16"
-                            >
-                              Advert Free
-                            </Text>
+                            <Link to="advert" className="flex gap-3">
+                              <Img
+                                className="h-6 w-6"
+                                src="images/advert_logo.png"
+                                alt="message icon"
+                              />
+                              <Text
+                                className="text-base text-gray-600_01"
+                                size="txtRobotoRegular16"
+                              >
+                                Advert Free
+                              </Text>
+                            </Link>
                           </div>
                         </div>
                       </div>
                     </div>
                   </List>
                 </div>
-                <div className="flex flex-1 flex-col items-end my-0 w-full">
-                  <div className="flex flex-col items-center py-4 w-[100%] md:w-full">
-                    <div className="flex flex-col px-8  w-full">
-                      <div className="flex gap-3 items-center">
-                        <Img
-                          className="h-6 w-6"
-                          src="images/message_icon.png"
-                          alt="message icon"
-                        />
-                        <Text
-                          className="text-base text-gray-600_01"
-                          size="txtRobotoRegular16"
-                        >
-                          Messages
-                        </Text>
-                      </div>
-                    </div>
-                  </div>
+                <div className="flex flex-row items-center justify-start mt-5 py-[11px] px-4 w-full pl-8 gap-3 cursor-pointer hover:bg-gray-500 ">
+                  <Link to="message" className="flex gap-3">
+                    <Img
+                      className="h-6 w-6"
+                      src="images/message_icon.png"
+                      alt="message icon"
+                    />
+                    <Text
+                      className="text-base text-gray-600_01"
+                      size="txtRobotoRegular16"
+                    >
+                      Messages
+                    </Text>
+                  </Link>
                 </div>
                 <div className=" flex flex-col justify-start w-full">
                   <Line className="bg-black-900_1e border-b border-gray-800_03 border-solid h-px w-full" />
@@ -817,27 +817,28 @@ const ProfileEditPage: React.FC = () => {
                     </div>
                   </Link>
                 </div>
-                <div className="flex flex-1 flex-row items-center justify-start px-4 w-full cursor-pointer">
-                  <Img
-                    className="h-14 w-14"
-                    src="images/img_divvlistitemiconmargin_gray_600_01.svg"
-                    alt="divvlistitemico"
-                  />
-                  <div className="flex flex-col items-center justify-start py-4 w-[79%]">
-                    <div className="flex flex-col items-start justify-start w-full">
-                      <div className="flex flex-col items-center justify-start">
-                        <Text
-                          className="text-base text-gray-600_01"
-                          size="txtRobotoRegular16"
-                        >
-                          Become a customer
-                        </Text>
+                <div className="flex flex-1 flex-row items-center justify-start px-4 w-full cursor-pointer hover:bg-gray-500">
+                  <Link to="" className="flex">
+                    <Img
+                      className="h-14 w-14"
+                      src="images/img_divvlistitemiconmargin_gray_600_01.svg"
+                      alt="divvlistitemico"
+                    />
+                    <div className="flex flex-col items-center justify-start py-4 w-[79%]">
+                      <div className="flex flex-col items-start justify-start w-full">
+                        <div className="flex flex-col items-center justify-start">
+                          <Text
+                            className="text-base text-gray-600_01"
+                            size="txtRobotoRegular16"
+                          >
+                            Become a customer
+                          </Text>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 </div>
-
-                <div className="flex flex-1 flex-row items-center justify-start px-4 w-full cursor-pointer">
+                <div className="flex flex-1 flex-row items-center justify-start px-4 w-full cursor-pointer  hover:bg-gray-500">
                   <Link to="/ladies-star" className="flex">
                     <Img
                       className="h-14 w-14"
@@ -859,12 +860,12 @@ const ProfileEditPage: React.FC = () => {
                   </Link>
                 </div>
 
-                <div className="cursor-pointer flex flex-1 flex-col font-montserrat items-center justify-end p-[5px] w-full">
-                  <div className="flex flex-row items-center justify-start pr-[11px] py-[11px] w-[82%] md:w-full">
+                <div className="flex flex-row items-center justify-start mt-8 pr-[11px] py-[11px] w-full cursor-pointer hover:bg-gray-500">
+                  <Link to="/live-video" className="flex">
                     <Img
                       className="h-5"
                       src="images/img_user_gray_800.svg"
-                      alt="user"
+                      alt="user_Three"
                     />
                     <Text
                       className="text-base text-gray-800"
@@ -872,7 +873,7 @@ const ProfileEditPage: React.FC = () => {
                     >
                       Live Videos
                     </Text>
-                  </div>
+                  </Link>
                 </div>
               </List>
             </div>
