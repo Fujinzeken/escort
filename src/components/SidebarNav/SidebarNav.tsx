@@ -83,17 +83,19 @@ const SidebarNav = ({ pageOn }) => {
             </div>
             <div className="flex flex-col items-center justify-start mb-[15px] w-full">
               <div className="flex flex-row items-center justify-start pr-[11px] w-full cursor-pointer hover:bg-gray-500">
-                <Img
-                  className="h-14 w-14"
-                  src="images/img_home.svg"
-                  alt="home"
-                />
-                <Text
-                  className="text-base text-gray-800"
-                  size="txtMontserratRegular16Gray800"
-                >
-                  Home
-                </Text>
+                <Link to="/" className="flex items-center">
+                  <Img
+                    className="h-14 w-14"
+                    src="images/img_home.svg"
+                    alt="home"
+                  />
+                  <Text
+                    className="text-base text-gray-800"
+                    size="txtMontserratRegular16Gray800"
+                  >
+                    Home
+                  </Text>
+                </Link>
               </div>
               {/* <div className="flex flex-row items-center justify-evenly mt-[3px] py-[11px] w-full">
             <Img
@@ -291,23 +293,25 @@ const SidebarNav = ({ pageOn }) => {
                   </Link>
                 </div>
                 <div className="flex flex-1 flex-row items-center justify-start w-full cursor-pointer hover:bg-gray-500">
-                  <Img
-                    className="h-14 w-14"
-                    src="images/img_divvlistitemiconmargin_gray_600_01.svg"
-                    alt="divvlistitemico"
-                  />
-                  <div className="flex flex-col items-center justify-start py-4 w-[79%]">
-                    <div className="flex flex-col items-start justify-start w-full">
-                      <div className="flex flex-col items-center justify-start">
-                        <Text
-                          className="text-base text-gray-600_01"
-                          size="txtRobotoRegular16"
-                        >
-                          Become a customer
-                        </Text>
+                  <Link to="/advert" className="flex">
+                    <Img
+                      className="h-14 w-14"
+                      src="images/img_divvlistitemiconmargin_gray_600_01.svg"
+                      alt="divvlistitemico"
+                    />
+                    <div className="flex flex-col items-center justify-start py-4 w-[79%]">
+                      <div className="flex flex-col items-start justify-start w-full">
+                        <div className="flex flex-col items-center justify-start">
+                          <Text
+                            className="text-base text-gray-600_01"
+                            size="txtRobotoRegular16"
+                          >
+                            Become a customer
+                          </Text>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 </div>
                 <div
                   className={`${
