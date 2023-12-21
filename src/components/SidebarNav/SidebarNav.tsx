@@ -4,7 +4,7 @@ import { Text, List, Line } from "components";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
-const SidebarNav = () => {
+const SidebarNav = ({ pageOn }) => {
   const [isHidden, setisHidden] = useState(true);
 
   const handleToggle = () => {
@@ -307,7 +307,11 @@ const SidebarNav = () => {
                     </div>
                   </div>
                 </div>
-                <div className="flex flex-1 flex-row items-center justify-start w-full cursor-pointer hover:bg-gray-500">
+                <div
+                  className={`${
+                    pageOn === "ladies" ? "bg-orange-600" : ""
+                  } flex flex-1 flex-row items-center justify-start w-full cursor-pointer hover:bg-gray-500`}
+                >
                   <Link to="/ladies-star" className="flex">
                     <Img
                       className="h-14 w-14"
@@ -318,7 +322,11 @@ const SidebarNav = () => {
                       <div className="flex flex-col items-start justify-start w-full">
                         <div className="flex flex-col items-center justify-start">
                           <Text
-                            className="text-base text-gray-600_01"
+                            className={`${
+                              pageOn === "ladies"
+                                ? "text-base text-white-A700"
+                                : "text-base text-gray-600_01"
+                            }`}
                             size="txtRobotoRegular16"
                           >
                             LadiesSTARS

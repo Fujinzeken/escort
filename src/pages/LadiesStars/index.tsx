@@ -16,7 +16,7 @@ const LadiesStar: React.FC = () => {
           backgroundImage: "url('images/img_loginbannermasksvg_black_900.png')",
         }}
       >
-        <SidebarNav />
+        <SidebarNav pageOn="ladies" />
         <div className="flex flex-col gap-3 p-4 rounded-2xl w-full px-4 font-roboto pt-[60px]">
           <div
             className="flex flex-col gap-3 p-4 rounded-2xl w-full"
