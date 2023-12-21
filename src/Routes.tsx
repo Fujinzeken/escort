@@ -72,7 +72,7 @@ const ProjectRoutes = () => {
         <Route path="/desktoptwentyfive" element={<DesktopTwentyFive />} />
         <Route path="/desktoptwentysix" element={<DesktopTwentySix />} />
         <Route path="/live-video" element={<DesktopThirtyFour />} />
-        <Route path="/desktopthirtyfive" element={<DesktopThirtyFive />} />
+        <Route path="/live-cam" element={<DesktopThirtyFive />} />
         <Route path="/service" element={<Service />} />
         <Route path="/EscortProfile" element={<EscortProfile />} />
         <Route path="/ConfirmEmail" element={<ConfirmEmail />} />

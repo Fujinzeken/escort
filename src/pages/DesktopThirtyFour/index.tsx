@@ -1,8 +1,13 @@
 import React from "react";
 
 import { Button, Img, Input, List, Text } from "components";
+import { useNavigate } from "react-router-dom";
 
 const DesktopThirtyFourPage: React.FC = () => {
+  const navigate = useNavigate();
+  const handleNavigate = () => {
+    navigate("/live-cam");
+  };
   return (
     <>
       <div className="bg-white-A700 flex flex-col font-montserrat items-center justify-start mx-auto pb-[275px] w-full">
@@ -174,16 +179,19 @@ const DesktopThirtyFourPage: React.FC = () => {
                             </Text>
                           </div>
                         </div>
-                        <div className="bg-orange-600 flex flex-row gap-[54px] items-center justify-start mb-2 mt-10 p-[15px] rounded-[36px] shadow-bs15 w-[84%] md:w-full">
+                        <div
+                          className="cursor-pointer bg-orange-600 flex flex-row gap-[54px] items-center justify-start mb-2 mt-10 p-[15px] rounded-[36px] shadow-bs15 w-[84%] md:w-full"
+                          onClick={handleNavigate}
+                        >
                           <Text
                             className="ml-16 text-lg text-white-A700"
                             size="txtSegoeUI18"
                           >
                             Click to view Livecam
                           </Text>
-                          <div className="flex flex-col h-[42px] items-center justify-start w-[42px]">
+                          <div className="flex flex-col h-[42px] items-center justify-start w-[42px] cursor-pointer">
                             <Button
-                              className="flex h-[42px] items-center justify-center shadow-bs16 w-[42px]"
+                              className="flex h-[42px] items-center justify-center shadow-bs16 w-[42px] cursor-pointer"
                               shape="circle"
                               color="white_A700"
                               size="md"
