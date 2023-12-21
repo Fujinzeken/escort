@@ -680,7 +680,7 @@ const ProfilePage: React.FC = () => {
                       <div className="flex flex-col items-center justify-start w-[79%] md:w-full">
                         <div className="flex flex-col items-start justify-start w-full">
                           <div className="flex gap-3 items-center">
-                            <Link to="advert" className="flex gap-3">
+                            <Link to="/advert" className="flex gap-3">
                               <Img
                                 className="h-6 w-6"
                                 src="images/advert_logo.png"
@@ -700,7 +700,7 @@ const ProfilePage: React.FC = () => {
                   </List>
                 </div>
                 <div className="flex flex-row items-center justify-start mt-5 py-[11px] px-4 w-full pl-8 gap-3 cursor-pointer hover:bg-gray-500 ">
-                  <Link to="message" className="flex gap-3">
+                  <Link to="/messages" className="flex gap-3">
                     <Img
                       className="h-6 w-6"
                       src="images/message_icon.png"

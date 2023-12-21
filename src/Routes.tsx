@@ -56,7 +56,7 @@ const ProjectRoutes = () => {
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/changepassword" element={<ChangePassword />} />
         <Route path="/desktopthirtythree" element={<DesktopThirtyThree />} />
-        <Route path="/meesages" element={<Meesages />} />
+        <Route path="/messages" element={<Meesages />} />
         <Route path="/desktopthirty" element={<DesktopThirty />} />
         <Route path="/desktopthirtyone" element={<DesktopThirtyOne />} />
         <Route path="/desktoptwentynine" element={<DesktopTwentyNine />} />
