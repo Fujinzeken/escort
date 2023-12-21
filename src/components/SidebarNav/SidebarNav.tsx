@@ -83,7 +83,7 @@ const SidebarNav = ({ pageOn }) => {
             </div>
             <div className="flex flex-col items-center justify-start mb-[15px] w-full">
               <div className="flex flex-row items-center justify-start pr-[11px] w-full cursor-pointer hover:bg-gray-500">
-                <Link to="/" className="flex items-center">
+                <Link to="/" className="flex items-center  w-full">
                   <Img
                     className="h-14 w-14"
                     src="images/img_home.svg"
@@ -176,11 +176,11 @@ const SidebarNav = ({ pageOn }) => {
               </div>
             </div>
           </div> */}
-                  <div className="flex flex-1 flex-col items-end justify-start my-0 px-8 w-full py-3 hover:bg-gray-500">
+                  <div className="flex flex-1 flex-col items-end justify-start my-0 px-8 w-full py-3 cursor-pointer hover:bg-gray-500">
                     <div className="flex flex-col items-center justify-start w-[79%] md:w-full">
                       <div className="flex flex-col items-start justify-start w-full ">
-                        <div className="flex gap-3 items-center cursor-pointer">
-                          <Link to="/advert" className="flex gap-3">
+                        <div className="flex gap-3 items-center w-full">
+                          <Link to="/advert" className="flex gap-3 w-full">
                             <Img
                               className="h-6 w-6"
                               src="images/advert_logo.png"
@@ -200,7 +200,7 @@ const SidebarNav = ({ pageOn }) => {
                 </List>
               </div>
               <div className="flex flex-row items-center justify-start mt-5 py-[11px] w-full pl-3 gap-3 cursor-pointer hover:bg-gray-500">
-                <Link to="/messages" className="flex gap-3">
+                <Link to="/messages" className="flex gap-3  w-full">
                   <Img
                     className="h-6 w-6"
                     src="images/message_icon.png"
@@ -272,7 +272,7 @@ const SidebarNav = ({ pageOn }) => {
                 orientation="vertical"
               >
                 <div className="flex flex-1 flex-row items-center justify-start w-full cursor-pointer hover:bg-gray-500">
-                  <Link to="/profile" className="flex">
+                  <Link to="/profile" className="flex  w-full">
                     <Img
                       className="h-14 w-14"
                       src="images/img_lock_gray_600_01.svg"
@@ -293,7 +293,7 @@ const SidebarNav = ({ pageOn }) => {
                   </Link>
                 </div>
                 <div className="flex flex-1 flex-row items-center justify-start w-full cursor-pointer hover:bg-gray-500">
-                  <Link to="/advert" className="flex">
+                  <Link to="/advert" className="flex  w-full">
                     <Img
                       className="h-14 w-14"
                       src="images/img_divvlistitemiconmargin_gray_600_01.svg"
@@ -318,7 +318,7 @@ const SidebarNav = ({ pageOn }) => {
                     pageOn === "ladies" ? "bg-orange-600" : ""
                   } flex flex-1 flex-row items-center justify-start w-full cursor-pointer hover:bg-gray-500`}
                 >
-                  <Link to="/ladies-star" className="flex">
+                  <Link to="/ladies-star" className="flex w-full">
                     <Img
                       className="h-14 w-14"
                       src="images/img_divvlistitemiconmargin_gray_600_01_56x56.svg"
@@ -363,7 +363,7 @@ const SidebarNav = ({ pageOn }) => {
             </div> */}
               </List>
               <div className="flex flex-row items-center justify-start mt-8 pr-[11px] py-[11px] w-full cursor-pointer hover:bg-gray-500">
-                <Link to="/live-video" className="flex">
+                <Link to="/live-video" className="flex w-full">
                   <Img
                     className="h-5"
                     src="images/img_user_gray_800.svg"
