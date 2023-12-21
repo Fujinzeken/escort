@@ -93,7 +93,7 @@ const Payment: React.FC = () => {
                       </div>
                     </div>
                     <div className="flex flex-col items-center justify-start w-full">
-                      <div className="h-14 relative w-full">
+                      <div className="h-14 relative w-full hover:bg-gray-500 cursor-pointer">
                         <Img
                           className="absolute h-14 inset-y-[0] left-[6%] my-auto w-14"
                           src="images/img_divvlistitemiconmargin.svg"
@@ -187,7 +187,7 @@ const Payment: React.FC = () => {
                       className="flex flex-col gap-4 items-center mb-4 w-full"
                       orientation="vertical"
                     >
-                      <div className="flex flex-1 flex-row items-center justify-start px-4 w-full">
+                      <div className="flex flex-1 flex-row items-center justify-start w-full cursor-pointer hover:bg-gray-500">
                         <Link to="/profile" className="flex">
                           <Img
                             className="h-14 w-14"
@@ -227,7 +227,7 @@ const Payment: React.FC = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="flex flex-1 flex-row items-center justify-start px-4 w-full">
+                      <div className="flex flex-1 flex-row items-center justify-start px-4 w-full hover:bg-gray-500">
                         <Link to="/ladies-star" className="flex">
                           <Img
                             className="h-14 w-14"
@@ -267,12 +267,12 @@ const Payment: React.FC = () => {
                           </div>
                         </div>
                       </div> */}
-                      <div className="flex flex-1 flex-col font-montserrat items-center justify-end p-[5px] w-full">
-                        <div className="flex flex-row items-center justify-start pr-[11px] py-[11px] w-[82%] md:w-full">
+                      <div className="flex flex-row items-center justify-start mt-8 pr-[11px] py-[11px] w-full cursor-pointer hover:bg-gray-500">
+                        <Link to="/live-video" className="flex">
                           <Img
                             className="h-5"
                             src="images/img_user_gray_800.svg"
-                            alt="user"
+                            alt="user_Three"
                           />
                           <Text
                             className="text-base text-gray-800"
@@ -280,7 +280,7 @@ const Payment: React.FC = () => {
                           >
                             Live Videos
                           </Text>
-                        </div>
+                        </Link>
                       </div>
                     </List>
                   </div>

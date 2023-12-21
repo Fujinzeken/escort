@@ -33,13 +33,13 @@ import Authenticate from "pages/Authenticate";
 import EscortMainProfile from "pages/EscortMainProfile";
 import AddImages from "pages/AddImages";
 import AddVideos from "pages/AddVideos";
-import DesktopFourtyEight from "pages/DesktopFourtyEight";
 import DesktopFourtyNine from "pages/DesktopFourtyNine";
 import Gallery from "pages/Gallery";
 import LadiesStar from "pages/LadiesStars";
 import ProfileEditPage from "pages/ProfileEdit";
 import Checkout from "pages/Checkout";
 import Payment from "pages/Payment";
+import DesktopFourtyEight from "pages/DesktopFourtyEight/Index";
 
 const ProjectRoutes = () => {
   return (
@@ -71,7 +71,7 @@ const ProjectRoutes = () => {
         <Route path="/becomeamember" element={<Becomeamember />} />
         <Route path="/desktoptwentyfive" element={<DesktopTwentyFive />} />
         <Route path="/desktoptwentysix" element={<DesktopTwentySix />} />
-        <Route path="/desktopthirtyfour" element={<DesktopThirtyFour />} />
+        <Route path="/live-video" element={<DesktopThirtyFour />} />
         <Route path="/desktopthirtyfive" element={<DesktopThirtyFive />} />
         <Route path="/service" element={<Service />} />
         <Route path="/EscortProfile" element={<EscortProfile />} />
