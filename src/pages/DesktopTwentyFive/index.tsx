@@ -1,11 +1,55 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Button, Img, Input, Line, List, Text } from "components";
 import Header1 from "components/Header1";
-
-
+import { useNavigate } from "react-router-dom";
 
 const DesktopTwentyFivePage: React.FC = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const [isrotate, setRotate] = useState(false);
+  const account = useNavigate();
+  const rotate = {
+    transform: isrotate ? "rotate(180deg)" : "rotate(0deg)",
+    transition: "all .5s ease-in-out",
+  };
+
+  const toggle = () => {
+    setIsVisible(!isVisible);
+    setRotate(!isrotate);
+  };
+
+  const ratedPage = () => {
+    account("/DesktopThirtyThree");
+  };
+
+  const AccountPage = () => {
+    account("/profile");
+  };
+
+  const Advert = () => {
+    account("/advert");
+  };
+
+  const messages = () => {
+    account("/messages");
+  };
+
+  const member = () => {
+    account("/Becomeamember");
+  };
+
+  const liveVideo = () => {
+    account("/live-video");
+  };
+
+  const ladiesStar = () => {
+    account("/ladies-star");
+  };
+
+  const home = () => {
+    account("/");
+  };
+
   return (
     <>
       <div className="bg-white-A700 flex overflow-x-hidden flex-col font-montserrat items-center justify-start mx-auto pb-[88px] w-full">
@@ -308,7 +352,10 @@ const DesktopTwentyFivePage: React.FC = () => {
                 </div>
 
                 <div className=" top-[5%] flex flex-col font-roboto inset-x-[0] items-center justify-start mx-auto py-2 w-[96%]">
-                  <div className="flex flex-row items-center justify-start  w-full">
+                  <div
+                    className=" leftNav flex flex-row items-center justify-start  w-full"
+                    onClick={home}
+                  >
                     <Img
                       className="h-14 w-14"
                       src="images/img_home.svg"
@@ -321,7 +368,7 @@ const DesktopTwentyFivePage: React.FC = () => {
                             className="text-base text-gray-600_01"
                             size="txtRobotoRegular16"
                           >
-                            Home page
+                            Home
                           </Text>
                         </div>
                       </div>
@@ -335,7 +382,7 @@ const DesktopTwentyFivePage: React.FC = () => {
                         src="images/img_divvlistitemiconmargin.svg"
                         alt="divvlistitemico"
                       />
-                      <div className="absolute flex flex-row h-max inset-y-[0] items-center justify-center my-auto right-[6%] w-[70%]">
+                      <div className="absolute flex flex-row h-max inset-y-[0] items-center justify-center my-auto right-[1%] w-[70%]">
                         <div className="flex flex-col items-center justify-start py-4 w-[84%]">
                           <div className="flex flex-col items-start justify-start w-full">
                             <div className="flex flex-col items-center justify-start">
@@ -348,11 +395,13 @@ const DesktopTwentyFivePage: React.FC = () => {
                             </div>
                           </div>
                         </div>
-                        <Img
-                          className="h-4"
-                          src="images/img_arrowdown_gray_600_01.svg"
-                          alt="arrowdown_One"
-                        />
+                        <section style={rotate} onClick={toggle}>
+                          <Img
+                            className="h-4 cursor"
+                            src="images/img_arrowdown_gray_600_01.svg"
+                            alt="arrowdown_One"
+                          />
+                        </section>
                       </div>
                       <Line className="absolute bg-black-900_1e border-gray-800_03 border-solid border-t h-px inset-x-[0] mx-auto top-[0] w-full" />
                     </div>
@@ -362,35 +411,32 @@ const DesktopTwentyFivePage: React.FC = () => {
                         className="flex flex-col gap-px items-center w-full"
                         orientation="vertical"
                       >
-                        <div className="flex flex-1 flex-col items-end justify-start my-0 px-4 w-full">
-                          <div className="flex flex-col items-center justify-start py-4 w-[79%] md:w-full">
-                            <div className="flex flex-col items-start justify-start w-full">
-                              <div className="flex flex-col items-center justify-start">
-                                <Text
-                                  className="text-base text-gray-600_01"
-                                  size="txtRobotoRegular16"
-                                >
-                                  Overview
-                                </Text>
+                        {isVisible && (
+                          <div
+                            className="leftNav flex flex-1 flex-col items-end justify-start my-0 px-4 w-full"
+                            onClick={Advert}
+                          >
+                            <div className="flex flex-col items-center justify-start py-4 w-[79%] md:w-full">
+                              <div className="flex flex-col items-start justify-start w-full">
+                                <div className="flex gap-3 items-center justify-start">
+                                  <Img
+                                    className="h-6 w-6"
+                                    src="images/advert_logo.png"
+                                    alt="message icon"
+                                  />
+                                  <Text
+                                    className="text-base text-gray-600_01"
+                                    size="txtRobotoRegular16"
+                                  >
+                                    Advert free
+                                  </Text>
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                        <div className="flex flex-1 flex-col items-end justify-start my-0 px-4 w-full">
-                          <div className="flex flex-col items-center justify-start py-4 w-[79%] md:w-full">
-                            <div className="flex flex-col items-start justify-start w-full">
-                              <div className="flex flex-col items-center justify-start">
-                                <Text
-                                  className="text-base text-gray-600_01"
-                                  size="txtRobotoRegular16"
-                                >
-                                  Advert free
-                                </Text>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="flex flex-1 flex-col items-end justify-start my-0 px-4 w-full">
+                        )}
+
+                        {/* <div className="leftNav flex flex-1 flex-col items-end justify-start my-0 px-4 w-full">
                           <div className="flex flex-col items-center justify-start md:ml-[0] ml-[72px] py-4 w-[70%] md:w-full">
                             <div className="flex flex-col items-start justify-start w-full">
                               <div className="flex flex-col items-center justify-start">
@@ -403,27 +449,59 @@ const DesktopTwentyFivePage: React.FC = () => {
                               </div>
                             </div>
                           </div>
-                          <Line className="bg-black-900_1e border-b border-gray-800_03 border-solid h-px w-full" />
+                        </div> */}
+                        <div
+                          className="leftNav flex flex-1 flex-col items-center justify-start my-0 px-2 w-full"
+                          onClick={messages}
+                        >
+                          <div className="flex flex-col items-center justify-start py-4 w-[79%] md:w-full">
+                            <div className="flex flex-col items-start justify-start w-full">
+                              <div className="flex gap-3 items-center justify-start">
+                                <Img
+                                  className="h-6 w-6"
+                                  src="images/message_icon.png"
+                                  alt="message icon"
+                                />
+                                <Text
+                                  className="text-base text-gray-600_01"
+                                  size="txtRobotoRegular16"
+                                >
+                                  Message
+                                </Text>
+                              </div>
+                            </div>
+                          </div>
                         </div>
+                        <Line className="bg-black-900_1e border-b border-gray-800_03 border-solid h-px w-full" />
                       </List>
                     </div>
                   </div>
-                  <Input
-                    name="link"
-                    placeholder="Account settings"
-                    className="font-bold p-0 placeholder:text-white-A700 sm:pr-5 text-base text-left w-full"
-                    wrapClassName="flex mt-4 pl-4 pr-[35px] w-full"
-                    prefix={
-                      <Img
-                        className="h-14 my-auto"
-                        src="images/img_lock_white_a700.svg"
-                        alt="lock"
-                      />
-                    }
-                    shape="square"
-                    color="orange_600"
-                  ></Input>
-                  <div className="flex flex-row items-center justify-start mt-4  w-full">
+                  <div className="leftNav active flex flex-1 flex-row items-center justify-start px-1 w-full">
+                    <Img
+                      className="h-14 w-14"
+                      src="images/img_lock_gray_600_01.svg"
+                      alt="lock"
+                    />
+                    <div
+                      onClick={AccountPage}
+                      className="cursor flex flex-col items-center justify-start py-4 w-[79%]"
+                    >
+                      <div className="flex flex-col items-start justify-start w-full">
+                        <div className="flex flex-col items-center justify-start">
+                          <Text
+                            className="text-base text-gray-600_01"
+                            size="txtRobotoRegular16"
+                          >
+                            Account settings
+                          </Text>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    className="leftNav flex flex-row items-center justify-start mt-4  w-full"
+                    onClick={member}
+                  >
                     <Img
                       className="h-14 w-14"
                       src="images/img_divvlistitemiconmargin_gray_600_01.svg"
@@ -442,7 +520,10 @@ const DesktopTwentyFivePage: React.FC = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="flex flex-row items-center justify-start mt-[15px]  w-full">
+                  <div
+                    className="leftNav flex flex-row items-center justify-start mt-[15px]  w-full"
+                    onClick={ladiesStar}
+                  >
                     <Img
                       className="h-14 w-14"
                       src="images/img_divvlistitemiconmargin_gray_600_01_56x56.svg"
@@ -461,7 +542,7 @@ const DesktopTwentyFivePage: React.FC = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="flex flex-row items-center justify-start mt-4  w-full">
+                  {/* <div className="flex flex-row items-center justify-start mt-4  w-full">
                     <Img
                       className="h-14 w-[55px]"
                       src="images/img_divvlistitemiconmargin_gray_600_01_56x55.svg"
@@ -479,9 +560,12 @@ const DesktopTwentyFivePage: React.FC = () => {
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="flex flex-col font-montserrat items-center justify-end mb-[34px] py-[5px] w-full">
-                    <div className="flex flex-row items-center justify-start pr-[11px] py-[11px] w-[82%] md:w-full">
+                  </div> */}
+                  <div
+                    className="leftNav flex flex-col font-montserrat items-center justify-end mb-[34px] py-[5px] w-full"
+                    onClick={liveVideo}
+                  >
+                    <div className=" flex flex-row items-center justify-start py-[11px] w-[82%] md:w-full">
                       <Img
                         className="h-5"
                         src="images/img_user_gray_800.svg"
@@ -810,7 +894,6 @@ const DesktopTwentyFivePage: React.FC = () => {
                 color="pink_700"
                 size="sm"
                 variant="fill"
-               
               >
                 Update
               </Button>

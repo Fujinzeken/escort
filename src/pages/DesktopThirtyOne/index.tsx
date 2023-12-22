@@ -1237,12 +1237,39 @@ const DesktopThirtyOnePage: React.FC = () => {
                     >
                       <div className="flex flex-col items-center justify-start py-4 w-[79%] md:w-full">
                         <div className="flex flex-col items-start justify-start w-full">
-                          <div className="flex flex-col items-center justify-start">
+                          <div className="flex gap-3 items-center justify-start">
+                            <Img
+                              className="h-6 w-6"
+                              src="images/advert_logo.png"
+                              alt="message icon"
+                            />
                             <Text
                               className="text-base text-gray-600_01"
                               size="txtRobotoRegular16"
                             >
                               Advert free
+                            </Text>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      className="leftNav flex flex-1 flex-col items-end justify-start my-0 px-4 w-full"
+                      onClick={messages}
+                    >
+                      <div className="flex flex-col items-center justify-start py-4 w-[79%] md:w-full">
+                        <div className="flex flex-col items-start justify-start w-full">
+                          <div className="flex gap-3 items-center justify-start">
+                            <Img
+                              className="h-6 w-6"
+                              src="images/message_icon.png"
+                              alt="message icon"
+                            />
+                            <Text
+                              className="text-base text-gray-600_01"
+                              size="txtRobotoRegular16"
+                            >
+                              Message
                             </Text>
                           </div>
                         </div>
