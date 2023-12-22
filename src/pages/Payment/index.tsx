@@ -2,9 +2,14 @@ import React from "react";
 
 import { Button, Img, Input, Line, List, Text } from "components";
 import Header1 from "components/Header1";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Payment: React.FC = () => {
+  const navigate = useNavigate();
+  const toCheckout = () => {
+    navigate("/checkout");
+  };
+
   return (
     <>
       <div className="bg-white-A700 flex flex-col font-montserrat justify-start mx-auto py-[39px] w-full">
@@ -365,7 +370,10 @@ const Payment: React.FC = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="flex flex-col items-center justify-start pb-[15px] w-[96%] md:w-full">
+                      <div
+                        className="flex flex-col items-center justify-start pb-[15px] w-[96%] md:w-full"
+                        onClick={toCheckout}
+                      >
                         <div className="flex flex-col items-center justify-start md:px-10 px-20 sm:px-5 w-full">
                           <Button
                             className="cursor-pointer font-bold min-w-[238px] text-center text-sm"

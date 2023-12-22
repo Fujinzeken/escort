@@ -25,7 +25,7 @@ const ProfileEditPage: React.FC = () => {
 
   return (
     <>
-      <div className="bg-white-A700 flex flex-col font-montserrat sm:gap-10 md:gap-10 gap-[836px] items-center justify-start mx-auto pb-[83px] w-full">
+      <div className="bg-white-A700 flex flex-col font-montserrat sm:gap-10 md:gap-10 gap-10 items-center justify-start mx-auto pb-[83px] w-full">
         <div className="md:h-[1046px] h-[1200px] md:px-5 relative w-full">
           <div className="md:h-[1046px] h-[1200px] m-auto w-full">
             <div
@@ -881,7 +881,7 @@ const ProfileEditPage: React.FC = () => {
         </div>
         <div className="flex flex-col items-center justify-start max-w-[1349px] mx-auto md:px-5 w-full">
           <div className="flex flex-col items-center justify-end p-[50px] md:px-10 sm:px-5 w-full">
-            <div className="flex flex-col items-center justify-start mt-7 pb-[98px] w-[84%] md:w-full">
+            <div className="flex flex-col items-center justify-start pb-[98px] w-[84%] md:w-full">
               <div className="flex md:flex-col flex-row md:gap-10 items-center justify-between w-full">
                 <div className="flex md:flex-1 flex-col items-center justify-end pt-9 w-[34%] md:w-full">
                   <div className="flex flex-row items-center justify-start w-full">

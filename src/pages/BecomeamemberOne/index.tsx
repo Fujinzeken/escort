@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import settings from 'assets/images/GalleryAssets/settings.svg'
+import settings from "assets/images/GalleryAssets/settings.svg";
 import { Button, Img, Input, Line, List, Text, TextArea } from "components";
 import Header1 from "components/Header1";
 import { useNavigate } from "react-router-dom";
@@ -8,33 +8,42 @@ const BecomeamemberOnePage: React.FC = () => {
   const account = useNavigate();
 
   const AccountPage = () => {
-    account('/DesktopTwentyNine')
-  }
+    account("/profile");
+  };
 
+  const home = () => {
+    account("/");
+  };
   const messages = () => {
-    account('/Meesages')
-  }
+    account("/messages");
+  };
 
   const ratedPage = () => {
-    account('/DesktopThirtyThree')
-  }
+    account("/DesktopThirtyThree");
+  };
 
   const Advert = () => {
-    account('/A')
-  }
+    account("/advert");
+  };
+  const liveVideo = () => {
+    account("/live-video");
+  };
 
+  const ladiesStar = () => {
+    account("/ladies-star");
+  };
   const [isVisible, setIsVisible] = useState(false);
-  const [isrotate, setRotate] = useState(false)
+  const [isrotate, setRotate] = useState(false);
 
   const toggle = () => {
-    setIsVisible(!isVisible)
-    setRotate(!isrotate)
-  }
+    setIsVisible(!isVisible);
+    setRotate(!isrotate);
+  };
 
   const rotate = {
-    transform: isrotate ? 'rotate(180deg)' : 'rotate(0deg)',
-    transition: 'all .5s ease-in-out'
-  }
+    transform: isrotate ? "rotate(180deg)" : "rotate(0deg)",
+    transition: "all .5s ease-in-out",
+  };
 
   return (
     <>
@@ -69,7 +78,10 @@ const BecomeamemberOnePage: React.FC = () => {
                   </div>
                   <div className="flex md:flex-col flex-row md:gap-12 items-start justify-between w-full">
                     <div className="md:h-[917px] h-[952px] relative w-[22%] md:w-full">
-                      <div style={{boxShadow: '1px 2px 11px lightgrey'}} className="absolute bg-white-A700 flex flex-col h-max inset-[0] items-center justify-center m-auto p-[25px] sm:px-5 rounded-[15px] shadow-bs7 w-[93%]">
+                      <div
+                        style={{ boxShadow: "1px 2px 11px lightgrey" }}
+                        className="absolute bg-white-A700 flex flex-col h-max inset-[0] items-center justify-center m-auto p-[25px] sm:px-5 rounded-[15px] shadow-bs7 w-[93%]"
+                      >
                         <div className="flex flex-col items-start justify-start mb-[674px] w-full">
                           <div className="flex flex-col items-start justify-start w-[34%] md:w-full">
                             <div
@@ -122,7 +134,10 @@ const BecomeamemberOnePage: React.FC = () => {
                         </div>
                       </div>
                       <div className="absolute top-[23%] flex flex-col font-roboto gap-4 inset-x-[0] items-center justify-start mx-auto py-2 w-[92%]">
-                        <div className="leftNav flex flex-row items-center justify-start px-4 w-full">
+                        <div
+                          className="leftNav flex flex-row items-center justify-start px-4 w-full"
+                          onClick={home}
+                        >
                           <Img
                             className="h-14 w-14"
                             src="images/img_home.svg"
@@ -171,57 +186,64 @@ const BecomeamemberOnePage: React.FC = () => {
                             </div>
                             <Line className="absolute bg-black-900_1e border-gray-800_03 border-solid border-t h-px inset-x-[0] mx-auto top-[0] w-full" />
                           </div>
-                          {isVisible && <div className="flex flex-col items-center justify-start w-full">
-                            <List
-                              className="flex flex-col gap-px items-center w-full"
-                              orientation="vertical"
-                            >
-                              <div onClick={messages} className="leftNav flex flex-1 flex-col items-end justify-start my-0 px-4 w-full">
-                                <div className="flex flex-col items-center justify-start py-4 w-[79%] md:w-full">
-                                  <div className="flex flex-col items-start justify-start w-full">
+                          {isVisible && (
+                            <div className="flex flex-col items-center justify-start w-full">
+                              <List
+                                className="flex flex-col gap-px items-center w-full"
+                                orientation="vertical"
+                              >
+                                <div
+                                  onClick={messages}
+                                  className="leftNav flex flex-1 flex-col items-end justify-start my-0 px-4 w-full"
+                                >
+                                  <div className="flex flex-col items-center justify-start py-4 w-[79%] md:w-full">
+                                    <div className="flex flex-col items-start justify-start w-full">
+                                      <div className="flex flex-col items-center justify-start">
+                                        <Text
+                                          className="text-base text-gray-600_01"
+                                          size="txtRobotoRegular16"
+                                        >
+                                          Messages
+                                        </Text>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div
+                                  className="leftNav flex flex-1 flex-col items-end justify-start my-0 px-4 w-full"
+                                  onClick={Advert}
+                                >
+                                  <div className="flex flex-col items-center justify-start py-4 w-[79%] md:w-full">
+                                    <div className="flex flex-col items-start justify-start w-full">
+                                      <div className="flex flex-col items-center justify-start">
+                                        <Text
+                                          className="text-base text-gray-600_01"
+                                          size="txtRobotoRegular16"
+                                        >
+                                          Advert free
+                                        </Text>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </List>
+                              <div className="rated mt-2 bg-orange-600 flex flex-col justify-start w-full">
+                                <div className="flex flex-col items-center justify-start md:ml-[0] py-4 w-[100%] md:w-full">
+                                  <div className="flex flex-col items-center justify-start w-full">
                                     <div className="flex flex-col items-center justify-start">
                                       <Text
-                                        className="text-base text-gray-600_01"
-                                        size="txtRobotoRegular16"
+                                        className="text-base text-white-A700"
+                                        size="txtRobotoBold16"
                                       >
-                                        Messages
+                                        18 + content
                                       </Text>
                                     </div>
                                   </div>
                                 </div>
+                                <Line className="none bg-black-900_1e border-b border-gray-800_03 border-solid h-px w-full" />
                               </div>
-                              <div className="leftNav flex flex-1 flex-col items-end justify-start my-0 px-4 w-full">
-                                <div className="flex flex-col items-center justify-start py-4 w-[79%] md:w-full">
-                                  <div className="flex flex-col items-start justify-start w-full">
-                                    <div className="flex flex-col items-center justify-start">
-                                      <Text
-                                        className="text-base text-gray-600_01"
-                                        size="txtRobotoRegular16"
-                                        onClick={Advert}
-                                      >
-                                        Advert free
-                                      </Text>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </List>
-                            <div className="rated mt-2 bg-orange-600 flex flex-col justify-start w-full">
-                              <div className="flex flex-col items-center justify-start md:ml-[0] py-4 w-[100%] md:w-full">
-                                <div className="flex flex-col items-center justify-start w-full">
-                                  <div className="flex flex-col items-center justify-start">
-                                    <Text
-                                      className="text-base text-white-A700"
-                                      size="txtRobotoBold16"
-                                    >
-                                      18 + content
-                                    </Text>
-                                  </div>
-                                </div>
-                              </div>
-                              <Line className="none bg-black-900_1e border-b border-gray-800_03 border-solid h-px w-full" />
                             </div>
-                          </div>}
+                          )}
                         </div>
                         <List
                           className="flex flex-col gap-4 items-center mb-4 w-full"
@@ -233,7 +255,10 @@ const BecomeamemberOnePage: React.FC = () => {
                               src="images/img_lock_gray_600_01.svg"
                               alt="lock"
                             />
-                            <div onClick={AccountPage} className=" cursor flex flex-col items-center justify-start py-4 w-[79%]">
+                            <div
+                              onClick={AccountPage}
+                              className=" cursor flex flex-col items-center justify-start py-4 w-[79%]"
+                            >
                               <div className="flex flex-col items-start justify-start w-full">
                                 <div className="flex flex-col items-center justify-start">
                                   <Text
@@ -265,7 +290,10 @@ const BecomeamemberOnePage: React.FC = () => {
                               </div>
                             </div>
                           </div>
-                          <div className="leftNav flex flex-1 flex-row items-center justify-start px-4 w-full">
+                          <div
+                            className="leftNav flex flex-1 flex-row items-center justify-start px-4 w-full"
+                            onClick={ladiesStar}
+                          >
                             <Img
                               className="h-14 w-14"
                               src="images/img_divvlistitemiconmargin_gray_600_01_56x56.svg"
@@ -284,7 +312,7 @@ const BecomeamemberOnePage: React.FC = () => {
                               </div>
                             </div>
                           </div>
-                          <div className="leftNav flex flex-1 flex-row items-center justify-start px-4 w-full">
+                          {/* <div className="leftNav flex flex-1 flex-row items-center justify-start px-4 w-full">
                             <Img
                               className="h-14 w-[55px]"
                               src="images/img_divvlistitemiconmargin_gray_600_01_56x55.svg"
@@ -302,8 +330,11 @@ const BecomeamemberOnePage: React.FC = () => {
                                 </div>
                               </div>
                             </div>
-                          </div>
-                          <div className="leftNav flex flex-1 flex-col font-montserrat items-center justify-end p-[5px] w-full">
+                          </div> */}
+                          <div
+                            className="leftNav flex flex-1 flex-col font-montserrat items-center justify-end p-[5px] w-full"
+                            onClick={liveVideo}
+                          >
                             <div className="flex flex-row items-center justify-start pr-[11px] py-[11px] w-[82%] md:w-full">
                               <Img
                                 className="h-5"
@@ -342,7 +373,9 @@ const BecomeamemberOnePage: React.FC = () => {
                       </Button> */}
                       <div
                         className="bg-cover bg-no-repeat flex inset-[0] justify-between m-auto md:pl-10 sm:pl-5 w-full"
-                        style={{ backgroundImage: "url('images/img_group51.png')" }}
+                        style={{
+                          backgroundImage: "url('images/img_group51.png')",
+                        }}
                       >
                         <div className="flex flex-col items-center justify-start w-[50%]">
                           <div className="flex flex-col items-start justify-start w-full">
@@ -357,7 +390,8 @@ const BecomeamemberOnePage: React.FC = () => {
                               size="txtRobotoRegular14Gray60001"
                             >
                               <span className="text-gray-600_01 font-roboto text-left font-normal">
-                                Hello ellytasha how can we help you? First, please check{" "}
+                                Hello ellytasha how can we help you? First,
+                                please check{" "}
                               </span>
                               <span className="text-orange-600 font-roboto text-left font-normal">
                                 Help page
@@ -367,11 +401,11 @@ const BecomeamemberOnePage: React.FC = () => {
                                   {" "}
                                   to
                                   <br />
-                                  see if there is already a solution to your problem. If
-                                  you want to receive
+                                  see if there is already a solution to your
+                                  problem. If you want to receive
                                   <br />
-                                  information about your problem, please enter an e-mail
-                                  address.
+                                  information about your problem, please enter
+                                  an e-mail address.
                                 </>
                               </span>
                             </Text>
@@ -619,7 +653,8 @@ const BecomeamemberOnePage: React.FC = () => {
                                     <div
                                       className="absolute bg-cover bg-no-repeat flex flex-col h-max inset-y-[0] items-center justify-start left-[0] my-auto w-[81%]"
                                       style={{
-                                        backgroundImage: "url('images/img_group61.svg')",
+                                        backgroundImage:
+                                          "url('images/img_group61.svg')",
                                       }}
                                     >
                                       <Img
@@ -658,7 +693,6 @@ const BecomeamemberOnePage: React.FC = () => {
                           </div>
                         </div>
                       </div>
-
                     </div>
                   </div>
                 </div>

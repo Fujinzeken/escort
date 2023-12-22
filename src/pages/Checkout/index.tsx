@@ -184,7 +184,7 @@ const Checkout: React.FC = () => {
                       </List>
                     </div>
                     <div className="flex flex-row items-center justify-start mt-5 py-[11px] w-full ml-8 gap-3">
-                      <Link to="/meesages" className="flex gap-3">
+                      <Link to="/messages" className="flex gap-3">
                         <Img
                           className="h-6 w-6"
                           src="images/message_icon.png"

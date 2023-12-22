@@ -1,8 +1,42 @@
 import React from "react";
 
 import { Button, Img, Input, Line, List, Text } from "components";
+import { useNavigate } from "react-router-dom";
 
 const DesktopThirtyOnePage: React.FC = () => {
+  const account = useNavigate();
+
+  const ratedPage = () => {
+    account("/DesktopThirtyThree");
+  };
+
+  const AccountPage = () => {
+    account("/profile");
+  };
+
+  const Advert = () => {
+    account("/advert");
+  };
+
+  const messages = () => {
+    account("/messages");
+  };
+
+  const member = () => {
+    account("/Becomeamember");
+  };
+
+  const liveVideo = () => {
+    account("/live-video");
+  };
+
+  const ladiesStar = () => {
+    account("/ladies-star");
+  };
+
+  const home = () => {
+    account("/");
+  };
   return (
     <>
       <div className="bg-white-A700 flex flex-col font-montserrat sm:gap-10 md:gap-10 gap-[95px] items-center justify-end mx-auto pl-1 pt-1 w-full">
@@ -1128,7 +1162,10 @@ const DesktopThirtyOnePage: React.FC = () => {
               </div>
             </div>
             <div className="absolute bottom-[5%] flex flex-col font-roboto inset-x-[0] items-center justify-start mx-auto py-2 w-[96%]">
-              <div className="flex flex-row items-center justify-start px-4 w-full">
+              <div
+                className="leftNav flex flex-row items-center justify-start px-4 w-full"
+                onClick={home}
+              >
                 <Img
                   className="h-14 w-14"
                   src="images/img_home.svg"
@@ -1180,7 +1217,7 @@ const DesktopThirtyOnePage: React.FC = () => {
                     className="flex flex-col gap-px items-center w-full"
                     orientation="vertical"
                   >
-                    <div className="flex flex-1 flex-col items-end justify-start my-0 px-4 w-full">
+                    {/* <div className="flex flex-1 flex-col items-end justify-start my-0 px-4 w-full">
                       <div className="flex flex-col items-center justify-start py-4 w-[79%] md:w-full">
                         <div className="flex flex-col items-start justify-start w-full">
                           <div className="flex flex-col items-center justify-start">
@@ -1193,8 +1230,11 @@ const DesktopThirtyOnePage: React.FC = () => {
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="flex flex-1 flex-col items-end justify-start my-0 px-4 w-full">
+                    </div> */}
+                    <div
+                      className="leftNav flex flex-1 flex-col items-end justify-start my-0 px-4 w-full"
+                      onClick={Advert}
+                    >
                       <div className="flex flex-col items-center justify-start py-4 w-[79%] md:w-full">
                         <div className="flex flex-col items-start justify-start w-full">
                           <div className="flex flex-col items-center justify-start">
@@ -1208,7 +1248,10 @@ const DesktopThirtyOnePage: React.FC = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="flex flex-1 flex-col justify-start my-0 w-full">
+                    <div
+                      className=" leftNav flex flex-1 flex-col justify-start my-0 w-full"
+                      onClick={ratedPage}
+                    >
                       <div className="flex flex-col items-center justify-start md:ml-[0] ml-[72px] py-4 w-[70%] md:w-full">
                         <div className="flex flex-col items-start justify-start w-full">
                           <div className="flex flex-col items-center justify-start">
@@ -1241,7 +1284,10 @@ const DesktopThirtyOnePage: React.FC = () => {
                 shape="square"
                 color="orange_600"
               ></Input>
-              <div className="flex flex-row items-center justify-start mt-4 px-4 w-full">
+              <div
+                className="leftNav flex flex-row items-center justify-start mt-4 px-4 w-full"
+                onClick={member}
+              >
                 <Img
                   className="h-14 w-14"
                   src="images/img_divvlistitemiconmargin_gray_600_01.svg"
@@ -1260,7 +1306,10 @@ const DesktopThirtyOnePage: React.FC = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex flex-row items-center justify-start mt-[15px] px-4 w-full">
+              <div
+                className="leftNav flex flex-row items-center justify-start mt-[15px] px-4 w-full"
+                onClick={ladiesStar}
+              >
                 <Img
                   className="h-14 w-14"
                   src="images/img_divvlistitemiconmargin_gray_600_01_56x56.svg"
@@ -1279,7 +1328,7 @@ const DesktopThirtyOnePage: React.FC = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex flex-row items-center justify-start mt-4 px-4 w-full">
+              {/* <div className="flex flex-row items-center justify-start mt-4 px-4 w-full">
                 <Img
                   className="h-14 w-[55px]"
                   src="images/img_divvlistitemiconmargin_gray_600_01_56x55.svg"
@@ -1297,8 +1346,11 @@ const DesktopThirtyOnePage: React.FC = () => {
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="flex flex-col font-montserrat items-center justify-end mb-[34px] p-[5px] w-full">
+              </div> */}
+              <div
+                className="leftNav flex flex-col font-montserrat items-center justify-end mb-[34px] p-[5px] w-full"
+                onClick={liveVideo}
+              >
                 <div className="flex flex-row items-center justify-start pr-[11px] py-[11px] w-[82%] md:w-full">
                   <Img
                     className="h-5"
