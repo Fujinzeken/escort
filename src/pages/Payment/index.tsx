@@ -1,13 +1,56 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Button, Img, Input, Line, List, Text } from "components";
 import Header1 from "components/Header1";
 import { Link, useNavigate } from "react-router-dom";
 
 const Payment: React.FC = () => {
-  const navigate = useNavigate();
+  const [isVisible, setIsVisible] = useState(false);
+  const [isrotate, setRotate] = useState(false);
+  const account = useNavigate();
+
+  const ratedPage = () => {
+    account("/DesktopThirtyThree");
+  };
+
+  const AccountPage = () => {
+    account("/profile");
+  };
+
+  const Advert = () => {
+    account("/advert");
+  };
+  const home = () => {
+    account("/");
+  };
+  const messages = () => {
+    account("/messages");
+  };
+
+  const member = () => {
+    account("/Becomeamember");
+  };
+
+  const liveVideo = () => {
+    account("/live-video");
+  };
+
+  const ladiesStar = () => {
+    account("/ladies-star");
+  };
+
+  const toggle = () => {
+    setIsVisible(!isVisible);
+    setRotate(!isrotate);
+  };
+
+  const rotate = {
+    transform: isrotate ? "rotate(180deg)" : "rotate(0deg)",
+    transition: "all .5s ease-in-out",
+  };
+
   const toCheckout = () => {
-    navigate("/checkout");
+    account("/checkout");
   };
 
   return (
@@ -78,29 +121,30 @@ const Payment: React.FC = () => {
                     </div>
                   </div>
                   <div className="absolute bottom-[3%] flex flex-col font-roboto gap-4 inset-x-[0] items-center justify-start mx-auto py-2 w-[96%]">
-                    <div className="  cursor-pointer hover:bg-gray-500 flex flex-row items-center justify-start px-4 w-full">
-                      <Link to="/" className="flex">
-                        <Img
-                          className="h-14 w-14"
-                          src="images/img_home.svg"
-                          alt="home"
-                        />
-                        <div className="flex flex-col items-center justify-start py-4 w-[79%]">
-                          <div className="flex flex-col items-start justify-start w-full">
-                            <div className="flex flex-col items-center justify-start">
-                              <Text
-                                className="text-base text-gray-600_01"
-                                size="txtRobotoRegular16"
-                              >
-                                Home page
-                              </Text>
-                            </div>
+                    <div
+                      className="leftNav flex flex-row items-center justify-start px-4 w-full"
+                      onClick={home}
+                    >
+                      <Img
+                        className="h-14 w-14"
+                        src="images/img_home.svg"
+                        alt="home"
+                      />
+                      <div className="flex flex-col items-center justify-start py-4 w-[79%]">
+                        <div className="flex flex-col items-start justify-start w-full">
+                          <div className="flex flex-col items-center justify-start">
+                            <Text
+                              className="text-base text-gray-600_01"
+                              size="txtRobotoRegular16"
+                            >
+                              Home page
+                            </Text>
                           </div>
                         </div>
-                      </Link>
+                      </div>
                     </div>
                     <div className="flex flex-col items-center justify-start w-full">
-                      <div className="h-14 relative w-full hover:bg-gray-500 cursor-pointer">
+                      <div className="h-14 relative w-full ">
                         <Img
                           className="absolute h-14 inset-y-[0] left-[6%] my-auto w-14"
                           src="images/img_divvlistitemiconmargin.svg"
@@ -119,11 +163,13 @@ const Payment: React.FC = () => {
                               </div>
                             </div>
                           </div>
-                          <Img
-                            className="h-4"
-                            src="images/img_arrowdown_gray_600_01.svg"
-                            alt="arrowdown_One"
-                          />
+                          <section onClick={toggle} style={rotate}>
+                            <Img
+                              className="h-4 cursor"
+                              src="images/img_arrowdown_gray_600_01.svg"
+                              alt="arrowdown_One"
+                            />
+                          </section>
                         </div>
                         <Line className="absolute bg-black-900_1e border-gray-800_03 border-solid border-t h-px inset-x-[0] mx-auto top-[0] w-full" />
                       </div>
@@ -146,11 +192,14 @@ const Payment: React.FC = () => {
                               </div>
                             </div>
                           </div> */}
-                          <div className="flex flex-1 flex-col items-end justify-start my-0 px-8 w-full cursor-pointer hover:bg-gray-500 py-3">
-                            <div className="flex flex-col items-center justify-start w-[79%] md:w-full">
-                              <div className="flex flex-col items-start justify-start w-full">
-                                <div className="flex gap-3 items-center">
-                                  <Link to="/advert" className="flex gap-3">
+                          {isVisible && (
+                            <div
+                              className="flex flex-1 flex-col items-end justify-start my-0 px-8 w-full leftNav py-3"
+                              onClick={Advert}
+                            >
+                              <div className="flex flex-col items-center justify-start w-[79%] md:w-full">
+                                <div className="flex flex-col items-start justify-start w-full">
+                                  <div className="flex gap-3 items-center">
                                     <Img
                                       className="h-6 w-6"
                                       src="images/advert_logo.png"
@@ -162,27 +211,28 @@ const Payment: React.FC = () => {
                                     >
                                       Advert Free
                                     </Text>
-                                  </Link>
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
+                          )}
                         </List>
                       </div>
-                      <div className="flex flex-row items-center justify-start mt-5 py-[11px] px-4 w-full pl-8 gap-3 cursor-pointer hover:bg-gray-500 ">
-                        <Link to="/messages" className="flex gap-3">
-                          <Img
-                            className="h-6 w-6"
-                            src="images/message_icon.png"
-                            alt="message icon"
-                          />
-                          <Text
-                            className="text-base text-gray-600_01"
-                            size="txtRobotoRegular16"
-                          >
-                            Messages
-                          </Text>
-                        </Link>
+                      <div
+                        className="flex flex-row items-center justify-start mt-5 py-[11px] px-4 w-full pl-8 gap-3 leftNav "
+                        onClick={messages}
+                      >
+                        <Img
+                          className="h-6 w-6"
+                          src="images/message_icon.png"
+                          alt="message icon"
+                        />
+                        <Text
+                          className="text-base text-gray-600_01"
+                          size="txtRobotoRegular16"
+                        >
+                          Messages
+                        </Text>
                       </div>
                       <div className=" flex flex-col justify-start w-full">
                         <Line className="bg-black-900_1e border-b border-gray-800_03 border-solid h-px w-full" />
@@ -192,68 +242,71 @@ const Payment: React.FC = () => {
                       className="flex flex-col gap-4 items-center mb-4 w-full"
                       orientation="vertical"
                     >
-                      <div className="flex flex-1 flex-row px-4 items-center justify-start w-full cursor-pointer hover:bg-gray-500">
-                        <Link to="/profile" className="flex">
-                          <Img
-                            className="h-14 w-14"
-                            src="images/img_lock_gray_600_01.svg"
-                            alt="lock"
-                          />
-                          <div className="flex flex-col items-center justify-start py-4 w-[79%]">
-                            <div className="flex flex-col items-start justify-start w-full">
-                              <div className="flex flex-col items-center justify-start">
-                                <Text
-                                  className="text-base text-gray-600_01"
-                                  size="txtRobotoRegular16"
-                                >
-                                  Account settings
-                                </Text>
-                              </div>
+                      <div
+                        className="flex flex-1 flex-row px-4 items-center justify-start w-full leftNav"
+                        onClick={AccountPage}
+                      >
+                        <Img
+                          className="h-14 w-14"
+                          src="images/img_lock_gray_600_01.svg"
+                          alt="lock"
+                        />
+                        <div className="flex flex-col items-center justify-start py-4 w-[79%]">
+                          <div className="flex flex-col items-start justify-start w-full">
+                            <div className="flex flex-col items-center justify-start">
+                              <Text
+                                className="text-base text-gray-600_01"
+                                size="txtRobotoRegular16"
+                              >
+                                Account settings
+                              </Text>
                             </div>
                           </div>
-                        </Link>
+                        </div>
                       </div>
-                      <div className="flex flex-1 flex-row items-center justify-start px-4 w-full cursor-pointer hover:bg-gray-500">
-                        <Link to="" className="flex">
-                          <Img
-                            className="h-14 w-14"
-                            src="images/img_divvlistitemiconmargin_gray_600_01.svg"
-                            alt="divvlistitemico"
-                          />
-                          <div className="flex flex-col items-center justify-start py-4 w-[79%]">
-                            <div className="flex flex-col items-start justify-start w-full">
-                              <div className="flex flex-col items-center justify-start">
-                                <Text
-                                  className="text-base text-gray-600_01"
-                                  size="txtRobotoRegular16"
-                                >
-                                  Become a customer
-                                </Text>
-                              </div>
+                      <div
+                        className="flex flex-1 flex-row items-center justify-start px-4 w-full leftNav"
+                        onClick={member}
+                      >
+                        <Img
+                          className="h-14 w-14"
+                          src="images/img_divvlistitemiconmargin_gray_600_01.svg"
+                          alt="divvlistitemico"
+                        />
+                        <div className="flex flex-col items-center justify-start py-4 w-[79%]">
+                          <div className="flex flex-col items-start justify-start w-full">
+                            <div className="flex flex-col items-center justify-start">
+                              <Text
+                                className="text-base text-gray-600_01"
+                                size="txtRobotoRegular16"
+                              >
+                                Become a customer
+                              </Text>
                             </div>
                           </div>
-                        </Link>
+                        </div>
                       </div>
-                      <div className="flex flex-1 flex-row items-center justify-start px-4 w-full hover:bg-gray-500">
-                        <Link to="/ladies-star" className="flex">
-                          <Img
-                            className="h-14 w-14"
-                            src="images/img_divvlistitemiconmargin_gray_600_01_56x56.svg"
-                            alt="divvlistitemico"
-                          />
-                          <div className="flex flex-col items-center justify-start py-4 w-[79%]">
-                            <div className="flex flex-col items-start justify-start w-full">
-                              <div className="flex flex-col items-center justify-start">
-                                <Text
-                                  className="text-base text-gray-600_01"
-                                  size="txtRobotoRegular16"
-                                >
-                                  LadiesSTARS
-                                </Text>
-                              </div>
+                      <div
+                        className="flex flex-1 flex-row items-center justify-start px-4 w-full leftNav"
+                        onClick={ladiesStar}
+                      >
+                        <Img
+                          className="h-14 w-14"
+                          src="images/img_divvlistitemiconmargin_gray_600_01_56x56.svg"
+                          alt="divvlistitemico"
+                        />
+                        <div className="flex flex-col items-center justify-start py-4 w-[79%]">
+                          <div className="flex flex-col items-start justify-start w-full">
+                            <div className="flex flex-col items-center justify-start">
+                              <Text
+                                className="text-base text-gray-600_01"
+                                size="txtRobotoRegular16"
+                              >
+                                LadiesSTARS
+                              </Text>
                             </div>
                           </div>
-                        </Link>
+                        </div>
                       </div>
                       {/* <div className="flex flex-1 flex-row items-center justify-start px-4 w-full">
                         <Img
@@ -274,7 +327,10 @@ const Payment: React.FC = () => {
                           </div>
                         </div>
                       </div> */}
-                      <div className="flex flex-row items-center justify-start mt-8 pr-[11px] py-[11px] w-full cursor-pointer hover:bg-gray-500">
+                      <div
+                        className="flex flex-row items-center justify-start  pr-[11px] py-[11px] w-full leftNav"
+                        onClick={liveVideo}
+                      >
                         <Link to="/live-video" className="flex">
                           <Img
                             className="h-5"

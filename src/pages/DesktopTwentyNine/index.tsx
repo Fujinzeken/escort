@@ -1669,34 +1669,13 @@ const DesktopTwentyNinePage: React.FC = () => {
                   </div>
                   <Line className="absolute bg-black-900_1e border-gray-800_03 border-solid border-t h-px inset-x-[0] mx-auto top-[0] w-full" />
                 </div>
-                {isVisible && (
-                  <div className="flex flex-col items-center justify-start w-full">
-                    <List
-                      className="flex flex-col gap-px items-center w-full"
-                      orientation="vertical"
-                    >
-                      <div
-                        onClick={messages}
-                        className=" leftNav flex flex-1 flex-col items-end justify-start my-0 px-4 w-full"
-                      >
-                        <div className="flex flex-col items-center justify-start py-4 w-[79%] md:w-full">
-                          <div className="flex flex-col items-start justify-start w-full">
-                            <div className="flex gap-3 items-center justify-start">
-                              <Img
-                                className="h-6 w-6"
-                                src="images/message_icon.png"
-                                alt="message icon"
-                              />
-                              <Text
-                                className="text-base text-gray-600_01"
-                                size="txtRobotoRegular16"
-                              >
-                                Messages
-                              </Text>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+
+                <div className="flex flex-col items-center justify-start w-full">
+                  <List
+                    className="flex flex-col gap-px items-center w-full"
+                    orientation="vertical"
+                  >
+                    {isVisible && (
                       <div
                         className="leftNav flex flex-1 flex-col items-end justify-start my-0 px-4 w-full"
                         onClick={Advert}
@@ -1719,8 +1698,31 @@ const DesktopTwentyNinePage: React.FC = () => {
                           </div>
                         </div>
                       </div>
-                    </List>
+                    )}
                     <div
+                      onClick={messages}
+                      className=" leftNav flex flex-1 flex-col items-center justify-start my-0 px-2 w-full"
+                    >
+                      <div className="flex flex-col items-center justify-start py-4 w-[79%] md:w-full">
+                        <div className="flex flex-col items-start justify-start w-full">
+                          <div className="flex gap-3 items-center justify-start">
+                            <Img
+                              className="h-6 w-6"
+                              src="images/message_icon.png"
+                              alt="message icon"
+                            />
+                            <Text
+                              className="text-base text-gray-600_01"
+                              size="txtRobotoRegular16"
+                            >
+                              Messages
+                            </Text>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </List>
+                  {/* <div
                       onClick={ratedPage}
                       className="rated flex flex-col justify-start w-full"
                     >
@@ -1737,9 +1739,8 @@ const DesktopTwentyNinePage: React.FC = () => {
                         </div>
                       </div>
                       <Line className="none bg-black-900_1e border-b border-gray-800_03 border-solid h-px w-full" />
-                    </div>
-                  </div>
-                )}
+                    </div> */}
+                </div>
               </div>
               <List
                 className="flex flex-col gap-4 items-center mb-4 w-full"

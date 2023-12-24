@@ -507,27 +507,32 @@ const APage: React.FC = () => {
                               className="flex flex-col gap-px items-center w-full"
                               orientation="vertical"
                             >
-                              <div className="leftNav flex flex-1 flex-col items-end justify-start active my-0 px-4 w-full">
-                                <div className="flex flex-col items-center justify-start py-4 w-[79%] md:w-full">
-                                  <div className="flex flex-col items-start justify-start w-full">
-                                    <div className="flex flex-col items-center justify-start">
-                                      <Link to="/advert" className="flex gap-3">
-                                        <Img
-                                          className="h-6 w-6"
-                                          src="images/advert_logo.png"
-                                          alt="message icon"
-                                        />
-                                        <Text
-                                          className="text-base text-gray-600_01"
-                                          size="txtRobotoRegular16"
+                              {isVisible && (
+                                <div className="leftNav flex flex-1 flex-col items-end justify-start active my-0 px-4 w-full">
+                                  <div className="flex flex-col items-center justify-start py-4 w-[79%] md:w-full">
+                                    <div className="flex flex-col items-start justify-start w-full">
+                                      <div className="flex flex-col items-center justify-start">
+                                        <Link
+                                          to="/advert"
+                                          className="flex gap-3"
                                         >
-                                          Advert Free
-                                        </Text>
-                                      </Link>
+                                          <Img
+                                            className="h-6 w-6"
+                                            src="images/advert_logo.png"
+                                            alt="message icon"
+                                          />
+                                          <Text
+                                            className="text-base text-gray-600_01"
+                                            size="txtRobotoRegular16"
+                                          >
+                                            Advert Free
+                                          </Text>
+                                        </Link>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
-                              </div>
+                              )}
                               <div
                                 onClick={messages}
                                 className="leftNav flex flex-1 flex-col items-center justify-start my-0 px-2 w-full"
@@ -551,7 +556,7 @@ const APage: React.FC = () => {
                                 </div>
                               </div>
                             </List>
-                            <Line className="none bg-black-900_1e border-b border-gray-800_03 border-solid h-px w-full" />
+                            <Line className=" bg-black-900_1e border-b border-gray-800_03 border-solid h-px w-full" />
                           </div>
                         </div>
                         <List
