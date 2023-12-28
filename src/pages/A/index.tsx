@@ -16,7 +16,7 @@ const APage: React.FC = () => {
   };
 
   const ratedPage = () => {
-    account("/DesktopThirtyThree");
+    account("/dashboard");
   };
 
   const member = () => {

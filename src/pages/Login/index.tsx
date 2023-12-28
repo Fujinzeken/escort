@@ -9,38 +9,36 @@ import { useGoogleLogin } from "@react-oauth/google";
 import { Button, Img, List, Text } from "components";
 
 import validation from "../Login/validationLogin";
+import { ToastContainer, toast } from "react-toastify";
 
 const LoginPage: React.FC = () => {
-  const navigate = useNavigate();
-  const googleSignIn = useGoogleLogin({
-    onSuccess: (res) => {
-      console.log("res", res);
-      alert("Login successfull. 😍");
-    },
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    usernameEmail: "",
+    password: "",
   });
+
+  const [errors, setErrors] = useState({
+    usernameEmail: "",
+    password: "",
+  });
+
+  const navigate = useNavigate();
+  // const googleSignIn = useGoogleLogin({
+  //   onSuccess: (res) => {
+  //     console.log("res", res);
+  //     alert("Login successfull. 😍");
+  //   },
+  // });
 
   const switchPage = () => {
     navigate("/Signup");
   };
 
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [usernameError, setUsernameError] = useState("");
-
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-
-  const [errors, setErrors] = useState({
-    email: "",
-    password: "",
-  });
-
-  const pass = useNavigate();
-
   const switchForget = () => {
-    pass("/ForgotPasswordOne");
+    navigate("/ForgotPasswordOne");
   };
 
   const handleInputChange = (e) => {
@@ -50,7 +48,7 @@ const LoginPage: React.FC = () => {
   };
 
   const camelCaseData = {
-    email: formData.email,
+    usernameEmail: formData.usernameEmail,
     password: formData.password,
   };
 
@@ -60,58 +58,58 @@ const LoginPage: React.FC = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    navigate("/DesktopThirtyThree");
-    console.log(formData);
 
-    // try {
-    //   // Make API call using Axios
-    //   const response = await axios.post(
-    //     "https://escort-backend-ny3u.onrender.com/api/v1/auth/login",
-    //     camelCaseData
-    //   );
+    setLoading(true);
 
-    //   if (response.status === 200) {
-    //     navigate("/DesktopThirtyThree");
-    //   }
+    try {
+      // Make API call using Axios
+      const response = await axios.post(
+        `https://lazer-escort.onrender.com/login`,
+        camelCaseData
+      );
 
-    //   // Handle the response as needed
-    //   console.log("Signup successful:", response.data);
-    // } catch (error) {
-    //   if (error.response) {
-    //     const responseData = error.response.data;
-    //     if (responseData.errors) {
-    //       setErrors(responseData.errors);
-    //     }
-    //     if (responseData.message) {
-    //       setUsernameError("");
-    //       setEmailError("");
-    //       setPasswordError("");
+      // Handle the response as needed
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("user", JSON.stringify(response.data));
+      setLoading(false);
+      if (response.status === 200) {
+        if (response.data.profile) {
+          navigate("/EscortDashboard");
+        } else {
+          navigate("/dashboard");
+        }
+      }
+    } catch (error) {
+      setLoading(false);
+      if (error.response) {
+        const responseData = error.response.data;
+        if (responseData.errors) {
+          setErrors(responseData.errors);
+        }
+        if (responseData.message) {
+          setEmailError("");
+          setPasswordError("");
 
-    //       if (
-    //         responseData.message.includes(
-    //           '"username" length must be at least 4 characters long'
-    //         )
-    //       ) {
-    //         setUsernameError("Username must have at least 4 characters");
-    //       }
-    //       if (responseData.message.includes('"email" must be a valid email')) {
-    //         setEmailError("Email must be a valid Email Address");
-    //       }
-    //       if (
-    //         responseData.message.includes(
-    //           '"password" length must be at least 7 characters long'
-    //         )
-    //       ) {
-    //         setPasswordError("Password must be more than 6 characters");
-    //       }
-    //     }
-
-    //     console.error("Signup failed:", error);
-    //   } else {
-    //     // Handle other types of errors
-    //     console.error("Signup failed:", error);
-    //   }
-    // }
+          if (responseData.message.includes('"email" must be a valid email')) {
+            setEmailError("Email must be a valid Email Address");
+          }
+          if (
+            responseData.message.includes(
+              '"password" length must be at least 7 characters long'
+            )
+          ) {
+            setPasswordError("Password must be more than 6 characters");
+          }
+        }
+        window.scrollTo(0, 0);
+        toast.error("Something went wrong");
+        console.log(error);
+      } else {
+        // Handle other types of errors
+        toast.error("Something went wrong");
+        console.log(error);
+      }
+    }
   };
   return (
     <>
@@ -194,7 +192,7 @@ const LoginPage: React.FC = () => {
                                           type="text"
                                           autoComplete="off"
                                           onChange={handleInputChange}
-                                          name="email"
+                                          name="usernameEmail"
                                           className="input-user"
                                         />
                                         {emailError && (
@@ -215,7 +213,7 @@ const LoginPage: React.FC = () => {
                                     <div className="border-b-2 border-solid border-white-A700_7f flex flex-col items-center justify-start py-3.5 w-full">
                                       <div className="flex relative flex-col items-start justify-start mb-[3px] w-full">
                                         <input
-                                          type="text"
+                                          type="password"
                                           autoComplete="off"
                                           onChange={handleInputChange}
                                           name="password"
@@ -242,9 +240,15 @@ const LoginPage: React.FC = () => {
                                       size="2xl"
                                       variant="fill"
                                       type="submit"
-                                      onClick={handleFormSubmit}
+                                      onClick={() => handleFormSubmit}
                                     >
-                                      Login
+                                      {!loading ? (
+                                        "Login"
+                                      ) : (
+                                        <div className="dotWrapper">
+                                          <div className="loadingDot"></div>
+                                        </div>
+                                      )}
                                     </Button>
                                     <Button
                                       className="common-pointer bg-transparent cursor-pointer min-w-[162px] text-center text-lg text-pink-50"
@@ -360,6 +364,7 @@ const LoginPage: React.FC = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 };

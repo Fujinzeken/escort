@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Button, Img, Input, Line, List, Text } from "components";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const DesktopTwentyNinePage: React.FC = () => {
+  const [profileData, setProfileData] = useState(null);
+  const token = localStorage.getItem("token");
   const account = useNavigate();
 
   const ratedPage = () => {
-    account("/DesktopThirtyThree");
+    account("/dashboard");
   };
 
   const AccountPage = () => {
@@ -50,7 +54,35 @@ const DesktopTwentyNinePage: React.FC = () => {
     transform: isrotate ? "rotate(180deg)" : "rotate(0deg)",
     transition: "all .5s ease-in-out",
   };
+  const getProfile = async () => {
+    try {
+      const res = await axios.get(
+        `https://lazer-escort.onrender.com/escort/profile`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setProfileData(res.data);
+      console.log(res.data);
+    } catch (err) {
+      if (err.response?.data?.message === "Invalid Session : Login again") {
+        account("/login");
+        localStorage.removeItem("token");
+      }
+      if (
+        err.response?.data?.error ===
+        "Unauthorized - Bearer token missing or invalid"
+      ) {
+        account("/login");
+        localStorage.removeItem("token");
+      } else {
+        toast.error("Oopss!!!, something went wrong, please reload the page");
+      }
 
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    getProfile();
+  }, []);
   return (
     <>
       <div className="bg-white-A700 flex flex-col font-montserrat items-center justify-start mx-auto w-full">
@@ -1493,6 +1525,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                                         color="amber_A200_01"
                                         size="2xl"
                                         variant="fill"
+                                        onClick={() => account("/checkout")}
                                       >
                                         Hook Up
                                       </Button>

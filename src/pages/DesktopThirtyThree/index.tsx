@@ -3,11 +3,11 @@ import React, { useState, useEffect } from "react";
 import { Button, CheckBox, Img, Input, Line, List, Text } from "components";
 import { useNavigate } from "react-router-dom";
 
-const DesktopThirtyThreePage: React.FC = () => {
+const DashboardPage: React.FC = () => {
   const account = useNavigate();
 
   const ratedPage = () => {
-    account("/DesktopThirtyThree");
+    account("/dashboard");
   };
 
   const AccountPage = () => {
@@ -3057,4 +3057,4 @@ const DesktopThirtyThreePage: React.FC = () => {
   );
 };
 
-export default DesktopThirtyThreePage;
+export default DashboardPage;

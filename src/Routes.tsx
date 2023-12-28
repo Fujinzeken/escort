@@ -16,7 +16,6 @@ import DesktopTwentyNine from "pages/DesktopTwentyNine";
 import DesktopThirtyOne from "pages/DesktopThirtyOne";
 import DesktopThirty from "pages/DesktopThirty";
 import Meesages from "pages/Meesages";
-import DesktopThirtyThree from "pages/DesktopThirtyThree";
 import ChangePassword from "pages/ChangePassword";
 import ForgotPassword from "pages/ForgotPassword";
 import ForgotPasswordOne from "pages/ForgotPasswordOne";
@@ -40,6 +39,7 @@ import ProfileEditPage from "pages/ProfileEdit";
 import Checkout from "pages/Checkout";
 import Payment from "pages/Payment";
 import DesktopFourtyEight from "pages/DesktopFourtyEight/Index";
+import DashboardPage from "pages/DesktopThirtyThree";
 
 const ProjectRoutes = () => {
   return (
@@ -55,7 +55,7 @@ const ProjectRoutes = () => {
         <Route path="/forgotpasswordone" element={<ForgotPasswordOne />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/changepassword" element={<ChangePassword />} />
-        <Route path="/desktopthirtythree" element={<DesktopThirtyThree />} />
+        <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/messages" element={<Meesages />} />
         <Route path="/desktopthirty" element={<DesktopThirty />} />
         <Route path="/desktopthirtyone" element={<DesktopThirtyOne />} />

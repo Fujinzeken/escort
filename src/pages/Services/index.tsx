@@ -7,7 +7,7 @@ const ServicesPage: React.FC = () => {
   const account = useNavigate();
 
   const ratedPage = () => {
-    account("/DesktopThirtyThree");
+    account("/dashboard");
   };
 
   const AccountPage = () => {

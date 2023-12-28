@@ -844,3 +844,60 @@ color: deeppink;
     font-size: 20px;
     font-weight: 600;
 }
+
+.dotWrapper {
+    width: 100%;
+    padding: 5px 35px;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .loadingDot {
+    position: relative;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: #dcdada;
+    color: #9880ff;
+    animation: loadingDot 1s infinite linear alternate;
+    animation-delay: 0.5s;
+  }
+  .loadingDot::before,
+  .loadingDot::after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    top: 0;
+  }
+  .loadingDot::before {
+    left: -15px;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #9880ff;
+    animation: loadingDot 1s infinite alternate;
+    animation-delay: 0s;
+  }
+  .loadingDot::after {
+    left: 15px;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #9880ff;
+    animation: dot-flashing 1s infinite alternate;
+    animation-delay: 1s;
+  }
+  
+  @keyframes loadingDot {
+    0% {
+      background-color:#fff;
+    }
+    50%,
+    100% {
+      background-color: rgba(152, 128, 255, 0.2);
+    }
+  }
+  

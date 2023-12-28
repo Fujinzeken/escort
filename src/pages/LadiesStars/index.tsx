@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Topbar from "components/Topbar";
 import SidebarNav from "components/SidebarNav/SidebarNav";
 import Footer from "components/Footer/Footer";
@@ -7,6 +7,9 @@ import { IoIosMenu } from "react-icons/io";
 import { AiOutlineWindows } from "react-icons/ai";
 
 const LadiesStar: React.FC = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="flex flex-col gap-2">
       <Topbar />

@@ -6,8 +6,13 @@ import profile from "assets/images/avatar.png";
 import { Button, Img, Input, Text } from "components";
 import { useNavigate } from "react-router-dom";
 import drop from "assets/images/drop.png";
+import { toast } from "react-toastify";
 
 function AddImages() {
+  const [isDropdown, setdropdown] = useState(true);
+  const [isToggleArrow, setToggleArrow] = useState(true);
+  const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const Dashboard = () => {
@@ -34,8 +39,6 @@ function AddImages() {
     navigate("/AddVideos");
   };
 
-  const [isDropdown, setdropdown] = useState(true);
-  const [isToggleArrow, setToggleArrow] = useState(true);
   const toggle = () => {
     setdropdown(!isDropdown);
     setToggleArrow(!isToggleArrow);
@@ -45,6 +48,52 @@ function AddImages() {
     transform: isToggleArrow ? "rotate(0deg)" : "rotate(180deg)",
     transition: "all .5s ease-in-out",
   };
+
+  const triggerFileInput = (e) => {
+    const fileInput = document.getElementById("fileUpload");
+
+    if (fileInput) {
+      fileInput.click(); // Programmatically trigger the file input
+    }
+  };
+
+  const handleFileChange = (event) => {
+    const selectedFiles = event.target.files;
+
+    if (selectedFiles.length > 0) {
+      const filesArray = Array.from(selectedFiles);
+      const imageArray = [];
+
+      // Loop through the selected files and process each one
+      filesArray.forEach((file: any) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          // Push the data URL of each image into the imageArray
+          imageArray.push(e.target.result);
+
+          // Check if all images have been processed
+          if (imageArray.length === filesArray.length) {
+            // You can use the imageArray as needed
+            console.log(imageArray);
+            setImages((prev) => [...prev, ...imageArray]);
+          }
+        };
+
+        reader.readAsDataURL(file);
+      });
+    }
+  };
+
+  const submitPictures = () => {
+    setLoading(!loading);
+  };
+
+  const addVideo = () => {
+    if (images.length < 1) {
+      navigate("/AddVideos");
+    }
+  };
+
   return (
     <div>
       <nav className="flex flex-col">
@@ -296,22 +345,46 @@ function AddImages() {
               Gallery
             </h1>
             <div
-              className=" flex items-center"
+              className=" flex items-center cursor-pointer"
               style={{
                 height: "160px",
                 border: "2px solid darkgrey",
                 borderRadius: ".5rem",
               }}
+              onClick={(e) => triggerFileInput(e)}
             >
-              <p
-                style={{ color: "rgb(183 178 178)" }}
-                className="text-center w-full"
-              >
-                Drag & Drop files here or click to browse. Select maximum 20
-                images
-              </p>
+              <input
+                type="file"
+                id="fileUpload"
+                accept="image/*"
+                style={{ display: "none" }}
+                onChange={(event) => handleFileChange(event)}
+                multiple
+              />
+              {images.length > 0 ? (
+                images.map((image, i) => (
+                  <div className="flex gap-1 w-full flex-wrap p-2" key={i}>
+                    <Img
+                      src={image}
+                      height={50}
+                      width={50}
+                      className="object-cover "
+                    />
+                  </div>
+                ))
+              ) : (
+                // <Img src={images[0]} height={150} width={150} />
+                <p
+                  style={{ color: "rgb(183 178 178)" }}
+                  className="text-center w-full"
+                >
+                  Drag & Drop files here or click to browse. Select maximum 20
+                  images
+                </p>
+              )}
             </div>
             <button
+              type="button"
               style={{
                 padding: ".5rem",
                 backgroundColor: "deeppink",
@@ -319,8 +392,15 @@ function AddImages() {
                 borderRadius: ".5rem",
                 color: "white",
               }}
+              onClick={submitPictures}
+              className="flex items-center justify-center text-center"
             >
-              Submit
+              {!loading && "Submit"}
+              {loading && (
+                <div className="dotWrapper">
+                  <div className="loadingDot"></div>
+                </div>
+              )}
             </button>
             <button
               style={{
@@ -330,6 +410,7 @@ function AddImages() {
                 borderRadius: ".5rem",
                 color: "white",
               }}
+              onClick={addVideo}
             >
               Click here to Add Video
             </button>

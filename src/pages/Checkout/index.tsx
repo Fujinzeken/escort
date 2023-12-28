@@ -13,7 +13,7 @@ const Checkout: React.FC = () => {
   }, []);
 
   const ratedPage = () => {
-    account("/DesktopThirtyThree");
+    account("/dashboard");
   };
 
   const AccountPage = () => {

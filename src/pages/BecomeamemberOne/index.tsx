@@ -19,7 +19,7 @@ const BecomeamemberOnePage: React.FC = () => {
   };
 
   const ratedPage = () => {
-    account("/DesktopThirtyThree");
+    account("/dashboard");
   };
 
   const Advert = () => {
