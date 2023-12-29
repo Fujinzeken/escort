@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import profile from "assets/images/avatar.png";
 import gallery from "../../assets/images/GalleryAssets/gallery.svg";
 import coloredvideo from "../../assets/images/GalleryAssets/coloredvideo.svg";
@@ -11,9 +11,16 @@ import { useNavigate } from "react-router-dom";
 import drop from "assets/images/drop.png";
 import { Button, Img, Input, Line, List, Text } from "components";
 import logo from "assets/images/logo.png";
+import axios from "axios";
+import catchErrorFunc from "utils/authErrorHandler";
 
 const Gallery: React.FC = () => {
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+  const [isDropdown, setdropdown] = useState(false);
+  const [isToggleArrow, setToggleArrow] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [galleryData, setGalleryData] = useState([]);
 
   const Dashboard = () => {
     navigate("/EscortDashboard");
@@ -34,8 +41,6 @@ const Gallery: React.FC = () => {
     navigate("/AddVideos");
   };
 
-  const [isDropdown, setdropdown] = useState(false);
-  const [isToggleArrow, setToggleArrow] = useState(false);
   const toggle = () => {
     setdropdown(!isDropdown);
     setToggleArrow(!isToggleArrow);
@@ -45,6 +50,28 @@ const Gallery: React.FC = () => {
     transform: isToggleArrow ? "rotate(0deg)" : "rotate(180deg)",
     transition: "all .5s ease-in-out",
   };
+  const getGalleryPics = async () => {
+    setLoading(true);
+    try {
+      const res = await axios.get(
+        "https://lazer-escort.onrender.com/escort/viewGallery",
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      console.log(res.data);
+      setLoading(false);
+      setGalleryData(res?.data);
+    } catch (err) {
+      console.log(err);
+      catchErrorFunc(err, navigate);
+    }
+  };
+  useEffect(() => {
+    if (!token) {
+      navigate("/login");
+    }
+
+    getGalleryPics();
+  }, []);
   return (
     <>
       <div className="relative">
@@ -282,10 +309,29 @@ const Gallery: React.FC = () => {
             <div className="w-[70%]  bg-[#fff] flex flex-col gap-4 rounded-sm shadow border py-[30px]  pl-[20px] pr-[30px]">
               <div className="pt-[25px] flex flex-col gap-4  pb-[50px] pl-[15px]">
                 <h3 className="font-bold text-[1.6rem]">Gallery</h3>
-                <div className="flex flex-col gap-3">
-                  <GalleryImageCol />
-                  <GalleryImageCol />
-                  <GalleryImageCol />
+                <div className="flex flex-wrap gap-3">
+                  {galleryData.length > 0 ? (
+                    galleryData?.map((data, i) => (
+                      <div className="w-1/3 p-2" key={i}>
+                        <img
+                          src={data}
+                          className="h-[325px] object-fit"
+                          alt=""
+                        />
+                      </div>
+                    ))
+                  ) : (
+                    <p>
+                      No Images yet!{" "}
+                      <span
+                        className="cursor-pointer"
+                        style={{ color: "deeppink" }}
+                        onClick={editImages}
+                      >
+                        Upload new Images
+                      </span>
+                    </p>
+                  )}
                 </div>
                 <div
                   className="flex text-[#fff] items-center rounded-full justify-center px-[10px] py-[9px] mt-[20px] w-2/4 bg-[#FD00B3] cursor-pointer"

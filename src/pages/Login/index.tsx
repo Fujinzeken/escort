@@ -48,8 +48,8 @@ const LoginPage: React.FC = () => {
   };
 
   const camelCaseData = {
-    usernameEmail: formData.usernameEmail,
-    password: formData.password,
+    usernameEmail: formData?.usernameEmail,
+    password: formData?.password,
   };
 
   const handleRegisterButtonClick = async (e) => {
@@ -69,11 +69,11 @@ const LoginPage: React.FC = () => {
       );
 
       // Handle the response as needed
-      localStorage.setItem("token", response.data.token);
-      localStorage.setItem("user", JSON.stringify(response.data));
+      localStorage.setItem("token", response?.data?.token);
+      localStorage.setItem("user", JSON.stringify(response?.data));
       setLoading(false);
-      if (response.status === 200) {
-        if (response.data.profile) {
+      if (response?.status === 200) {
+        if (response?.data?.profile) {
           navigate("/EscortDashboard");
         } else {
           navigate("/dashboard");
@@ -81,20 +81,22 @@ const LoginPage: React.FC = () => {
       }
     } catch (error) {
       setLoading(false);
-      if (error.response) {
-        const responseData = error.response.data;
-        if (responseData.errors) {
-          setErrors(responseData.errors);
+      if (error?.response) {
+        const responseData = error?.response?.data;
+        if (responseData?.errors) {
+          setErrors(responseData?.errors);
         }
-        if (responseData.message) {
+        if (responseData?.message) {
           setEmailError("");
           setPasswordError("");
 
-          if (responseData.message.includes('"email" must be a valid email')) {
+          if (
+            responseData?.message?.includes('"email" must be a valid email')
+          ) {
             setEmailError("Email must be a valid Email Address");
           }
           if (
-            responseData.message.includes(
+            responseData?.message?.includes(
               '"password" length must be at least 7 characters long'
             )
           ) {

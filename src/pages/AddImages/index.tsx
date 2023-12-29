@@ -7,8 +7,10 @@ import { Button, Img, Input, Text } from "components";
 import { useNavigate } from "react-router-dom";
 import drop from "assets/images/drop.png";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 function AddImages() {
+  const token = localStorage.getItem("token");
   const [isDropdown, setdropdown] = useState(true);
   const [isToggleArrow, setToggleArrow] = useState(true);
   const [images, setImages] = useState([]);
@@ -84,8 +86,17 @@ function AddImages() {
     }
   };
 
-  const submitPictures = () => {
-    setLoading(!loading);
+  const submitPictures = async () => {
+    setLoading(true);
+    try {
+      const res = await axios.post(
+        "https://lazer-escort.onrender.com/escort/addImage",
+        { images: images },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+    } catch (err) {
+      toast.error("Ooops!!!, something went wrong");
+    }
   };
 
   const addVideo = () => {
