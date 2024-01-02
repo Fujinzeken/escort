@@ -8,23 +8,115 @@ import { Button, Img, Input, Text } from "components";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import catchErrorFunc from "utils/authErrorHandler";
+import { ToastContainer } from "react-toastify";
 function EscortMainProfile() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const [loading, setLoading] = useState(false);
-  const [profileData, setProfileData] = useState();
+  const [name, setName] = useState("");
+  const [country, setCountry] = useState("");
+  const [city, setCity] = useState("");
+  const [image, setImage] = useState(null);
+  const [desc, setDesc] = useState("");
+  const [profileType, setProfileType] = useState("");
+  const [age, setAge] = useState(null);
+  const [height, setHeight] = useState(null);
+  const [weight, setWeight] = useState(null);
+  const [availableFor, setAvailableFor] = useState("");
+  const [breastSize, setBreastSize] = useState(null);
+  const [breastType, setBreastType] = useState("");
+  const [nationality, setNationality] = useState("");
+  const [travel, setTravle] = useState("");
+  const [language, setLanguage] = useState("");
+  const [tatoo, setTatoo] = useState("");
+  const [piercing, setPiercing] = useState("");
+  const [isPornstar, setIsPornstar] = useState(false);
+  const [service, setService] = useState("");
+  const [meeting, setMeeting] = useState("");
+  const [phone1, setPhone1] = useState("");
+  const [phone2, setPhone2] = useState("");
+  const [languageArr, setLangageArr] = useState([]);
+  const [showSecondPhone, setShowSecondPhone] = useState(false);
 
-  const getProfileData = async () => {
+  const handleLanguageArr = (e) => {
+    if (languageArr.length > 6) {
+      console.log("running");
+
+      const newlanguageArr = e.target.value.split(", ");
+      const temp = [
+        newlanguageArr[0],
+        newlanguageArr[1],
+        newlanguageArr[2],
+        newlanguageArr[3],
+        newlanguageArr[4],
+        newlanguageArr[5],
+      ];
+      setLanguage(temp.join(", "));
+      setLangageArr([]);
+      return;
+    }
+    setLanguage(e.target.value);
+    const newlanguageArr = e.target.value.split(",");
+    setLangageArr(newlanguageArr);
+    console.log(newlanguageArr);
+  };
+  const triggerFileInput = (e) => {
+    const fileInput = document.getElementById("fileUpload");
+
+    if (fileInput) {
+      fileInput.click(); // Programmatically trigger the file input
+    }
+  };
+
+  const handleFileChange = (event) => {
+    const selectedFile = event.target.files[0];
+
+    if (selectedFile) {
+      // setImage(selectedFile);
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setImage(e.target.result); // Set the data URL as the groupImage state
+      };
+      reader.readAsDataURL(selectedFile);
+    }
+  };
+  const submitProfileData = async () => {
     setLoading(true);
+    const phones = [phone1, phone2];
+    const data = {
+      modelName: name,
+      country,
+      city,
+      image,
+      description: desc,
+      profileType,
+      age: parseInt(age),
+      weight: parseInt(weight),
+      height: parseInt(height),
+      availableFor,
+      breastSize: parseInt(breastSize),
+      breastType,
+      nationality,
+      travel,
+      languages: languageArr,
+      tatoo,
+      piercing,
+      isPornstar,
+      services: service,
+      meetingWith: meeting,
+      cellPhones: phones,
+    };
+    console.log(data);
+
     try {
       const res = await axios.post(
         "https://lazer-escort.onrender.com/escort/profile",
-        {},
+        data,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       console.log(res.data);
       setLoading(false);
-      // setProfileData(res?.data);
+      navigate("/EscortDashboard");
     } catch (err) {
       console.log(err);
       catchErrorFunc(err, navigate);
@@ -35,8 +127,6 @@ function EscortMainProfile() {
     if (!token) {
       navigate("/login");
     }
-
-    // getProfileData();
   }, []);
   return (
     <div>
@@ -264,51 +354,95 @@ function EscortMainProfile() {
                 style={{ width: "435px" }}
                 type="text"
                 placeholder="Steph"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
               />
               <div className="flex mt-2">
                 <section className="mr-2">
                   <h1>Country</h1>
-                  <input type="text" placeholder="choose" />
+                  <input
+                    type="text"
+                    placeholder="choose"
+                    value={country}
+                    onChange={(e) => setCountry(e.target.value)}
+                  />
                 </section>
                 <section className="ml-2">
                   <h1>City</h1>
-                  <input type="text" placeholder="choose" />
+                  <input
+                    type="text"
+                    placeholder="choose"
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
+                  />
                 </section>
               </div>
               <div className="mt-4">
                 <h1>Profile picture</h1>
-                <img src={Emphasis} alt="" />
+                <img
+                  src={!image ? Emphasis : image}
+                  alt=""
+                  height={150}
+                  width={300}
+                />
                 <p className="p-2 mt-4" style={{ border: "1px solid gray" }}>
                   NOT ALLOWED: watermark, logo, phone number, any text
                 </p>
-                <button className="mt-2 pl-[.8rem] pr-[.8rem] p-[.3rem]">
+                <input
+                  type="file"
+                  id="fileUpload"
+                  accept="image/*"
+                  style={{ display: "none" }}
+                  onChange={(event) => handleFileChange(event)}
+                />
+                <button
+                  className="mt-2 pl-[.8rem] pr-[.8rem] p-[.3rem]"
+                  onClick={triggerFileInput}
+                >
                   Browse
                 </button>
               </div>
               <div className="mt-4">
                 <h1>Description</h1>
-                <p
-                  className="p-4"
-                  style={{
-                    borderRadius: ".5rem",
-                    border: "1px solid lightgray",
-                    color: "grey",
-                  }}
-                >
-                  Not allowed: Phone Number, E-mail address, Website URL
-                </p>
+                <input
+                  type="text"
+                  placeholder="  Not allowed: Phone Number, E-mail address, Website URL"
+                  className="w-full"
+                  value={desc}
+                  onChange={(e) => setDesc(e.target.value)}
+                />
               </div>
               <div className="mt-4" style={{ fontSize: "smaller" }}>
                 <h1>Types of Profile</h1>
-                <input type="radio" value="Female" />
+                <input
+                  type="radio"
+                  value="Female"
+                  onChange={(e) => setProfileType("Female")}
+                />
                 <label className="ml-2 mr-2">Female</label>
-                <input type="radio" value="Male" />
+                <input
+                  type="radio"
+                  value="Male"
+                  onChange={(e) => setProfileType("Male")}
+                />
                 <label className="ml-2 mr-2">Male</label>
-                <input type="radio" value="Trans" />
+                <input
+                  type="radio"
+                  value="Trans"
+                  onChange={(e) => setProfileType("Trans")}
+                />
                 <label className="ml-2 mr-2">Trans</label>
-                <input type="radio" value="Duo with girl" />
+                <input
+                  type="radio"
+                  value="Duo with girl"
+                  onChange={(e) => setProfileType("Duo with girl")}
+                />
                 <label className="ml-2 mr-2">Duo with girl</label>
-                <input type="radio" value="couple" />
+                <input
+                  type="radio"
+                  value="couple"
+                  onChange={(e) => setProfileType("couple")}
+                />
                 <label className="ml-2 mr-2">Couple</label>
               </div>
               <section
@@ -317,65 +451,160 @@ function EscortMainProfile() {
               >
                 <div>
                   <h1>Age</h1>
-                  <input type="text" placeholder="Choose" />
+                  <input
+                    type="text"
+                    placeholder="Choose"
+                    value={age}
+                    onChange={(e) => setAge(e.target.value)}
+                  />
                 </div>
                 <div>
                   <h1>Height</h1>
-                  <input type="text" placeholder="Choose" />
+                  <input
+                    type="text"
+                    placeholder="Choose"
+                    value={height}
+                    onChange={(e) => setHeight(e.target.value)}
+                  />
                 </div>
                 <div>
                   <h1>Weight</h1>
-                  <input type="text" placeholder="Choose" />
+                  <input
+                    type="text"
+                    placeholder="Choose"
+                    value={weight}
+                    onChange={(e) => setWeight(e.target.value)}
+                  />
                 </div>
                 <div>
                   <h1>Available for</h1>
-                  <input type="text" placeholder="Choose" />
+                  <input
+                    type="text"
+                    placeholder="Choose"
+                    value={availableFor}
+                    onChange={(e) => setAvailableFor(e.target.value)}
+                  />
                 </div>
                 <div>
                   <h1>Breast size</h1>
-                  <input type="text" placeholder="Choose" />
+                  <input
+                    type="text"
+                    placeholder="Choose"
+                    value={breastSize}
+                    onChange={(e) => setBreastSize(e.target.value)}
+                  />
                 </div>
                 <div>
                   <h1>Breast type</h1>
-                  <input type="text" placeholder="Choose" />
+                  <input
+                    type="text"
+                    placeholder="Choose"
+                    value={breastType}
+                    onChange={(e) => setBreastType(e.target.value)}
+                  />
                 </div>
                 <div>
                   <h1>Nationality</h1>
-                  <input type="text" placeholder="Choose" />
+                  <input
+                    type="text"
+                    placeholder="Choose"
+                    value={nationality}
+                    onChange={(e) => setNationality(e.target.value)}
+                  />
                 </div>
                 <div>
                   <h1>Travel</h1>
-                  <input type="text" placeholder="Choose" />
+                  <input
+                    type="text"
+                    placeholder="Choose"
+                    value={travel}
+                    onChange={(e) => setTravle(e.target.value)}
+                  />
                 </div>
                 <div>
-                  <h1>Languages (max 6)</h1>
-                  <input type="text" placeholder="Choose" />
+                  <h1>Languages (max 6, seperate languages with ,)</h1>
+                  <input
+                    type="text"
+                    placeholder="Choose"
+                    value={language}
+                    onChange={handleLanguageArr}
+                  />
                 </div>
                 <div>
                   <h1>Tattoo</h1>
-                  <input type="text" placeholder="Choose" />
+                  <input
+                    type="text"
+                    placeholder="Choose"
+                    value={tatoo}
+                    onChange={(e) => setTatoo(e.target.value)}
+                  />
                 </div>
                 <div>
                   <h1>Piercing</h1>
-                  <input type="text" placeholder="Choose" />
+                  <input
+                    type="text"
+                    placeholder="Choose"
+                    value={piercing}
+                    onChange={(e) => setPiercing(e.target.value)}
+                  />
                 </div>
                 <div>
                   <h1>Are you a pornstar</h1>
-                  <input type="text" placeholder="No" />
+                  <select
+                    className="w-4/5"
+                    onChange={(e) => {
+                      if (e.target.value === "Yes") {
+                        setIsPornstar(true);
+                      } else {
+                        setIsPornstar(false);
+                      }
+                    }}
+                  >
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                  </select>
                 </div>
               </section>
               <div className="mt-2">
                 <h1>Services</h1>
-                <input type="text" style={{ height: "60px", width: "100%" }} />
+                <input
+                  type="text"
+                  style={{ height: "60px", width: "100%" }}
+                  value={service}
+                  onChange={(e) => {
+                    setService(e.target.value);
+                  }}
+                />
               </div>
               <section className="mt-6">
                 <h1>Meeting</h1>
-                <input className="w-[435px]" type="text" placeholder="choose" />
+                <input
+                  className="w-[435px]"
+                  type="text"
+                  placeholder="choose"
+                  value={meeting}
+                  onChange={(e) => {
+                    setMeeting(e.target.value);
+                  }}
+                />
                 <div className="mt-2">
                   <h1>Cell phone</h1>
                   <section className="flex">
-                    <input className="mr-2" type="text" placeholder="choose" />
-                    <input className="ml-2" type="text" />
+                    <input
+                      className="mr-2"
+                      type="text"
+                      placeholder="choose"
+                      value={phone1}
+                      onChange={(e) => setPhone1(e.target.value)}
+                    />
+                    {showSecondPhone && (
+                      <input
+                        className="ml-2"
+                        type="text"
+                        value={phone2}
+                        onChange={(e) => setPhone2(e.target.value)}
+                      />
+                    )}
                   </section>
                   <button
                     className="mt-4 p-[.4rem]"
@@ -385,6 +614,7 @@ function EscortMainProfile() {
                       backgroundColor: "#FD00B3",
                       borderRadius: ".3rem",
                     }}
+                    onClick={() => setShowSecondPhone(true)}
                   >
                     ADD ANOTHER PHONE
                   </button>
@@ -397,8 +627,15 @@ function EscortMainProfile() {
                   color: "white",
                   borderRadius: ".5rem",
                 }}
+                onClick={submitProfileData}
               >
-                Submit
+                {loading ? (
+                  <div className="dotWrapper">
+                    <div className="loadingDot"></div>
+                  </div>
+                ) : (
+                  "Submit"
+                )}
               </button>
             </section>
           </div>
@@ -622,6 +859,7 @@ function EscortMainProfile() {
           </div>
         </div>
       </section>
+      <ToastContainer />
     </div>
   );
 }

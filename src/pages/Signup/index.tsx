@@ -83,34 +83,36 @@ const SignupPage: React.FC = () => {
 
       localStorage.setItem("userData", response.data);
     } catch (error) {
+      console.log(error);
+
       if (error.response) {
-        const responseData = error.response.data;
+        const responseData = error?.response?.data;
         if (responseData.errors) {
           setErrors(responseData.errors);
         }
-        if (responseData.message) {
+        if (responseData?.message) {
           setUsernameError("");
           setEmailError("");
           setPasswordError("");
 
           if (
-            responseData.message.includes(
+            responseData?.message.includes(
               '"username" length must be at least 4 characters long'
             )
           ) {
             setUsernameError("Username must have at least 4 characters");
           }
-          if (responseData.message.includes('"email" must be a valid email')) {
+          if (responseData?.message.includes('"email" must be a valid email')) {
             setEmailError("Email must be a valid Email Address");
           }
           if (
-            responseData.message.includes(
+            responseData?.message.includes(
               '"password" length must be at least 7 characters long'
             )
           ) {
             setPasswordError("Password must be more than 6 characters");
           }
-          if (responseData.message === "User already exists") {
+          if (responseData?.message === "User already exists") {
             window.scrollTo(0, 0);
             toast.error("Oops!!!, User already exists");
           }

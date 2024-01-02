@@ -6,34 +6,50 @@ import { Button, Img, Input, List, Text } from "components";
 import EscortProfile from "pages/EscortProfile";
 
 const DesktopThirtyTwoPage: React.FC = () => {
+  const history = useNavigate();
 
- const history = useNavigate()
+  const switchPage = () => {
+    history("/signup");
+  };
 
- const switchPage = () => {
-  history('/signup');  
- }
+  const escortProfile = () => {
+    history("/EscortProfile");
+  };
 
- const escortProfile = () => {
-  history('/EscortProfile')
- }
+  const login = () => {
+    history("/login");
+  };
 
   return (
     <>
       <div className="bg-white-A700 flex flex-col font-asap gap-[22px] justify-start mx-auto w-full">
         <div className="flex flex-col items-end md:px-10 sm:px-5 w-full">
-        <header className="flex flex-col items-center justify-center md:px-5 w-full">
-            <svg xmlns="http://www.w3.org/2000/svg" width="1436" height="10" viewBox="0 0 1436 10" fill="none">
+          <header className="flex flex-col items-center justify-center md:px-5 w-full">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="1436"
+              height="10"
+              viewBox="0 0 1436 10"
+              fill="none"
+            >
               <mask id="path-1-inside-1_60_11978" fill="white">
-                <path d="M0 0H1443V10H0V0Z"/>
+                <path d="M0 0H1443V10H0V0Z" />
               </mask>
-              <path d="M0 0V-10H-10V0H0ZM1443 0H1453V-10H1443V0ZM1443 10V20H1453V10H1443ZM0 10H-10V20H0V10ZM0 10H1443V-10H0V10ZM1433 0V10H1453V0H1433ZM1443 0H0V20H1443V0ZM10 10V0H-10V10H10Z" fill="#FD00B399" mask="url(#path-1-inside-1_60_11978)"/>
+              <path
+                d="M0 0V-10H-10V0H0ZM1443 0H1453V-10H1443V0ZM1443 10V20H1453V10H1443ZM0 10H-10V20H0V10ZM0 10H1443V-10H0V10ZM1433 0V10H1453V0H1433ZM1443 0H0V20H1443V0ZM10 10V0H-10V10H10Z"
+                fill="#FD00B399"
+                mask="url(#path-1-inside-1_60_11978)"
+              />
             </svg>
-              <div className="md:h-[171px] h-[73px] m-0 sm:h-[85px] md:ml-[0] ml-[25px] mr-[57px] mt-4 relative w-[95%] md:w-full">
-                <div className="absolute bg-white-A700 border-b border-gray-200_03 border-solid bottom-[0] flex flex-col inset-x-[0] items-center justify-start mx-auto w-[98%]">
-                  <div className="nav-links flex md:flex-col flex-row md:gap-10 items-center justify-end px-[15px] w-full">
-                    <div className="flex md:flex-1 flex-row gap-3.5 items-center justify-center pr-[18px] w-[40%] md:w-full">
-                      <div className="flex flex-row items-center justify-end w-[75%] md:w-full">
-                      <div className="flex flex-col items-center justify-end p-[11px]">
+            <div className="md:h-[171px] h-[73px] m-0 sm:h-[85px] md:ml-[0] ml-[25px] mr-[57px] mt-4 relative w-[95%] md:w-full">
+              <div className="absolute bg-white-A700 border-b border-gray-200_03 border-solid bottom-[0] flex flex-col inset-x-[0] items-center justify-start mx-auto w-[98%]">
+                <div className="nav-links flex md:flex-col flex-row md:gap-10 items-center justify-end px-[15px] w-full">
+                  <div className="flex md:flex-1 flex-row gap-3.5 items-center justify-center pr-[18px] w-[40%] md:w-full">
+                    <div className="flex flex-row items-center justify-end w-[75%] md:w-full">
+                      <div
+                        className="flex flex-col items-center justify-end p-[11px]"
+                        onClick={login}
+                      >
                         <a
                           href="javascript:"
                           className="mt-0.5 text-blue_gray-900_01 text-center text-lg tracking-[0.50px]"
@@ -54,28 +70,28 @@ const DesktopThirtyTwoPage: React.FC = () => {
                           Register
                         </Button>
                       </div>
-                        <button className="becomeEscort" onClick={escortProfile}>
-                          Become an Escort
-                        </button>
-                    </div>
-                      </div>
-                    </div>
-                </div>
-                <div className="absolute logo-wrap flex flex-col items-center justify-start left-[0] ml-[4%] py-4 top-[0] w-[22%]">
-                  <div className="flex flex-col items-center justify-start w-full">
-                    <div className="flex flex-col logo-img-wrap items-start justify-start px-4 w-full">
-                      <div className="flex flex-col items-center justify-start w-fit md:w-full">
-                        <Img
-                          className="h-[37px] md:h-auto object-cover w-full"
-                          src="images/img_divvimageimage.png"
-                          alt="divvimageimage"
-                        />
-                      </div>
+                      <button className="becomeEscort" onClick={escortProfile}>
+                        Become an Escort
+                      </button>
                     </div>
                   </div>
                 </div>
               </div>
-            </header>
+              <div className="absolute logo-wrap flex flex-col items-center justify-start left-[0] ml-[4%] py-4 top-[0] w-[22%]">
+                <div className="flex flex-col items-center justify-start w-full">
+                  <div className="flex flex-col logo-img-wrap items-start justify-start px-4 w-full">
+                    <div className="flex flex-col items-center justify-start w-fit md:w-full">
+                      <Img
+                        className="h-[37px] md:h-auto object-cover w-full"
+                        src="images/img_divvimageimage.png"
+                        alt="divvimageimage"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </header>
         </div>
         <div className="flex flex-col font-montserrat md:gap-10 gap-[177px] items-center mb-[214px] w-full">
           <div className="md:h-[1695px] sm:h-[3363px] h-[3728px] md:px-5 relative w-full">
@@ -395,85 +411,139 @@ const DesktopThirtyTwoPage: React.FC = () => {
                             >
                               <div className="flex flex-1 flex-col items-center justify-start w-full">
                                 <div className="flex flex-col justify-start pb-[29px] sm:px-5 px-[29px] w-full">
-                                   <div className="input-section">
-                                     <div>
-                                      <p id = 'purp'>i am a:</p>
-                                       <select type="number" className="homeInput" placeholder="Female">
+                                  <div className="input-section">
+                                    <div>
+                                      <p id="purp">i am a:</p>
+                                      <select
+                                        type="number"
+                                        className="homeInput"
+                                        placeholder="Female"
+                                      >
                                         <option value="female">Female</option>
                                         <option value="Male">Male</option>
-                                       <svg xmlns="http://www.w3.org/2000/svg" width="11" height="5" viewBox="0 0 11 5" fill="none">
-                                          <path d="M0.339844 0L5.33984 5L10.3398 0H0.339844Z" fill="black" fill-opacity="0.7"/>
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          width="11"
+                                          height="5"
+                                          viewBox="0 0 11 5"
+                                          fill="none"
+                                        >
+                                          <path
+                                            d="M0.339844 0L5.33984 5L10.3398 0H0.339844Z"
+                                            fill="black"
+                                            fill-opacity="0.7"
+                                          />
                                         </svg>
-                                        </select>
-                                     </div>
-                                    <div className = 'imputimg'>
-                                      <Img
-                                          src="images/img_svg.svg"
-                                          alt="svg_One"
-                                        />
+                                      </select>
                                     </div>
-                                   </div>
+                                    <div className="imputimg">
+                                      <Img
+                                        src="images/img_svg.svg"
+                                        alt="svg_One"
+                                      />
+                                    </div>
+                                  </div>
                                 </div>
                                 <div className="flex flex-col justify-start pb-[30px] sm:px-5 px-[30px] w-full">
-                                <div className="input-section">
-                                     <div>
-                                      <p id = 'purp'>i am looking for a:</p>
-                                      <select type="number" className="homeInput">
+                                  <div className="input-section">
+                                    <div>
+                                      <p id="purp">i am looking for a:</p>
+                                      <select
+                                        type="number"
+                                        className="homeInput"
+                                      >
                                         <option value="female">Male</option>
                                         <option value="Male">Female</option>
-                                       <svg xmlns="http://www.w3.org/2000/svg" width="11" height="5" viewBox="0 0 11 5" fill="none">
-                                          <path d="M0.339844 0L5.33984 5L10.3398 0H0.339844Z" fill="black" fill-opacity="0.7"/>
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          width="11"
+                                          height="5"
+                                          viewBox="0 0 11 5"
+                                          fill="none"
+                                        >
+                                          <path
+                                            d="M0.339844 0L5.33984 5L10.3398 0H0.339844Z"
+                                            fill="black"
+                                            fill-opacity="0.7"
+                                          />
                                         </svg>
-                                        </select>
-                                     </div>
-                                    <div  className="inputimg">
-                                      <Img               
-                                          src="images/img_svg.svg"
-                                          alt="svg_One"
-                                        />
+                                      </select>
                                     </div>
-                                   </div>
+                                    <div className="inputimg">
+                                      <Img
+                                        src="images/img_svg.svg"
+                                        alt="svg_One"
+                                      />
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
                               <div className="flex flex-1 flex-col items-center justify-start w-full">
                                 <div className="flex flex-col justify-start pb-[30px] sm:px-5 px-[30px] w-full">
-                                <div className="input-section">
-                                     <div>
-                                      <p id = 'purp'>Between ages:</p>
-                                      <select type="number" className="homeInput" placeholder="Female">
+                                  <div className="input-section">
+                                    <div>
+                                      <p id="purp">Between ages:</p>
+                                      <select
+                                        type="number"
+                                        className="homeInput"
+                                        placeholder="Female"
+                                      >
                                         <option value="female">20-30</option>
                                         <option value="Male">30-40</option>
                                         <option value="Male">40-50</option>
-                                       <svg xmlns="http://www.w3.org/2000/svg" width="11" height="5" viewBox="0 0 11 5" fill="none">
-                                          <path d="M0.339844 0L5.33984 5L10.3398 0H0.339844Z" fill="black" fill-opacity="0.7"/>
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          width="11"
+                                          height="5"
+                                          viewBox="0 0 11 5"
+                                          fill="none"
+                                        >
+                                          <path
+                                            d="M0.339844 0L5.33984 5L10.3398 0H0.339844Z"
+                                            fill="black"
+                                            fill-opacity="0.7"
+                                          />
                                         </svg>
-                                        </select>
-                                     </div>
-                                    <div  className="inputimg">
-                                      <Img               
-                                          src="images/img_svg.svg"
-                                          alt="svg_One"
-                                        />
+                                      </select>
+                                    </div>
+                                    <div className="inputimg">
+                                      <Img
+                                        src="images/img_svg.svg"
+                                        alt="svg_One"
+                                      />
                                     </div>
                                   </div>
                                 </div>
                                 <div className="flex flex-col justify-start pb-7 sm:px-5 px-7 w-full">
-                                <div className="input-section">
-                                     <div>
-                                      <p id = 'purp'>and:</p>
-                                      <select type="number" className="homeInput">
-                                      <option value="Male">50-60</option>
-                                      <option value="Male">60-70</option>
-                                       <svg xmlns="http://www.w3.org/2000/svg" width="11" height="5" viewBox="0 0 11 5" fill="none">
-                                          <path d="M0.339844 0L5.33984 5L10.3398 0H0.339844Z" fill="black" fill-opacity="0.7"/>
+                                  <div className="input-section">
+                                    <div>
+                                      <p id="purp">and:</p>
+                                      <select
+                                        type="number"
+                                        className="homeInput"
+                                      >
+                                        <option value="Male">50-60</option>
+                                        <option value="Male">60-70</option>
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          width="11"
+                                          height="5"
+                                          viewBox="0 0 11 5"
+                                          fill="none"
+                                        >
+                                          <path
+                                            d="M0.339844 0L5.33984 5L10.3398 0H0.339844Z"
+                                            fill="black"
+                                            fill-opacity="0.7"
+                                          />
                                         </svg>
-                                        </select>
-                                     </div>
-                                    <div  className="inputimg">
-                                      <Img               
-                                          src="images/img_svg.svg"
-                                          alt="svg_One"
-                                        />
+                                      </select>
+                                    </div>
+                                    <div className="inputimg">
+                                      <Img
+                                        src="images/img_svg.svg"
+                                        alt="svg_One"
+                                      />
                                     </div>
                                   </div>
                                 </div>
@@ -706,7 +776,10 @@ const DesktopThirtyTwoPage: React.FC = () => {
                                   alt="divh2de44f3029"
                                 />
                                 <div className="flex md:flex-1 flex-col items-center justify-start md:px-10 sm:px-5 px-[50px] w-[74%] md:w-full">
-                                  <div onClick={switchPage} className="flex flex-col items-start justify-start">
+                                  <div
+                                    onClick={switchPage}
+                                    className="flex flex-col items-start justify-start"
+                                  >
                                     <Text
                                       className="text-2xl md:text-[22px] text-white-A700 sm:text-xl"
                                       size="txtMontserratMedium24WhiteA700"

@@ -20,7 +20,7 @@ const Gallery: React.FC = () => {
   const [isDropdown, setdropdown] = useState(false);
   const [isToggleArrow, setToggleArrow] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [galleryData, setGalleryData] = useState([]);
+  const [galleryData, setGalleryData] = useState(null);
 
   const Dashboard = () => {
     navigate("/EscortDashboard");
@@ -309,18 +309,30 @@ const Gallery: React.FC = () => {
             <div className="w-[70%]  bg-[#fff] flex flex-col gap-4 rounded-sm shadow border py-[30px]  pl-[20px] pr-[30px]">
               <div className="pt-[25px] flex flex-col gap-4  pb-[50px] pl-[15px]">
                 <h3 className="font-bold text-[1.6rem]">Gallery</h3>
-                <div className="flex flex-wrap gap-3">
-                  {galleryData.length > 0 ? (
-                    galleryData?.map((data, i) => (
-                      <div className="w-1/3 p-2" key={i}>
+                <div className="flex flex-wrap">
+                  {galleryData?.images.length > 0 &&
+                    galleryData?.images?.map((data, i) => (
+                      <div className="w-1/3 p-1" key={i}>
                         <img
                           src={data}
-                          className="h-[325px] object-fit"
-                          alt=""
+                          className="h-[325px] object-cover"
+                          alt="image"
+                          width={350}
                         />
                       </div>
-                    ))
-                  ) : (
+                    ))}
+                  {galleryData?.videos.length > 0 &&
+                    galleryData?.videos?.map((data, i) => (
+                      <div className="w-1/3 p-1" key={i}>
+                        <video
+                          src={data}
+                          className="h-[325px]"
+                          controls
+                          width={350}
+                        />
+                      </div>
+                    ))}
+                  {galleryData?.images.length < 1 && (
                     <p>
                       No Images yet!{" "}
                       <span

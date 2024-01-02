@@ -6,8 +6,9 @@ import profile from "assets/images/avatar.png";
 import { Button, Img, Input, Text } from "components";
 import { useNavigate } from "react-router-dom";
 import drop from "assets/images/drop.png";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
+import catchErrorFunc from "utils/authErrorHandler";
 
 function AddImages() {
   const token = localStorage.getItem("token");
@@ -15,6 +16,7 @@ function AddImages() {
   const [isToggleArrow, setToggleArrow] = useState(true);
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [imageArrData, setImageArrData] = useState([]);
   const navigate = useNavigate();
 
   const Dashboard = () => {
@@ -61,7 +63,6 @@ function AddImages() {
 
   const handleFileChange = (event) => {
     const selectedFiles = event.target.files;
-
     if (selectedFiles.length > 0) {
       const filesArray = Array.from(selectedFiles);
       const imageArray = [];
@@ -72,7 +73,12 @@ function AddImages() {
         reader.onload = (e) => {
           // Push the data URL of each image into the imageArray
           imageArray.push(e.target.result);
-
+          const newString = e.target.result.toString();
+          const newData = newString.split(",");
+          setImageArrData((prev) => [
+            ...prev,
+            { data: newData[1], filename: file.name },
+          ]);
           // Check if all images have been processed
           if (imageArray.length === filesArray.length) {
             // You can use the imageArray as needed
@@ -88,16 +94,26 @@ function AddImages() {
 
   const submitPictures = async () => {
     setLoading(true);
+
     try {
       const res = await axios.post(
         "https://lazer-escort.onrender.com/escort/addImage",
-        { images: images },
+        { images: imageArrData },
         { headers: { Authorization: `Bearer ${token}` } }
       );
+      console.log(res.data);
+      setLoading(false);
+
+      navigate("/Gallery");
     } catch (err) {
+      console.log(err);
       toast.error("Ooops!!!, something went wrong");
+      setLoading(false);
+      catchErrorFunc(err, navigate);
     }
   };
+
+  console.log(imageArrData);
 
   const addVideo = () => {
     if (images.length < 1) {
@@ -389,8 +405,7 @@ function AddImages() {
                   style={{ color: "rgb(183 178 178)" }}
                   className="text-center w-full"
                 >
-                  Drag & Drop files here or click to browse. Select maximum 20
-                  images
+                  Click to browse. Select maximum 20 images
                 </p>
               )}
             </div>
@@ -646,6 +661,7 @@ function AddImages() {
           </div>
         </div>
       </section>
+      <ToastContainer />
     </div>
   );
 }

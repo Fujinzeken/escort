@@ -1,14 +1,38 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Topbar from "components/Topbar";
 import SidebarNav from "components/SidebarNav/SidebarNav";
 import Footer from "components/Footer/Footer";
 import { Img, Text } from "components";
 import { IoIosMenu } from "react-icons/io";
 import { AiOutlineWindows } from "react-icons/ai";
+import catchErrorFunc from "utils/authErrorHandler";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 const LadiesStar: React.FC = () => {
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+  const [ladies, setLadies] = useState([]);
+
+  const getAllLadies = async () => {
+    try {
+      const res = await axios.get(
+        "https://lazer-escort.onrender.com/client/ladiesStars",
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      console.log(res.data);
+    } catch (err) {
+      console.log(err);
+      catchErrorFunc(err, navigate);
+    }
+  };
   useEffect(() => {
     window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    getAllLadies();
   }, []);
   return (
     <div className="flex flex-col gap-2">
@@ -282,6 +306,7 @@ const LadiesStar: React.FC = () => {
         </div>
       </div>
       <Footer />
+      <ToastContainer />
     </div>
   );
 };

@@ -73,7 +73,7 @@ function EscortDashboard() {
     if (!token) {
       navigate("/login");
     }
-    // window.scrollTo(0, 0);
+    window.scrollTo(0, 0);
   }, []);
 
   useEffect(() => {

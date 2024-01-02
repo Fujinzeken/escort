@@ -6,9 +6,18 @@ import profile from "assets/images/avatar.png";
 import { Button, Img, Input, Text } from "components";
 import { useNavigate } from "react-router-dom";
 import drop from "assets/images/drop.png";
+import catchErrorFunc from "utils/authErrorHandler";
+import { ToastContainer, toast } from "react-toastify";
+import axios from "axios";
 
 function AddVideos() {
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+  const [isDropdown, setdropdown] = useState(true);
+  const [isToggleArrow, setToggleArrow] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [videos, setVideos] = useState([]);
+  const [videoArrData, setVideoArrData] = useState([]);
 
   const settings = () => {
     navigate("/DesktopFourtyEight");
@@ -31,8 +40,7 @@ function AddVideos() {
   };
 
   const liveVideo = () => [navigate("/live-video")];
-  const [isDropdown, setdropdown] = useState(true);
-  const [isToggleArrow, setToggleArrow] = useState(true);
+
   const toggle = () => {
     setdropdown(!isDropdown);
     setToggleArrow(!isToggleArrow);
@@ -41,6 +49,66 @@ function AddVideos() {
   const ArrowStyle = {
     transform: isToggleArrow ? "rotate(0deg)" : "rotate(180deg)",
     transition: "all .5s ease-in-out",
+  };
+
+  const triggerFileInput = (e) => {
+    const fileInput = document.getElementById("fileUpload");
+
+    if (fileInput) {
+      fileInput.click(); // Programmatically trigger the file input
+    }
+  };
+
+  const handleFileChange = (event) => {
+    const selectedFiles = event.target.files;
+    if (selectedFiles.length > 0) {
+      const filesArray = Array.from(selectedFiles);
+      const vidArray = [];
+
+      // Loop through the selected files and process each one
+      filesArray.forEach((file: any) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          // Push the data URL of each image into the imageArray
+          vidArray.push(e.target.result);
+          const newString = e.target.result.toString();
+          const newData = newString.split(",");
+          setVideoArrData((prev) => [
+            ...prev,
+            { data: newData[1], filename: file.name },
+          ]);
+          // Check if all images have been processed
+          if (vidArray.length === filesArray.length) {
+            // You can use the imageArray as needed
+            console.log(vidArray);
+            setVideos((prev) => [...prev, ...vidArray]);
+          }
+        };
+
+        reader.readAsDataURL(file);
+      });
+    }
+  };
+
+  const submitVideos = async () => {
+    setLoading(true);
+
+    try {
+      const res = await axios.post(
+        "https://lazer-escort.onrender.com/escort/addVideo",
+        { videos: videoArrData },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      console.log(res.data);
+      setLoading(false);
+
+      navigate("/Gallery");
+    } catch (err) {
+      console.log(err);
+      toast.error("Ooops!!!, something went wrong");
+      setLoading(false);
+      catchErrorFunc(err, navigate);
+    }
   };
   return (
     <div>
@@ -293,19 +361,42 @@ function AddVideos() {
               Gallery
             </h1>
             <div
-              className=" flex items-center"
+              className=" flex items-center cursor-pointer"
               style={{
                 height: "160px",
                 border: "2px solid darkgrey",
                 borderRadius: ".5rem",
               }}
+              onClick={(e) => triggerFileInput(e)}
             >
-              <p
-                style={{ color: "rgb(183 178 178)" }}
-                className="text-center w-full"
-              >
-                Drag & Drop files here or click to browse. Select Video
-              </p>
+              <input
+                type="file"
+                id="fileUpload"
+                accept="video/*"
+                style={{ display: "none" }}
+                onChange={(event) => handleFileChange(event)}
+                multiple
+              />
+              {videos.length > 0 ? (
+                videos.map((vid, i) => (
+                  <div className="flex gap-1 w-full flex-wrap p-2" key={i}>
+                    <video
+                      controls
+                      autoPlay
+                      width={150}
+                      height={150}
+                      src={vid}
+                    ></video>
+                  </div>
+                ))
+              ) : (
+                <p
+                  style={{ color: "rgb(183 178 178)" }}
+                  className="text-center w-full"
+                >
+                  Click to browse. Select Video to upload
+                </p>
+              )}
             </div>
             <button
               style={{
@@ -315,8 +406,14 @@ function AddVideos() {
                 borderRadius: ".5rem",
                 color: "white",
               }}
+              onClick={submitVideos}
             >
-              Submit Video
+              {!loading && "Submit Video"}
+              {loading && (
+                <div className="dotWrapper">
+                  <div className="loadingDot"></div>
+                </div>
+              )}
             </button>
           </section>
         </div>
@@ -539,6 +636,7 @@ function AddVideos() {
           </div>
         </div>
       </section>
+      <ToastContainer />
     </div>
   );
 }
