@@ -310,7 +310,7 @@ const Gallery: React.FC = () => {
               <div className="pt-[25px] flex flex-col gap-4  pb-[50px] pl-[15px]">
                 <h3 className="font-bold text-[1.6rem]">Gallery</h3>
                 <div className="flex flex-wrap">
-                  {galleryData?.images.length > 0 &&
+                  {galleryData?.images?.length > 0 &&
                     galleryData?.images?.map((data, i) => (
                       <div className="w-1/3 p-1" key={i}>
                         <img
@@ -321,7 +321,7 @@ const Gallery: React.FC = () => {
                         />
                       </div>
                     ))}
-                  {galleryData?.videos.length > 0 &&
+                  {galleryData?.videos?.length > 0 &&
                     galleryData?.videos?.map((data, i) => (
                       <div className="w-1/3 p-1" key={i}>
                         <video
@@ -332,7 +332,7 @@ const Gallery: React.FC = () => {
                         />
                       </div>
                     ))}
-                  {galleryData?.images.length < 1 && (
+                  {galleryData?.images?.length < 1 && (
                     <p>
                       No Images yet!{" "}
                       <span

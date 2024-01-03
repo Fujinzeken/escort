@@ -18,7 +18,7 @@ const LadiesStar: React.FC = () => {
   const getAllLadies = async () => {
     try {
       const res = await axios.get(
-        "https://lazer-escort.onrender.com/client/ladiesStars",
+        "https://lazer-escort.onrender.com/ladiesStars",
         { headers: { Authorization: `Bearer ${token}` } }
       );
       console.log(res.data);
@@ -167,7 +167,10 @@ const LadiesStar: React.FC = () => {
               </div>
             </div>
             <div className="flex gap-3 mb-8 sm:flex-col md:flex-col">
-              <div className="flex flex-col w-1/2 gap-3 sm:w-full md:w-full">
+              <div
+                className="flex flex-col w-1/2 gap-3 sm:w-full md:w-full"
+                onClick={() => navigate("/ladies-star/1")}
+              >
                 <div className="flex items-center justify-center cursor-pointer">
                   <Img
                     src="images/escort.png"

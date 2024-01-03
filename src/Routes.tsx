@@ -85,6 +85,7 @@ const ProjectRoutes = () => {
         <Route path="/DesktopFourtyNine" element={<DesktopFourtyNine />} />
         <Route path="Gallery" element={<Gallery />} />
         <Route path="/ladies-star" element={<LadiesStar />} />
+        <Route path="/ladies-star/:id" element={<DesktopTwentyNine />} />
       </Routes>
     </Router>
   );

@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 
 import { Button, Img, Input, Line, List, Text } from "components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import catchErrorFunc from "utils/authErrorHandler";
 
 const DesktopTwentyNinePage: React.FC = () => {
   const [profileData, setProfileData] = useState(null);
   const token = localStorage.getItem("token");
   const account = useNavigate();
+  const param = useParams();
 
   const ratedPage = () => {
     account("/dashboard");
@@ -80,8 +82,29 @@ const DesktopTwentyNinePage: React.FC = () => {
       console.log(err);
     }
   };
+
+  const fetchSingleLady = async () => {
+    try {
+      const res = await axios.get(
+        `https://lazer-escort.onrender.com/client/userProfile/${param.id}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setProfileData(res.data);
+      console.log(res.data);
+    } catch (err) {
+      console.log(err);
+      catchErrorFunc(err, account);
+    }
+  };
   useEffect(() => {
-    getProfile();
+    if (!token) {
+      account("/login");
+    }
+    if (param.id) {
+      fetchSingleLady();
+    } else {
+      getProfile();
+    }
   }, []);
   return (
     <>
@@ -162,7 +185,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                       variant="gradient"
                       color="yellow_700_01_yellow_800_01"
                     >
-                      <Img src="images/img_arrowright.svg" alt="arrowright" />
+                      <Img src="/images/img_arrowright.svg" alt="arrowright" />
                     </Button>
                   </div>
                 </div>
@@ -197,12 +220,12 @@ const DesktopTwentyNinePage: React.FC = () => {
                   </div>
                   <Img
                     className="h-[57px]"
-                    src="images/img_user.svg"
+                    src="/images/img_user.svg"
                     alt="user"
                   />
                   <Img
                     className="h-[57px]"
-                    src="images/img_item.svg"
+                    src="/images/img_item.svg"
                     alt="item"
                   />
                   <div className="flex flex-row items-center justify-evenly w-[47%] sm:w-full">
@@ -237,7 +260,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                         <div className=" user-img-wrap flex flex-col items-start justify-start ml-3 w-[38px]">
                           <Img
                             className=" user-img h-[39px] md:h-auto object-cover rounded-[20px] w-[74%]"
-                            src="images/img_bv7mozwnhchqrqp.png"
+                            src="/images/img_bv7mozwnhchqrqp.png"
                             alt="bv7mozwnhchqrqp"
                           />
                         </div>
@@ -251,7 +274,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                         </div>
                         <Img
                           className="h-[22px]"
-                          src="images/img_arrowdown.svg"
+                          src="/images/img_arrowdown.svg"
                           alt="arrowdown"
                         />
                       </div>
@@ -266,7 +289,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                   <div className="flex flex-col items-center justify-start w-fit md:w-full">
                     <Img
                       className="h-[37px] md:h-auto object-cover w-full"
-                      src="images/img_divvimageimage.png"
+                      src="/images/img_divvimageimage.png"
                       alt="divvimageimage"
                     />
                   </div>
@@ -294,99 +317,99 @@ const DesktopTwentyNinePage: React.FC = () => {
                                         <div className=" flex md:flex-col flex-row md:gap-5 items-start justify-start w-full">
                                           <Img
                                             className="md:h-auto h-px md:mt-0 mt-64 object-cover w-px"
-                                            src="images/img_vt.png"
+                                            src="/images/img_vt.png"
                                             alt="vt"
                                           />
                                           <Img
                                             className="md:h-auto h-px ml-64 md:ml-[0] md:mt-0 mt-64 object-cover w-px"
-                                            src="images/img_vt_1x1.png"
+                                            src="/images/img_vt_1x1.png"
                                             alt="vt_One"
                                           />
                                           <Img
                                             className="md:h-auto h-px md:mt-0 mt-64 object-cover w-px"
-                                            src="images/img_vt_1.png"
+                                            src="/images/img_vt_1.png"
                                             alt="vt_Two"
                                           />
                                           <Img
                                             className="md:h-auto h-px md:ml-[0] ml-[255px] md:mt-0 mt-64 object-cover w-px"
-                                            src="images/img_vt_2.png"
+                                            src="/images/img_vt_2.png"
                                             alt="vt_Three"
                                           />
                                           <Img
                                             className="h-64 md:h-auto md:ml-[0] ml-[511px] object-cover w-64"
-                                            src="images/img_vt_256x256.png"
+                                            src="/images/img_vt_256x256.png"
                                             alt="vt_Four"
                                           />
                                           <Img
                                             className="h-64 md:h-auto object-cover w-64"
-                                            src="images/img_vt_3.png"
+                                            src="/images/img_vt_3.png"
                                             alt="vt_Five"
                                           />
                                         </div>
                                         <div className="flex md:flex-col flex-row md:gap-5 items-start justify-start w-full">
                                           <Img
                                             className="md:h-auto h-px md:mt-0 mt-64 object-cover w-px"
-                                            src="images/img_vt_4.png"
+                                            src="/images/img_vt_4.png"
                                             alt="vt_Six"
                                           />
                                           <Img
                                             className="md:h-auto h-px object-cover w-px"
-                                            src="images/img_vt_5.png"
+                                            src="/images/img_vt_5.png"
                                             alt="vt_Seven"
                                           />
                                           <div className="h-px relative w-px">
                                             <div className="flex flex-row h-full items-center justify-between m-auto w-px">
                                               <Img
                                                 className="md:h-auto h-px object-cover w-px"
-                                                src="images/img_vt_6.png"
+                                                src="/images/img_vt_6.png"
                                                 alt="vt_Eight"
                                               />
                                               <Img
                                                 className="md:h-auto h-px object-cover w-px"
-                                                src="images/img_vt_7.png"
+                                                src="/images/img_vt_7.png"
                                                 alt="vt_Nine"
                                               />
                                             </div>
                                             <Img
                                               className="absolute bottom-[0] h-px object-cover right-[0] w-px"
-                                              src="images/img_vt_8.png"
+                                              src="/images/img_vt_8.png"
                                               alt="vt_Ten"
                                             />
                                             <Img
                                               className="absolute bottom-[0] h-px inset-x-[0] mx-auto object-cover w-px"
-                                              src="images/img_vt_9.png"
+                                              src="/images/img_vt_9.png"
                                               alt="vt_Eleven"
                                             />
                                             <Img
                                               className="absolute bottom-[0] h-px left-[0] object-cover w-px"
-                                              src="images/img_vt_10.png"
+                                              src="/images/img_vt_10.png"
                                               alt="vt_Twelve"
                                             />
                                             <Img
                                               className="absolute bottom-[0] h-px object-cover right-[0] w-px"
-                                              src="images/img_vt_11.png"
+                                              src="/images/img_vt_11.png"
                                               alt="vt_Thirteen"
                                             />
                                             <Img
                                               className="absolute h-px inset-y-[0] left-[0] my-auto object-cover w-px"
-                                              src="images/img_vt_12.png"
+                                              src="/images/img_vt_12.png"
                                               alt="vt_Fourteen"
                                             />
                                           </div>
                                           <Img
                                             className="h-64 md:h-auto md:ml-[0] ml-[511px] object-cover w-64"
-                                            src="images/img_vt_13.png"
+                                            src="/images/img_vt_13.png"
                                             alt="vt_Fifteen"
                                           />
                                           <Img
                                             className="h-64 md:h-auto object-cover w-64"
-                                            src="images/img_vt_14.png"
+                                            src="/images/img_vt_14.png"
                                             alt="vt_Sixteen"
                                           />
                                         </div>
                                         <Img
                                           className="h-64 md:h-auto md:ml-[0] ml-[768px] object-cover w-64"
-                                          src="images/img_vt_15.png"
+                                          src="/images/img_vt_15.png"
                                           alt="vt_Seventeen"
                                         />
                                       </div>
@@ -398,7 +421,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                                         <div className="bg-amber-400_95 flex flex-col h-[150px] items-center justify-center p-8 sm:px-5 rounded-[50%] w-[150px]">
                                           <Img
                                             className="h-[45px] mt-1.5"
-                                            src="images/img_eye.svg"
+                                            src="/images/img_eye.svg"
                                             alt="eye"
                                           />
                                           <Text
@@ -416,14 +439,14 @@ const DesktopTwentyNinePage: React.FC = () => {
                                   <div className="flex flex-col items-start justify-start w-full">
                                     <Img
                                       className="md:h-auto h-px object-cover w-[16%]"
-                                      src="images/img_transparentpng.png"
+                                      src="/images/img_transparentpng.png"
                                       alt="transparentpng"
                                     />
                                   </div>
                                 </div>
                                 <Img
                                   className="h-[26px] mr-[1049px] mt-[148px]"
-                                  src="images/img_divh2d7da0963d.svg"
+                                  src="/images/img_divh2d7da0963d.svg"
                                   alt="divh2d7da0963d"
                                 />
                               </div>
@@ -451,7 +474,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                                     <div className="h-3.5 md:h-auto pt-[1.13px] relative w-full">
                                       <Img
                                         className="absolute flex-1 h-3.5 inset-[0] m-auto w-[129px]"
-                                        src="images/img_divgmstylecc.svg"
+                                        src="/images/img_divgmstylecc.svg"
                                         alt="divh2d639ce712"
                                       />
                                       <div className="flex flex-1 flex-col items-center justify-start mt-auto mx-auto px-1.5 relative w-auto md:w-full">
@@ -468,7 +491,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                                     className="bg-cover bg-no-repeat flex flex-row h-3.5 md:h-auto items-start justify-center pt-[1.13px] w-auto"
                                     style={{
                                       backgroundImage:
-                                        "url('images/img_divgmnoprint.png')",
+                                        "url('/images/img_divgmnoprint.png')",
                                     }}
                                   >
                                     <div className="h-[13px] w-full"></div>
@@ -476,7 +499,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                                   <div className="h-3.5 md:h-auto ml-10 sm:ml-[0] pt-[1.13px] relative w-[105px]">
                                     <Img
                                       className="absolute h-3.5 inset-[0] m-auto w-[105px]"
-                                      src="images/img_divgmstylecc.svg"
+                                      src="/images/img_divgmstylecc.svg"
                                       alt="divh2d879eeb2c"
                                     />
                                     <div className="flex flex-col items-center justify-start m-auto px-1.5 relative w-auto">
@@ -502,7 +525,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                         <div className="flex flex-col gap-[13px] items-start justify-start w-auto md:w-full">
                           <Img
                             className="h-6 sm:h-auto object-cover w-[1056px] md:w-full"
-                            src="images/img_divmediaicons.png"
+                            src="/images/img_divmediaicons.png"
                             alt="divmediaicons"
                           />
                           <div className="flex flex-col items-start justify-center w-auto md:w-full">
@@ -514,7 +537,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                                       <div className="pb-[3.39px] relative w-full">
                                         <Img
                                           className="h-[400px] m-auto object-cover w-[300px] md:w-full"
-                                          src="images/img_124614633imagejpg.png"
+                                          src="/images/img_124614633imagejpg.png"
                                           alt="124614633imagej"
                                         />
                                         <div className="absolute flex flex-col md:h-auto h-max inset-y-[0] items-center justify-center left-[3%] my-auto pb-[88px] pl-[2.18px] pr-[2.21px] w-[27px]">
@@ -535,7 +558,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                                       <div className="flex flex-col items-start justify-start pb-[3.39px] w-full">
                                         <Img
                                           className="h-[400px] sm:h-auto object-cover w-[300px] md:w-full"
-                                          src="images/img_124614634imagejpg.png"
+                                          src="/images/img_124614634imagejpg.png"
                                           alt="124614634imagej"
                                         />
                                       </div>
@@ -546,7 +569,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                                       <div className="flex flex-col items-start justify-start pb-[3.39px] w-full">
                                         <Img
                                           className="h-[400px] sm:h-auto object-cover w-[300px] md:w-full"
-                                          src="images/img_124614634imagejpg.png"
+                                          src="/images/img_124614634imagejpg.png"
                                           alt="124614635imagej"
                                         />
                                       </div>
@@ -555,7 +578,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                                       <div className="pb-[3.39px] relative w-full">
                                         <Img
                                           className="h-[400px] m-auto object-cover w-[300px] md:w-full"
-                                          src="images/img_124614636imagejpg.png"
+                                          src="/images/img_124614636imagejpg.png"
                                           alt="124614636imagej"
                                         />
                                         <div className="absolute flex flex-col md:h-auto h-max inset-y-[0] items-center justify-center left-[37%] my-auto pb-[88px] pl-[2.19px] pr-[2.2px] w-[27px]">
@@ -585,7 +608,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                                 <div className="flex flex-row h-12 md:h-auto items-center justify-center md:px-10 px-12 sm:px-5 py-2.5 w-auto">
                                   <Img
                                     className="h-full w-[38px]"
-                                    src="images/img_eye_amber_a200_01.svg"
+                                    src="/images/img_eye_amber_a200_01.svg"
                                     alt="eye_One"
                                   />
                                   <div className="flex flex-col items-center justify-start w-auto">
@@ -595,7 +618,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                                 <div className="flex flex-row h-12 md:h-auto items-center justify-center md:px-10 px-12 sm:px-5 py-2.5 w-auto">
                                   <Img
                                     className="h-full w-[38px]"
-                                    src="images/img_imgmargin.svg"
+                                    src="/images/img_imgmargin.svg"
                                     alt="imgmargin"
                                   />
                                   <div className="flex flex-col items-center justify-start pl-[0.39px] pr-[0.05px] w-auto">
@@ -605,7 +628,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                                 <div className="flex flex-row h-12 md:h-auto items-center justify-center md:px-10 px-12 sm:px-5 py-2.5 w-auto">
                                   <Img
                                     className="h-full w-[38px]"
-                                    src="images/img_favorite_purple_a100.svg"
+                                    src="/images/img_favorite_purple_a100.svg"
                                     alt="favorite"
                                   />
                                   <div className="flex flex-col items-center justify-start w-auto">
@@ -622,7 +645,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                                   <div className="flex flex-row gap-[11px] items-start justify-start max-w-[1056px] md:pr-10 sm:pr-5 w-full">
                                     <Img
                                       className="h-6 w-6"
-                                      src="images/img_imgsvg.svg"
+                                      src="/images/img_imgsvg.svg"
                                       alt="imgsvg"
                                     />
                                     <div className="flex flex-col h-7 md:h-auto items-start justify-start">
@@ -658,7 +681,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                                   <div className="flex flex-row gap-[11px] items-start justify-start md:pr-10 sm:pr-5 pr-[805.39px] w-auto md:w-full">
                                     <Img
                                       className="h-6 w-6"
-                                      src="images/img_imgsvg_black_900.svg"
+                                      src="/images/img_imgsvg_black_900.svg"
                                       alt="imgsvg_One"
                                     />
                                     <h1>Personal Details</h1>
@@ -739,7 +762,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                                   <div className="flex flex-row gap-[11px] items-start justify-start md:pr-10 sm:pr-5 pr-[825px] w-auto md:w-full">
                                     <Img
                                       className="h-6 w-6"
-                                      src="images/img_imgsvg_black_900_24x24.svg"
+                                      src="/images/img_imgsvg_black_900_24x24.svg"
                                       alt="imgsvg_Two"
                                     />
                                     <h1>Physical Details</h1>
@@ -947,7 +970,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                                   <div className="flex flex-row gap-[11px] items-start justify-start md:pr-10 sm:pr-5 pr-[940.39px] w-auto md:w-full">
                                     <Img
                                       className="h-6 w-6"
-                                      src="images/img_imgsvg_24x24.svg"
+                                      src="/images/img_imgsvg_24x24.svg"
                                       alt="imgsvg_Three"
                                     />
                                     <h1>Language</h1>
@@ -960,7 +983,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                                             <div className="flex flex-row items-center justify-start w-auto">
                                               <Img
                                                 className="h-full w-12"
-                                                src="images/img_close_red_a700.svg"
+                                                src="/images/img_close_red_a700.svg"
                                                 alt="close"
                                               />
                                               <div className="flex flex-col items-start justify-start w-auto">
@@ -981,7 +1004,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                                             <div className="flex flex-row items-center justify-start w-auto">
                                               <Img
                                                 className="h-full w-12"
-                                                src="images/img_contrast_red_a700.svg"
+                                                src="/images/img_contrast_red_a700.svg"
                                                 alt="contrast"
                                               />
                                               <div className="flex flex-col items-start justify-start w-auto">
@@ -1003,7 +1026,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                                           <div className="flex flex-row items-center justify-start w-auto">
                                             <Img
                                               className="h-full w-12"
-                                              src="images/img_imgmargin_light_green_900.svg"
+                                              src="/images/img_imgmargin_light_green_900.svg"
                                               alt="imgmargin_One"
                                             />
                                             <div className="flex flex-col items-start justify-start w-auto">
@@ -1026,7 +1049,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                                   <div className="flex flex-row gap-[11px] items-start justify-start md:pr-10 sm:pr-5 pr-[825.39px] w-auto md:w-full">
                                     <Img
                                       className="h-6 w-6"
-                                      src="images/img_imgsvg_1.svg"
+                                      src="/images/img_imgsvg_1.svg"
                                       alt="imgsvg_Four"
                                     />
                                     <h1>Booking Notes</h1>
@@ -1039,7 +1062,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                                             <div className="flex flex-row items-center justify-start md:pr-10 sm:pr-5 pr-[369.7px] w-auto sm:w-full">
                                               <Img
                                                 className="h-full w-9"
-                                                src="images/img_close_purple_a100.svg"
+                                                src="/images/img_close_purple_a100.svg"
                                                 alt="close_One"
                                               />
                                               <div className="flex flex-col items-start justify-start w-auto">
@@ -1056,7 +1079,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                                             <div className="flex flex-row items-center justify-start md:pr-10 sm:pr-5 pr-[428.7px] w-auto sm:w-full">
                                               <Img
                                                 className="h-full w-9"
-                                                src="images/img_close_purple_a100.svg"
+                                                src="/images/img_close_purple_a100.svg"
                                                 alt="close_Two"
                                               />
                                               <div className="flex flex-col items-start justify-start w-auto">
@@ -1074,7 +1097,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                                           <div className="flex flex-row items-center justify-start md:pr-10 sm:pr-5 pr-[116px] w-auto md:w-full">
                                             <Img
                                               className="h-full w-9"
-                                              src="images/img_close_purple_a100.svg"
+                                              src="/images/img_close_purple_a100.svg"
                                               alt="close_Three"
                                             />
                                             <div className="flex flex-col items-start justify-start pr-[0.47px] w-auto">
@@ -1097,7 +1120,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                                   <div className="flex flex-row gap-[11px] items-start justify-start md:pr-10 sm:pr-5 pr-[949.39px] w-auto md:w-full">
                                     <Img
                                       className="h-6 w-6"
-                                      src="images/img_imgsvg_2.svg"
+                                      src="/images/img_imgsvg_2.svg"
                                       alt="imgsvg_Five"
                                     />
                                     <h1>Location</h1>
@@ -1180,7 +1203,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                                   <div className="flex flex-row gap-[11px] items-start justify-start md:pr-10 sm:pr-5 pr-[1001.39px] w-auto md:w-full">
                                     <Img
                                       className="h-6 w-6"
-                                      src="images/img_imgsvg_3.svg"
+                                      src="/images/img_imgsvg_3.svg"
                                       alt="imgsvg_Six"
                                     />
                                     <h1>Price</h1>
@@ -1304,7 +1327,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                                     <div className="flex flex-row gap-[11px] items-start justify-start md:pr-10 sm:pr-5 pr-[915.39px] w-auto md:w-full">
                                       <Img
                                         className="h-6 w-6"
-                                        src="images/img_clock_black_900.svg"
+                                        src="/images/img_clock_black_900.svg"
                                         alt="clock"
                                       />
                                       <h1>Availability</h1>
@@ -1461,7 +1484,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                         <div className="escort-widget-wrap flex flex-col h-[360px] md:h-auto items-start justify-start w-[360px]">
                           <Img
                             className="h-[360px] escort-img md:h-auto object-cover w-[360px]"
-                            src="images/img_divngtnsc30975.png"
+                            src="/images/img_divngtnsc30975.png"
                             alt="divngtnsc30975"
                           />
                         </div>
@@ -1482,7 +1505,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                             <div className="flex flex-row items-center justify-start w-auto">
                               <Img
                                 className="h-8 w-8"
-                                src="images/img_svg_purple_a100_01.svg"
+                                src="/images/img_svg_purple_a100_01.svg"
                                 alt="svg"
                               />
                               <div className="flex flex-col items-end justify-start pl-3">
@@ -1495,7 +1518,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                               </div>
                               <Img
                                 className="h-full w-[25px]"
-                                src="images/img_videocamera_white_a700.svg"
+                                src="/images/img_videocamera_white_a700.svg"
                                 alt="videocamera"
                               />
                               <div className="flex flex-col items-start justify-start w-auto">
@@ -1510,7 +1533,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                           </div>
                           <Img
                             className="h-[43px] md:h-auto object-cover w-full"
-                            src="images/img_divdividermobile.png"
+                            src="/images/img_divdividermobile.png"
                             alt="divdividermobil"
                           />
                           <div className="flex md:flex-col flex-row gap-[0.01px] items-start justify-between w-full">
@@ -1609,7 +1632,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                   >
                     <Img
                       className="h-[49px] md:h-auto my-1.5 rounded-[50%] w-[49px]"
-                      src="images/img_bv7mozwnhchqrqp_49x49.png"
+                      src="/images/img_bv7mozwnhchqrqp_49x49.png"
                       alt="bv7mozwnhchqrqp_One"
                     />
                   </div>
@@ -1656,7 +1679,7 @@ const DesktopTwentyNinePage: React.FC = () => {
               >
                 <Img
                   className="h-14 w-14"
-                  src="images/img_home.svg"
+                  src="/images/img_home.svg"
                   alt="home"
                 />
                 <div className="flex flex-col items-center justify-start py-4 w-[79%]">
@@ -1676,7 +1699,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                 <div className=" mt-2 h-14 relative w-full">
                   <Img
                     className="absolute h-14 inset-y-[0] left-[6%] my-auto w-14"
-                    src="images/img_divvlistitemiconmargin.svg"
+                    src="/images/img_divvlistitemiconmargin.svg"
                     alt="divvlistitemico"
                   />
                   <div className="absolute flex flex-row h-max inset-y-[0] items-center justify-center my-auto right-[6%] w-[70%]">
@@ -1695,7 +1718,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                     <section style={rotate} onClick={toggle}>
                       <Img
                         className="h-4 cursor"
-                        src="images/img_arrowdown_gray_600_01.svg"
+                        src="/images/img_arrowdown_gray_600_01.svg"
                         alt="arrowdown_One"
                       />
                     </section>
@@ -1718,7 +1741,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                             <div className="flex gap-3 items-center justify-start">
                               <Img
                                 className="h-6 w-6"
-                                src="images/advert_logo.png"
+                                src="/images/advert_logo.png"
                                 alt="message icon"
                               />
                               <Text
@@ -1741,7 +1764,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                           <div className="flex gap-3 items-center justify-start">
                             <Img
                               className="h-6 w-6"
-                              src="images/message_icon.png"
+                              src="/images/message_icon.png"
                               alt="message icon"
                             />
                             <Text
@@ -1782,7 +1805,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                 <div className="leftNav active flex flex-1 flex-row items-center justify-start px-4 w-full">
                   <Img
                     className="h-14 w-14"
-                    src="images/img_lock_gray_600_01.svg"
+                    src="/images/img_lock_gray_600_01.svg"
                     alt="lock"
                   />
                   <div
@@ -1804,7 +1827,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                 <div className="leftNav flex flex-1 flex-row items-center justify-start px-4 w-full">
                   <Img
                     className="h-14 w-14"
-                    src="images/img_divvlistitemiconmargin_gray_600_01.svg"
+                    src="/images/img_divvlistitemiconmargin_gray_600_01.svg"
                     alt="divvlistitemico"
                   />
                   <div
@@ -1829,7 +1852,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                 >
                   <Img
                     className="h-14 w-14"
-                    src="images/img_divvlistitemiconmargin_gray_600_01_56x56.svg"
+                    src="/images/img_divvlistitemiconmargin_gray_600_01_56x56.svg"
                     alt="divvlistitemico"
                   />
                   <div className="flex flex-col items-center justify-start py-4 w-[79%]">
@@ -1871,7 +1894,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                   <div className="flex flex-row items-center justify-start pr-[11px] py-[11px] w-[82%] md:w-full">
                     <Img
                       className="h-5"
-                      src="images/img_user_gray_800.svg"
+                      src="/images/img_user_gray_800.svg"
                       alt="user"
                     />
                     <Text
@@ -1989,7 +2012,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                           prefix={
                             <Img
                               className="mr-3 my-auto"
-                              src="images/img_svg_gray_600.svg"
+                              src="/images/img_svg_gray_600.svg"
                               alt="SVG"
                             />
                           }
@@ -2045,7 +2068,10 @@ const DesktopTwentyNinePage: React.FC = () => {
                         size="xl"
                         variant="fill"
                       >
-                        <Img src="images/img_contrast.svg" alt="contrast_One" />
+                        <Img
+                          src="/images/img_contrast.svg"
+                          alt="contrast_One"
+                        />
                       </Button>
                     </div>
                   </div>
@@ -2061,7 +2087,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                         <div className="flex flex-row items-start justify-start w-[63%] md:w-full">
                           <Img
                             className="h-4 w-4"
-                            src="images/img_globe.svg"
+                            src="/images/img_globe.svg"
                             alt="globe"
                           />
                           <Text
