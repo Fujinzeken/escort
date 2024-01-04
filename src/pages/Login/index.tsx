@@ -1,15 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import axios from "axios";
 
 import { useNavigate } from "react-router-dom";
-
-import { useGoogleLogin } from "@react-oauth/google";
-
 import { Button, Img, List, Text } from "components";
-
-import validation from "../Login/validationLogin";
 import { ToastContainer, toast } from "react-toastify";
+import useProfile from "store/userProfile";
 
 const LoginPage: React.FC = () => {
   const [emailError, setEmailError] = useState("");
@@ -24,7 +20,7 @@ const LoginPage: React.FC = () => {
     usernameEmail: "",
     password: "",
   });
-
+  const { setUserProfile, userProfile } = useProfile();
   const navigate = useNavigate();
   // const googleSignIn = useGoogleLogin({
   //   onSuccess: (res) => {
@@ -51,6 +47,7 @@ const LoginPage: React.FC = () => {
     usernameEmail: formData?.usernameEmail,
     password: formData?.password,
   };
+  console.log(userProfile);
 
   const handleRegisterButtonClick = async (e) => {
     await handleFormSubmit(e);
@@ -70,7 +67,9 @@ const LoginPage: React.FC = () => {
 
       // Handle the response as needed
       localStorage.setItem("token", response?.data?.token);
+      setUserProfile(response?.data);
       localStorage.setItem("user", JSON.stringify(response?.data));
+
       setLoading(false);
       if (response?.status === 200) {
         if (response?.data?.profile) {
@@ -113,6 +112,16 @@ const LoginPage: React.FC = () => {
       }
     }
   };
+
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+
+  //   if (token) {
+  //     // @ts-ignore
+  //     navigate("/");
+  //   }
+  // }, []);
+
   return (
     <>
       <div className="bg-white-A700 flex flex-col font-montserrat gap-[42px] items-center justify-end mx-auto w-full">

@@ -7,7 +7,6 @@ import DesktopThirtyFour from "pages/DesktopThirtyFour";
 import DesktopTwentySix from "pages/DesktopTwentySix";
 import DesktopTwentyFive from "pages/DesktopTwentyFive";
 import Becomeamember from "pages/Becomeamember";
-import Divdtindexfoot from "pages/Divdtindexfoot";
 import DesktopThirtySeven from "pages/DesktopThirtySeven";
 import ProfilePage from "pages/Profile";
 import BecomeamemberOne from "pages/BecomeamemberOne";
@@ -67,7 +66,6 @@ const ProjectRoutes = () => {
         <Route path="/payment" element={<Payment />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/desktopthirtyseven" element={<DesktopThirtySeven />} />
-        <Route path="/divdtindexfoot" element={<Divdtindexfoot />} />
         <Route path="/becomeamember" element={<Becomeamember />} />
         <Route path="/desktoptwentyfive" element={<DesktopTwentyFive />} />
         <Route path="/desktoptwentysix" element={<DesktopTwentySix />} />

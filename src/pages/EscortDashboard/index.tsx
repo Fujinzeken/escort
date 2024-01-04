@@ -17,6 +17,8 @@ import { ToastContainer, toast } from "react-toastify";
 
 function EscortDashboard() {
   const token = localStorage.getItem("token");
+
+  const user = JSON.parse(localStorage.getItem("user"));
   const navigate = useNavigate();
   const [isDropdown, setdropdown] = useState(false);
   const [isToggleArrow, setToggleArrow] = useState(false);
@@ -173,7 +175,8 @@ function EscortDashboard() {
                         className="capitalize text-[15px] pl-2 text-white-A700"
                         size="txtMontserratMedium15WhiteA700"
                       >
-                        Hi, tekena
+                        {/* @ts-ignore */}
+                        Hi, {user?.workingName}
                       </Text>
                     </div>
                     <Img
@@ -199,7 +202,8 @@ function EscortDashboard() {
                 <section className="mt-4 flex flex-col w-[80%] items-center">
                   <img src={profile} alt="" />
                   <h2 style={{ fontSize: "20px", fontWeight: "bold" }}>
-                    Cruel Santino
+                    {/* @ts-ignore */}
+                    {user?.workingName}
                   </h2>
                   <p>ID :8312630 </p>
                   <button

@@ -9,6 +9,7 @@ type HeaderProps = React.DetailedHTMLProps<
   Partial<{}>;
 
 const Header: React.FC<HeaderProps> = (props) => {
+  const user = JSON.parse(localStorage.getItem("user"));
   return (
     <>
       <header className={props.className}>
@@ -27,7 +28,7 @@ const Header: React.FC<HeaderProps> = (props) => {
                   className="capitalize text-[15px] text-white-A700"
                   size="txtMontserratMedium15WhiteA700"
                 >
-                  Hi, tekena
+                  Hi, {user?.workingName || user.firstName}
                 </Text>
               </div>
               <Img

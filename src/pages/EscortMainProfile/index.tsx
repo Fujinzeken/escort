@@ -9,8 +9,10 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import catchErrorFunc from "utils/authErrorHandler";
 import { ToastContainer } from "react-toastify";
+import useProfile from "store/userProfile";
 function EscortMainProfile() {
   const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("user"));
   const token = localStorage.getItem("token");
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState("");
@@ -37,6 +39,7 @@ function EscortMainProfile() {
   const [phone2, setPhone2] = useState("");
   const [languageArr, setLangageArr] = useState([]);
   const [showSecondPhone, setShowSecondPhone] = useState(false);
+  const [imageData, setImageData] = useState(null);
 
   const handleLanguageArr = (e) => {
     if (languageArr.length > 6) {
@@ -76,6 +79,9 @@ function EscortMainProfile() {
       const reader = new FileReader();
       reader.onload = (e) => {
         setImage(e.target.result); // Set the data URL as the groupImage state
+        const newString = e.target.result.toString();
+        const newData = newString.split(",");
+        setImageData(newData[1]);
       };
       reader.readAsDataURL(selectedFile);
     }
@@ -87,7 +93,7 @@ function EscortMainProfile() {
       modelName: name,
       country,
       city,
-      image,
+      image: imageData,
       description: desc,
       profileType,
       age: parseInt(age),
@@ -172,7 +178,8 @@ function EscortMainProfile() {
             <section className="mt-4 flex flex-col w-[80%] items-center">
               <img src={profile} alt="" />
               <h2 style={{ fontSize: "20px", fontWeight: "bold" }}>
-                Cruel Santino
+                {/* @ts-ignore */}
+                {user?.workingName}
               </h2>
               <p>ID :8312630 </p>
               <button
@@ -187,6 +194,7 @@ function EscortMainProfile() {
                 <li
                   className="pb-[1.5rem] pl-[1.5rem]"
                   style={{ borderBottom: "1px solid black" }}
+                  onClick={() => navigate("/EscortDashboard")}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -238,11 +246,14 @@ function EscortMainProfile() {
                   </svg>
                   Gallery
                 </li>
-                <li>
+                <li onClick={() => navigate("/DesktopFourtyEight")}>
                   <img src={user1} alt="" />
                   Account Settings
                 </li>
-                <li style={{ borderBottom: "1px solid black" }}>
+                <li
+                  style={{ borderBottom: "1px solid black" }}
+                  onClick={() => navigate("/ladies-star")}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="35"
@@ -257,7 +268,7 @@ function EscortMainProfile() {
                   </svg>
                   LadiesSTARS
                 </li>
-                <li>
+                <li onClick={() => navigate("/live-video")}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20"

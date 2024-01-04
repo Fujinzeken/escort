@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import axios from "axios";
 
@@ -9,11 +9,12 @@ import { Button, Img, Text } from "components";
 import validation from "./validation";
 
 import { ToastContainer, toast } from "react-toastify";
+import useProfile from "store/userProfile";
 
 const SignupPage: React.FC = () => {
   const navigate = useNavigate();
   const loginPage = useNavigate();
-
+  const { setUserProfile, userProfile } = useProfile();
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [usernameError, setUsernameError] = useState("");
@@ -74,14 +75,15 @@ const SignupPage: React.FC = () => {
         camelCaseData
       );
 
-      if (response.status === 201) {
-        navigate("/login");
+      // Handle the response as needed
+      if (response?.data?.profile) {
+        navigate("/EscortDashboard");
+      } else {
+        navigate("/dashboard");
       }
 
-      // Handle the response as needed
-      navigate("/");
-
-      localStorage.setItem("userData", response.data);
+      localStorage.setItem("user", JSON.stringify(response?.data));
+      setUserProfile(response?.data);
     } catch (error) {
       console.log(error);
 
@@ -125,7 +127,14 @@ const SignupPage: React.FC = () => {
       }
     }
   };
+  useEffect(() => {
+    const token = localStorage.getItem("token");
 
+    if (token) {
+      // @ts-ignore
+      navigate("/");
+    }
+  }, []);
   return (
     <>
       <div className="bg-white-A700 flex flex-col font-montserrat items-center justify-end mx-auto sm:pr-5 pr-[38px] pl-[38px] pt-[38px] w-full">

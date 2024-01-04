@@ -22,6 +22,7 @@ const LadiesStar: React.FC = () => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       console.log(res.data);
+      setLadies(res?.data?.escorts);
     } catch (err) {
       console.log(err);
       catchErrorFunc(err, navigate);
@@ -109,9 +110,39 @@ const LadiesStar: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="flex flex-col mt-5 rounded-2xl border border-whiteA700 bg-white-A700 p-5">
-            <div className="flex gap-3 mb-8 sm:flex-col md:flex-col">
-              <div className="flex flex-col w-1/2 gap-3 sm:w-full md:w-full">
+          <div className="flex flex-wrap mt-5 rounded-2xl border border-whiteA700 bg-white-A700 p-5">
+            <div className="flex flex-wrap mb-8 sm:flex-col md:flex-col">
+              {ladies.length > 0 &&
+                ladies.map((item, i) => (
+                  <div className="flex flex-col w-1/2 gap-3 sm:w-full md:w-full">
+                    <div className="flex items-center justify-center cursor-pointer">
+                      <Img
+                        src={item?.images[0]}
+                        className="h-[150px] w-[150px] sm:h-[150px] w-[100px]"
+                      />
+                      <Img
+                        src={item?.images[1]}
+                        className="h-[150px] w-[150px] sm:h-[150px] w-[100px]"
+                      />
+                      <Img
+                        src={item?.images[2]}
+                        className="h-[150px] w-[150px] sm:h-[150px] w-[100px]"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-4 sm:w-full">
+                      <span>Nuremberg</span>
+                      <div className="flex">
+                        <Img src="images/escort-star.png" />
+                        <span>{item?.workingName} - Current pictures</span>
+                      </div>
+                      <p className="font-light" style={{ fontSize: "14px" }}>
+                        26 years, 75B, KF 34, 1.67m, completely shaved, Eastern
+                        European 69, GF6, Franz b. You, cuddles, cuddles, KBp
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              {/* <div className="flex flex-col w-1/2 gap-3 sm:w-full md:w-full">
                 <div className="flex items-center justify-center cursor-pointer">
                   <Img
                     src="images/escort.png"
@@ -164,9 +195,9 @@ const LadiesStar: React.FC = () => {
                     European 69, GF6, Franz b. You, cuddles, cuddles, KBp
                   </p>
                 </div>
-              </div>
+              </div> */}
             </div>
-            <div className="flex gap-3 mb-8 sm:flex-col md:flex-col">
+            {/* <div className="flex gap-3 mb-8 sm:flex-col md:flex-col">
               <div
                 className="flex flex-col w-1/2 gap-3 sm:w-full md:w-full"
                 onClick={() => navigate("/ladies-star/1")}
@@ -280,7 +311,7 @@ const LadiesStar: React.FC = () => {
                   </p>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
