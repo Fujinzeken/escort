@@ -13,7 +13,7 @@ import useProfile from "store/userProfile";
 
 const SignupPage: React.FC = () => {
   const navigate = useNavigate();
-  const loginPage = useNavigate();
+  const user = JSON.parse(localStorage.getItem("user"));
   const { setUserProfile, userProfile } = useProfile();
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -21,7 +21,7 @@ const SignupPage: React.FC = () => {
   const [userError, setUserError] = useState("");
 
   const login = () => {
-    loginPage("/login");
+    navigate("/login");
   };
 
   const [formData, setFormData] = useState({
@@ -132,7 +132,11 @@ const SignupPage: React.FC = () => {
 
     if (token) {
       // @ts-ignore
-      navigate("/");
+      if (user?.profile) {
+        navigate("/EscortDashboard");
+      } else {
+        navigate("/dashboard");
+      }
     }
   }, []);
   return (
@@ -172,7 +176,7 @@ const SignupPage: React.FC = () => {
                               alt="pseudo"
                             />
                           </div>
-                          <div className=" gen-container absolute flex flex-col md:gap-10 gap-[60px] h-max inset-y-[0] justify-start my-auto right-[0] w-[94%]">
+                          <div className=" gen-container absolute flex flex-col md:gap-10 gap-5 h-max inset-y-[0] justify-start my-auto right-[0] w-[94%]">
                             <div className="flex flex-col items-start justify-start md:ml-[0] ml-[11px] w-[88%] md:w-full">
                               <div className="flex flex-col items-start justify-start w-full">
                                 <Text

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Button, Img, Input, Text } from "components";
 import Header from "components/Header";
@@ -86,11 +86,23 @@ const DesktopTwoPage: React.FC = () => {
         data,
         { headers: { Authorization: `Bearer ${token}` } }
       );
+      console.log(res?.data);
+      navigate("/dashboard");
     } catch (err) {
       console.log(err);
       catchErrorFunc(err, navigate);
     }
   };
+
+  useEffect(() => {
+    if (token) {
+      if (user.profile) {
+        navigate("/EscortDashboard");
+      }
+    } else {
+      navigate("/login");
+    }
+  });
   return (
     <>
       <div className="bg-white-A700 flex flex-col font-montserrat sm:gap-10 md:gap-10 gap-[66px] items-center justify-start mx-auto py-[11px] w-full">

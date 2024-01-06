@@ -7,6 +7,7 @@ export default function catchErrorFunc(err, navigate) {
   ) {
     toast.error("Please login to continue");
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     setTimeout(() => {
       navigate("/login");
     }, 2000);

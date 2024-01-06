@@ -32,7 +32,7 @@ function EscortMainProfile() {
   const [language, setLanguage] = useState("");
   const [tatoo, setTatoo] = useState("");
   const [piercing, setPiercing] = useState("");
-  const [isPornstar, setIsPornstar] = useState(false);
+  const [isPornstar, setIsPornstar] = useState(true);
   const [service, setService] = useState("");
   const [meeting, setMeeting] = useState("");
   const [phone1, setPhone1] = useState("");
@@ -43,8 +43,6 @@ function EscortMainProfile() {
 
   const handleLanguageArr = (e) => {
     if (languageArr.length > 6) {
-      console.log("running");
-
       const newlanguageArr = e.target.value.split(", ");
       const temp = [
         newlanguageArr[0],
@@ -61,7 +59,6 @@ function EscortMainProfile() {
     setLanguage(e.target.value);
     const newlanguageArr = e.target.value.split(",");
     setLangageArr(newlanguageArr);
-    console.log(newlanguageArr);
   };
   const triggerFileInput = (e) => {
     const fileInput = document.getElementById("fileUpload");
@@ -130,7 +127,11 @@ function EscortMainProfile() {
   };
 
   useEffect(() => {
-    if (!token) {
+    if (token) {
+      if (!user?.profile) {
+        navigate("/dashboard");
+      }
+    } else {
       navigate("/login");
     }
   }, []);

@@ -113,14 +113,19 @@ const LoginPage: React.FC = () => {
     }
   };
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    const token = localStorage.getItem("token");
+    const user = JSON.parse(localStorage.getItem("user"));
 
-  //   if (token) {
-  //     // @ts-ignore
-  //     navigate("/");
-  //   }
-  // }, []);
+    if (token) {
+      if (user.profile) {
+        navigate("/EscortDashboard");
+      } else {
+        navigate("/dashboard");
+      }
+    }
+  }, []);
 
   return (
     <>

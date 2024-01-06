@@ -6,6 +6,7 @@ import { useState } from "react";
 
 const SidebarNav = ({ pageOn }) => {
   const [isHidden, setisHidden] = useState(true);
+  const user = JSON.parse(localStorage.getItem("user"));
 
   const handleToggle = () => {
     setisHidden(!isHidden);
@@ -13,7 +14,7 @@ const SidebarNav = ({ pageOn }) => {
   return (
     <>
       <button
-        className={`hidden sm:flex absolute top-[100px] left-[10px] flex items-center justify-center w-[20%] border p-3 rounded-full`}
+        className={`hidden sm:flex absolute top-[80px] left-[5px] flex items-center justify-center w-[10%] border p-3 rounded-full`}
         style={{
           background: "#FD00B3",
           border: "1px solid #FD00B3",
@@ -28,9 +29,11 @@ const SidebarNav = ({ pageOn }) => {
           isHidden
             ? "hidden"
             : "flex w-full absolute left-[0] ml-[-20px] top-[5%] z-10"
-        } flex md:flex-col flex-row gap-[31px] items-center justify-between w-[30%] md:w-full`}
+        } flex gap-[31px] items-center w-[100%]  md:${
+          isHidden ? "hidden" : "w-full flex-col"
+        }`}
       >
-        <div className="flex flex-col items-end justify-start pb-[420px] sm:pl-5 pl-[22px] w-full md:w-full">
+        <div className="flex flex-col items-end justify-start sm:pl-5 pl-[22px] w-full md:w-full">
           <div className="bg-white-A700 flex flex-col gap-[15px] items-center justify-start mb-2 p-[25px] sm:px-5 rounded-[15px] shadow-bs7 w-full">
             <div className="flex flex-col items-start justify-start w-full">
               <div className="flex flex-col items-start justify-start w-full md:w-full">
@@ -53,7 +56,7 @@ const SidebarNav = ({ pageOn }) => {
                     className="text-base text-blue_gray-900_02"
                     size="txtMontserratMedium16Bluegray90002"
                   >
-                    Tekena west
+                    {user?.workingName || user?.firstName}
                   </Text>
                 </div>
                 <div className="flex flex-col items-start justify-start w-full">

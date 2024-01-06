@@ -17,6 +17,7 @@ import catchErrorFunc from "utils/authErrorHandler";
 const Gallery: React.FC = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+  const user = JSON.parse(localStorage.getItem("user"));
   const [isDropdown, setdropdown] = useState(false);
   const [isToggleArrow, setToggleArrow] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -66,7 +67,11 @@ const Gallery: React.FC = () => {
     }
   };
   useEffect(() => {
-    if (!token) {
+    if (token) {
+      if (!user?.profile) {
+        navigate("/dashboard");
+      }
+    } else {
       navigate("/login");
     }
 
@@ -132,7 +137,7 @@ const Gallery: React.FC = () => {
               <section className="mt-4 flex flex-col w-[80%] items-center">
                 <img src={profile} alt="" />
                 <h2 style={{ fontSize: "20px", fontWeight: "bold" }}>
-                  Cruel Santino
+                  {user?.workingName}
                 </h2>
                 <p>ID :8312630 </p>
                 <button

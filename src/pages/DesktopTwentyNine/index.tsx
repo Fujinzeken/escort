@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import { Button, Img, Input, Line, List, Text } from "components";
 import { useNavigate, useParams } from "react-router-dom";
@@ -8,10 +8,31 @@ import catchErrorFunc from "utils/authErrorHandler";
 
 const DesktopTwentyNinePage: React.FC = () => {
   const [profileData, setProfileData] = useState(null);
+  const [isMoved, setIsMoved] = useState(false);
+  const [slideNumber, setSlideNumber] = useState(0);
+  // const [countryCode, setCountryCode] = useState({})
+
+  const listRef = useRef();
   const token = localStorage.getItem("token");
+  const user = JSON.parse(localStorage.getItem("user"));
   const account = useNavigate();
   const param = useParams();
 
+  const handleClick = (direction) => {
+    setIsMoved(true);
+    //@ts-ignore
+    let distance = listRef.current.getBoundingClientRect().x - 50;
+    if (direction === "left" && slideNumber >= 0) {
+      setSlideNumber(slideNumber - 1);
+      //@ts-ignore
+      listRef.current.style.transform = `translateX(${370 + distance}px)`;
+    }
+    if (direction === "right" && slideNumber < 5) {
+      setSlideNumber(slideNumber + 1);
+      //@ts-ignore
+      listRef.current.style.transform = `translateX(${-300 + distance}px)`;
+    }
+  };
   const ratedPage = () => {
     account("/dashboard");
   };
@@ -65,28 +86,27 @@ const DesktopTwentyNinePage: React.FC = () => {
       setProfileData(res.data);
       console.log(res.data);
     } catch (err) {
-      if (err.response?.data?.message === "Invalid Session : Login again") {
-        account("/login");
-        localStorage.removeItem("token");
-      }
-      if (
-        err.response?.data?.error ===
-        "Unauthorized - Bearer token missing or invalid"
-      ) {
-        account("/login");
-        localStorage.removeItem("token");
-      } else {
-        toast.error("Oopss!!!, something went wrong, please reload the page");
-      }
-
       console.log(err);
+      catchErrorFunc(err, account);
     }
   };
+
+  // const getCountryCode = async()=>{
+  //   try{
+  //     profileData?.profile?.languages.forEach(item => {
+  //       const countryData = {...countryCode}
+  //     });
+  //     const res = await axios.get(`https://restcountries.com/v3.1/name/${item}`)
+  //   }catch(err){
+  //     console.log(err);
+
+  //   }
+  // }
 
   const fetchSingleLady = async () => {
     try {
       const res = await axios.get(
-        `https://lazer-escort.onrender.com/client/userProfile/${param.id}`,
+        `https://lazer-escort.onrender.com/userProfile/${param.id}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setProfileData(res.data);
@@ -269,7 +289,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                             className="capitalize text-[15px] pl-2 text-white-A700"
                             size="txtMontserratMedium15WhiteA700"
                           >
-                            Hi, tekena
+                            Hi, {user?.workingName || user?.firstName}
                           </Text>
                         </div>
                         <Img
@@ -519,7 +539,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="sm:h-[3172px h-[3729px] md:h-[4761px] mt-[-110px] mx-auto w-[1120px] md:w-full z-[1]">
+                  <div className="sm:h-[3172px] h-[3729px] md:h-[4761px] mt-[-410px] mx-auto w-full md:w-full z-[1]">
                     <div className="escort-preview absolute bg-white-A700 flex flex-col h-max inset-[0] items-center justify-center m-auto w-auto">
                       <div className="flex flex-col items-center justify-start md:px-10 sm:px-5 w-auto md:w-full">
                         <div className="flex flex-col gap-[13px] items-start justify-start w-auto md:w-full">
@@ -528,74 +548,52 @@ const DesktopTwentyNinePage: React.FC = () => {
                             src="/images/img_divmediaicons.png"
                             alt="divmediaicons"
                           />
-                          <div className="flex flex-col items-start justify-center w-auto md:w-full">
-                            <div className="flex flex-col h-[403px] md:h-auto items-start justify-start max-w-[1056px] w-full">
-                              <div className="w-full">
-                                <div className="flex md:flex-col flex-row md:gap-5 h-full items-start justify-start w-full">
-                                  <div className="flex flex-1 md:flex-1 flex-col items-start justify-start sm:pr-5 pr-[30px] w-auto md:w-full">
-                                    <div className="flex flex-col items-start justify-start w-auto">
-                                      <div className="pb-[3.39px] relative w-full">
-                                        <Img
-                                          className="h-[400px] m-auto object-cover w-[300px] md:w-full"
-                                          src="/images/img_124614633imagejpg.png"
-                                          alt="124614633imagej"
-                                        />
-                                        <div className="absolute flex flex-col md:h-auto h-max inset-y-[0] items-center justify-center left-[3%] my-auto pb-[88px] pl-[2.18px] pr-[2.21px] w-[27px]">
-                                          <div className="flex flex-col h-[132px] md:h-auto items-start justify-start w-[22px]">
-                                            <Text
-                                              className="leading-[44.00px] max-w-[22px] md:max-w-full text-[22px] text-amber-A200_01 sm:text-lg md:text-xl"
-                                              size="txtInterRegular22"
-                                            >
-                                              prev
-                                            </Text>
-                                          </div>
-                                        </div>
-                                      </div>
+                          <div className="w-4/5 ">
+                            <div className="flex">
+                              {profileData &&
+                                profileData?.profile?.images?.length > 4 && (
+                                  <span
+                                    className="sticky left-[25%] top-[30%] cursor-pointer m-auto transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded"
+                                    style={{ zIndex: "999" }}
+                                    onClick={() => handleClick("left")}
+                                  >
+                                    Previous
+                                  </span>
+                                )}
+                              <div
+                                className="flex mt-8 ml-2"
+                                ref={listRef}
+                                style={{
+                                  overflow: "hidden",
+                                  width: "100%", // Set the width to 100%
+                                  transform: "translateX(0)",
+                                  transition: "all 1s ease",
+                                }}
+                              >
+                                {profileData &&
+                                  profileData?.profile?.images?.map((image) => (
+                                    <div
+                                      className="w-[300px] height-[120px] cursor-pointer "
+                                      style={{ overflow: "hidden" }}
+                                    >
+                                      <Img
+                                        className="h-[100%] sm:h-auto object-contain w-[100%]"
+                                        src={image}
+                                        alt="124614634imagej"
+                                      />
                                     </div>
-                                  </div>
-                                  <div className="flex flex-1 md:flex-1 flex-col items-start justify-start sm:pr-5 pr-[30px] w-auto md:w-full">
-                                    <div className="flex flex-col items-start justify-start w-auto">
-                                      <div className="flex flex-col items-start justify-start pb-[3.39px] w-full">
-                                        <Img
-                                          className="h-[400px] sm:h-auto object-cover w-[300px] md:w-full"
-                                          src="/images/img_124614634imagejpg.png"
-                                          alt="124614634imagej"
-                                        />
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div className="flex flex-1 md:flex-1 md:flex-col flex-row gap-[30px] items-start justify-start sm:pr-5 pr-[30px] w-auto md:w-full">
-                                    <div className="flex flex-col items-start justify-start w-auto">
-                                      <div className="flex flex-col items-start justify-start pb-[3.39px] w-full">
-                                        <Img
-                                          className="h-[400px] sm:h-auto object-cover w-[300px] md:w-full"
-                                          src="/images/img_124614634imagejpg.png"
-                                          alt="124614635imagej"
-                                        />
-                                      </div>
-                                    </div>
-                                    <div className="flex flex-col items-start justify-start w-auto">
-                                      <div className="pb-[3.39px] relative w-full">
-                                        <Img
-                                          className="h-[400px] m-auto object-cover w-[300px] md:w-full"
-                                          src="/images/img_124614636imagejpg.png"
-                                          alt="124614636imagej"
-                                        />
-                                        <div className="absolute flex flex-col md:h-auto h-max inset-y-[0] items-center justify-center left-[37%] my-auto pb-[88px] pl-[2.19px] pr-[2.2px] w-[27px]">
-                                          <div className="flex flex-col h-[132px] md:h-auto items-start justify-start w-[22px]">
-                                            <Text
-                                              className="leading-[44.00px] max-w-[22px] md:max-w-full text-[22px] text-amber-A200_01 sm:text-lg md:text-xl"
-                                              size="txtInterRegular22"
-                                            >
-                                              next
-                                            </Text>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
+                                  ))}
                               </div>
+                              {profileData &&
+                                profileData?.profile?.images?.length > 5 && (
+                                  <span
+                                    className="sticky right-[0] top-[30%] cursor-pointer   m-auto transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded"
+                                    style={{ zIndex: "999" }}
+                                    onClick={() => handleClick("right")}
+                                  >
+                                    Next
+                                  </span>
+                                )}
                             </div>
                           </div>
                         </div>
@@ -657,21 +655,8 @@ const DesktopTwentyNinePage: React.FC = () => {
                                       className="leading-[32.00px] text-base text-black-900 tracking-[0.50px]"
                                       size="txtAsapRegular16"
                                     >
-                                      <>
-                                        Hello, my name is Marina and i am 25
-                                        years old. I am one very sweet and sexy
-                                        girl.
-                                        <br />
-                                        Young, attractive and very passionate. I
-                                        love the sex. I am something you wont
-                                        forget.
-                                        <br />I am proffesional escort/vip
-                                        escort. You will receive a very special
-                                        attitude. I CAN DO
-                                        <br />
-                                        EVERYTHING FOR YOU. JUST ASK ABOUT IT.
-                                        DONT WORRY.
-                                      </>
+                                      {profileData?.profile?.personalDetails
+                                        ?.description || "null"}
                                     </Text>
                                   </div>
                                 </div>
@@ -699,7 +684,9 @@ const DesktopTwentyNinePage: React.FC = () => {
                                                 className="text-base text-black-900 tracking-[0.50px]"
                                                 size="txtAsapRegular16"
                                               >
-                                                Female
+                                                {profileData?.profile
+                                                  ?.personalDetails?.gender ||
+                                                  "null"}
                                               </Text>
                                             </div>
                                             <div className="flex flex-col items-center justify-start pt-1">
@@ -714,7 +701,9 @@ const DesktopTwentyNinePage: React.FC = () => {
                                                 className="text-base text-black-900 tracking-[0.50px]"
                                                 size="txtAsapRegular16"
                                               >
-                                                Heterosexual
+                                                {profileData?.profile
+                                                  ?.personalDetails
+                                                  ?.sexuality || "null"}
                                               </Text>
                                             </div>
                                             <div className="flex flex-col items-center justify-start pt-1">
@@ -729,7 +718,9 @@ const DesktopTwentyNinePage: React.FC = () => {
                                                 className="h-[18px] text-base text-black-900 tracking-[0.50px]"
                                                 size="txtAsapRegular16"
                                               >
-                                                26
+                                                {profileData?.profile
+                                                  ?.personalDetails?.age ||
+                                                  "null"}
                                               </Text>
                                             </div>
                                             <div className="mt-[2px] flex flex-col items-center justify-start pt-1">
@@ -745,7 +736,9 @@ const DesktopTwentyNinePage: React.FC = () => {
                                               className="text-base text-black-900 tracking-[0.50px]"
                                               size="txtAsapRegular16"
                                             >
-                                              Bulgarian
+                                              {profileData?.profile
+                                                ?.personalDetails
+                                                ?.nationality || "null"}
                                             </Text>
                                           </div>
                                           <div className="flex flex-col items-center justify-start pt-1">
@@ -799,7 +792,15 @@ const DesktopTwentyNinePage: React.FC = () => {
                                                     -
                                                   </Text>
                                                 </div> */}
-                                                <p>null</p>
+                                                <p>
+                                                  {profileData?.profile
+                                                    ?.physicalDetails?.chest /
+                                                    profileData?.profile
+                                                      ?.physicalDetails?.waist /
+                                                    profileData?.profile
+                                                      ?.physicalDetails?.hips ||
+                                                    "null"}
+                                                </p>
                                               </div>
                                               <div className="flex flex-col items-start justify-end pt-[5px]">
                                                 <h2 className="w-[62%]">
@@ -819,7 +820,9 @@ const DesktopTwentyNinePage: React.FC = () => {
                                                     className="text-base text-black-900 tracking-[0.50px]"
                                                     size="txtAsapRegular16"
                                                   >
-                                                    Caucasian
+                                                    {profileData?.profile
+                                                      ?.personalDetails
+                                                      ?.ethnicity || "null"}
                                                   </Text>
                                                 </div>
                                                 <div className="flex flex-col items-center justify-end pt-1">
@@ -834,7 +837,9 @@ const DesktopTwentyNinePage: React.FC = () => {
                                                     className="text-base text-black-900 tracking-[0.50px]"
                                                     size="txtAsapRegular16"
                                                   >
-                                                    Black
+                                                    {profileData?.profile
+                                                      ?.physicalDetails
+                                                      ?.hairColor || "null"}
                                                   </Text>
                                                 </div>
                                                 <div className="flex flex-col items-center justify-end pt-1">
@@ -849,7 +854,10 @@ const DesktopTwentyNinePage: React.FC = () => {
                                                     className="text-base text-black-900 tracking-[0.50px]"
                                                     size="txtAsapRegular16"
                                                   >
-                                                    169cm
+                                                    {profileData?.profile
+                                                      ?.physicalDetails
+                                                      ?.height || "null"}
+                                                    cm
                                                   </Text>
                                                 </div>
                                                 <div className="flex flex-col items-center justify-end pt-1">
@@ -868,7 +876,10 @@ const DesktopTwentyNinePage: React.FC = () => {
                                                     className="text-base text-black-900 tracking-[0.50px]"
                                                     size="txtAsapRegular16"
                                                   >
-                                                    52kg
+                                                    {profileData?.profile
+                                                      ?.physicalDetails
+                                                      ?.weight || "null"}
+                                                    kg
                                                   </Text>
                                                 </div>
                                                 <div className="flex flex-col items-center justify-end pt-1">
@@ -883,7 +894,9 @@ const DesktopTwentyNinePage: React.FC = () => {
                                                     className="text-base text-black-900 tracking-[0.50px]"
                                                     size="txtAsapRegular16"
                                                   >
-                                                    -
+                                                    {profileData?.profile
+                                                      ?.physicalDetails
+                                                      ?.breastImplant || "null"}
                                                   </Text>
                                                 </div>
                                                 <div className="flex flex-col items-center justify-end pt-1">
@@ -900,7 +913,9 @@ const DesktopTwentyNinePage: React.FC = () => {
                                                     className="text-base text-black-900 tracking-[0.50px]"
                                                     size="txtAsapRegular16"
                                                   >
-                                                    Brown
+                                                    {profileData?.profile
+                                                      ?.physicalDetails
+                                                      ?.eyeColor || "null"}
                                                   </Text>
                                                 </div>
                                                 <div className="flex flex-col items-center justify-end pt-1">
@@ -920,7 +935,9 @@ const DesktopTwentyNinePage: React.FC = () => {
                                                     className="text-base text-black-900 tracking-[0.50px]"
                                                     size="txtAsapRegular16"
                                                   >
-                                                    -
+                                                    {profileData?.profile
+                                                      ?.physicalDetails
+                                                      ?.genetalia || "null"}
                                                   </Text>
                                                 </div>
                                                 <div className="flex flex-col items-center justify-end pt-1">
@@ -935,7 +952,9 @@ const DesktopTwentyNinePage: React.FC = () => {
                                                     className="text-base text-black-900 tracking-[0.50px]"
                                                     size="txtAsapRegular16"
                                                   >
-                                                    -
+                                                    {profileData?.profile
+                                                      ?.physicalDetails
+                                                      ?.bodyArt || "null"}
                                                   </Text>
                                                 </div>
                                                 <div className="flex flex-col items-center justify-end pt-1">
@@ -951,7 +970,9 @@ const DesktopTwentyNinePage: React.FC = () => {
                                                   className="text-base text-black-900 tracking-[0.50px]"
                                                   size="txtAsapRegular16"
                                                 >
-                                                  -
+                                                  {profileData?.profile
+                                                    ?.physicalDetails
+                                                    ?.cupSize || "null"}
                                                 </Text>
                                               </div>
                                               <div className="flex flex-col items-center justify-end pt-1">
@@ -975,72 +996,26 @@ const DesktopTwentyNinePage: React.FC = () => {
                                     />
                                     <h1>Language</h1>
                                   </div>
-                                  <div className="flex flex-col items-start justify-start w-[97%] md:w-full">
-                                    <div className="flex relative gap-[163px] w-full">
-                                      <div className="flex flex-col items-start w-[85%] justify-start my-auto pb-8 md:pr-10 sm:pr-5 pr-[49.87px] w-auto">
-                                        <div className="flex flex-col items-start justify-between pr-[0.01px] w-fit sm:w-full">
-                                          <div className="flex flex-col items-start justify-start pr-4 w-auto">
-                                            <div className="flex flex-row items-center justify-start w-auto">
-                                              <Img
-                                                className="h-full w-12"
-                                                src="/images/img_close_red_a700.svg"
-                                                alt="close"
-                                              />
-                                              <div className="flex flex-col items-start justify-start w-auto">
-                                                <Text
-                                                  className="text-base text-black-900 tracking-[0.50px] uppercase w-auto"
-                                                  size="txtAsapRegular16"
-                                                >
-                                                  English
-                                                </Text>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                      <div className="flex flex-col items-center justify-start ml-[-0.01px] my-auto pb-8 md:pr-10 sm:pr-5 pr-[49.88px] w-auto z-[1]">
-                                        <div className="flex flex-col items-center justify-between w-auto sm:w-full">
-                                          <div className="flex flex-col items-start justify-start pr-4 w-auto">
-                                            <div className="flex flex-row items-center justify-start w-auto">
-                                              <Img
-                                                className="h-full w-12"
-                                                src="/images/img_contrast_red_a700.svg"
-                                                alt="contrast"
-                                              />
-                                              <div className="flex flex-col items-start justify-start w-auto">
-                                                <Text
-                                                  className="text-base text-black-900 tracking-[0.50px] uppercase w-auto"
-                                                  size="txtAsapRegular16"
-                                                >
-                                                  German
-                                                </Text>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div className="flex flex-col items-start justify-start pb-8 md:pr-10 sm:pr-5 pr-[49.87px] w-auto sm:w-full">
-                                      <div className="flex flex-col items-center justify-between pr-[0.01px] w-auto sm:w-full">
-                                        <div className="flex flex-col items-start justify-start pr-4 w-auto">
-                                          <div className="flex flex-row items-center justify-start w-auto">
-                                            <Img
+
+                                  <div className="flex flex-wrap gap-5 items-start justify-start w-[97%] md:w-full">
+                                    {profileData?.profile?.languages &&
+                                      profileData?.profile?.languages?.map(
+                                        (lan) => (
+                                          <div className="flex gap-2">
+                                            {/* <Img
                                               className="h-full w-12"
-                                              src="/images/img_imgmargin_light_green_900.svg"
-                                              alt="imgmargin_One"
-                                            />
-                                            <div className="flex flex-col items-start justify-start w-auto">
-                                              <Text
-                                                className="text-base text-black-900 tracking-[0.50px] uppercase w-auto"
-                                                size="txtAsapRegular16"
-                                              >
-                                                Bulgarian
-                                              </Text>
-                                            </div>
+                                              src="/images/img_close_red_a700.svg"
+                                              alt="close"
+                                            /> */}
+                                            <Text
+                                              className="text-base text-black-900 tracking-[0.50px] uppercase w-auto"
+                                              size="txtAsapRegular16"
+                                            >
+                                              {lan}
+                                            </Text>
                                           </div>
-                                        </div>
-                                      </div>
-                                    </div>
+                                        )
+                                      )}
                                   </div>
                                 </div>
                               </div>
@@ -1054,7 +1029,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                                     />
                                     <h1>Booking Notes</h1>
                                   </div>
-                                  <div className="flex flex-col items-start justify-start w-auto md:w-full">
+                                  {/* <div className="flex flex-col items-start justify-start w-auto md:w-full">
                                     <div className="flex flex-col items-center justify-start w-[25%]">
                                       <div className="flex flex-col items-center justify-start w-full">
                                         <div className="flex md:flex-col flex-row md:gap-5 items-center justify-start w-full">
@@ -1112,6 +1087,35 @@ const DesktopTwentyNinePage: React.FC = () => {
                                         </div>
                                       </div>
                                     </div>
+                                  </div> */}
+                                  <div className="flex flex-wrap gap-5 items-start justify-start w-[97%] md:w-full">
+                                    {profileData?.profile?.bookingNotes
+                                      ?.length > 0 ? (
+                                      profileData?.profile?.bookingNotes?.map(
+                                        (item) => (
+                                          <div className="flex gap-2">
+                                            <Img
+                                              className="h-full w-9"
+                                              src="/images/img_close_purple_a100.svg"
+                                              alt="close_One"
+                                            />
+                                            <Text
+                                              className="text-base text-black-900 tracking-[0.50px] uppercase w-auto"
+                                              size="txtAsapRegular16"
+                                            >
+                                              {item}
+                                            </Text>
+                                          </div>
+                                        )
+                                      )
+                                    ) : (
+                                      <Text
+                                        className="text-base text-black-900 tracking-[0.50px] w-auto"
+                                        size="txtAsapRegular16"
+                                      >
+                                        This Gingr has no booking notes
+                                      </Text>
+                                    )}
                                   </div>
                                 </div>
                               </div>
@@ -1136,8 +1140,9 @@ const DesktopTwentyNinePage: React.FC = () => {
                                             className="text-base text-black-900 tracking-[0.50px] w-auto"
                                             size="txtAsapRegular16"
                                           >
-                                            This Gingr has chosen not to show
-                                            their exact address.
+                                            {profileData?.profile?.location
+                                              ?.incall ||
+                                              " This Gingr has chosen not to show their exact address."}
                                           </Text>
                                         </div>
                                       </div>
@@ -1150,7 +1155,9 @@ const DesktopTwentyNinePage: React.FC = () => {
                                             className="sm:text-[17px] md:text-[19px] text-[21px] text-black-900 tracking-[0.50px] w-auto"
                                             size="txtAsapRegular21"
                                           >
-                                            Zürich
+                                            {profileData?.profile?.location
+                                              ?.outcall?.location ||
+                                              "No outcall location"}
                                           </Text>
                                         </div>
                                         <div className="flex flex-col items-start justify-start md:pr-10 sm:pr-5 pr-[405px] w-auto sm:w-full">
@@ -1173,23 +1180,10 @@ const DesktopTwentyNinePage: React.FC = () => {
                                               className="text-base text-black-900 tracking-[0.50px] w-auto"
                                               size="txtAsapRegular16"
                                             >
-                                              City
-                                            </Text>
-                                          </div>
-                                          <div className="flex flex-col items-start justify-start md:pr-10 sm:pr-5 pr-[403.7px] w-full">
-                                            <Text
-                                              className="text-base text-black-900 tracking-[0.50px] w-auto"
-                                              size="txtAsapRegular16"
-                                            >
-                                              City surroundings
-                                            </Text>
-                                          </div>
-                                          <div className="flex flex-col items-start justify-start md:pr-10 sm:pr-5 pr-[469.7px] w-full">
-                                            <Text
-                                              className="text-base text-black-900 tracking-[0.50px] w-auto"
-                                              size="txtAsapRegular16"
-                                            >
-                                              National
+                                              {
+                                                profileData?.profile?.location
+                                                  ?.outcall?.iTravelTo
+                                              }
                                             </Text>
                                           </div>
                                         </div>
@@ -1227,7 +1221,9 @@ const DesktopTwentyNinePage: React.FC = () => {
                                                 className="text-base text-black-900 tracking-[0.50px] w-auto"
                                                 size="txtAsapRegular16"
                                               >
-                                                € 200
+                                                €{" "}
+                                                {profileData?.profile?.price
+                                                  ?.incall?.hour1 || 0}
                                               </Text>
                                             </div>
                                           </div>
@@ -1237,7 +1233,9 @@ const DesktopTwentyNinePage: React.FC = () => {
                                                 className="text-base text-black-900 tracking-[0.50px] w-auto"
                                                 size="txtAsapRegular16"
                                               >
-                                                € 200
+                                                €{" "}
+                                                {profileData?.profile?.price
+                                                  ?.outcall?.hour1 || 0}
                                               </Text>
                                             </div>
                                           </div>
@@ -1252,7 +1250,9 @@ const DesktopTwentyNinePage: React.FC = () => {
                                                 className="text-base text-black-900 tracking-[0.50px] w-auto"
                                                 size="txtAsapRegular16"
                                               >
-                                                € 400
+                                                €{" "}
+                                                {profileData?.profile?.price
+                                                  ?.incall?.hour2 || 0}
                                               </Text>
                                             </div>
                                           </div>
@@ -1262,7 +1262,9 @@ const DesktopTwentyNinePage: React.FC = () => {
                                                 className="text-base text-black-900 tracking-[0.50px] w-auto"
                                                 size="txtAsapRegular16"
                                               >
-                                                € 400
+                                                €{" "}
+                                                {profileData?.profile?.price
+                                                  ?.outcall?.hour2 || 0}
                                               </Text>
                                             </div>
                                           </div>
@@ -1277,7 +1279,9 @@ const DesktopTwentyNinePage: React.FC = () => {
                                                 className="text-base text-black-900 tracking-[0.50px] w-auto"
                                                 size="txtAsapRegular16"
                                               >
-                                                € 600
+                                                €{" "}
+                                                {profileData?.profile?.price
+                                                  ?.incall?.hour3 || 0}
                                               </Text>
                                             </div>
                                           </div>
@@ -1287,7 +1291,9 @@ const DesktopTwentyNinePage: React.FC = () => {
                                                 className="text-base text-black-900 tracking-[0.50px] w-auto"
                                                 size="txtAsapRegular16"
                                               >
-                                                € 600
+                                                €{" "}
+                                                {profileData?.profile?.price
+                                                  ?.outcall?.hour3 || 0}
                                               </Text>
                                             </div>
                                           </div>
@@ -1350,7 +1356,10 @@ const DesktopTwentyNinePage: React.FC = () => {
                                                       className="text-base text-black-900 tracking-[0.50px] w-auto"
                                                       size="txtAsapRegular16"
                                                     >
-                                                      All day
+                                                      {profileData?.profile
+                                                        ?.availability?.monday
+                                                        ? "All day"
+                                                        : "unvailable"}
                                                     </Text>
                                                   </div>
                                                 </div>
@@ -1367,7 +1376,10 @@ const DesktopTwentyNinePage: React.FC = () => {
                                                       className="text-base text-black-900 tracking-[0.50px] w-auto"
                                                       size="txtAsapRegular16"
                                                     >
-                                                      All day
+                                                      {profileData?.profile
+                                                        ?.availability?.tuesday
+                                                        ? "All day"
+                                                        : "unavailable"}
                                                     </Text>
                                                   </div>
                                                 </div>
@@ -1386,17 +1398,11 @@ const DesktopTwentyNinePage: React.FC = () => {
                                                       className="text-base text-black-900 tracking-[0.50px] w-auto"
                                                       size="txtAsapRegular16"
                                                     >
-                                                      All day
-                                                    </Text>
-                                                  </div>
-                                                </div>
-                                                <div className="flex flex-col hidden h-[41px] md:h-auto items-start justify-start">
-                                                  <div className="flex flex-col items-start justify-start md:pr-10 sm:pr-5 w-full">
-                                                    <Text
-                                                      className="text-base text-black-900 tracking-[0.50px] w-auto"
-                                                      size="txtAsapRegular16"
-                                                    >
-                                                      All day
+                                                      {profileData?.profile
+                                                        ?.availability
+                                                        ?.wednesday
+                                                        ? "All day"
+                                                        : "unavailable"}
                                                     </Text>
                                                   </div>
                                                 </div>
@@ -1414,7 +1420,10 @@ const DesktopTwentyNinePage: React.FC = () => {
                                                     className="text-base text-black-900 tracking-[0.50px] w-auto"
                                                     size="txtAsapRegular16"
                                                   >
-                                                    All day
+                                                    {profileData?.profile
+                                                      ?.availability?.thursday
+                                                      ? "All day"
+                                                      : "unavailable"}
                                                   </Text>
                                                 </div>
                                               </div>
@@ -1437,7 +1446,10 @@ const DesktopTwentyNinePage: React.FC = () => {
                                                       className="text-base text-black-900 tracking-[0.50px] w-auto"
                                                       size="txtAsapRegular16"
                                                     >
-                                                      All day
+                                                      {profileData?.profile
+                                                        ?.availability?.friday
+                                                        ? "All day"
+                                                        : "unavailable"}
                                                     </Text>
                                                   </div>
                                                 </div>
@@ -1454,16 +1466,32 @@ const DesktopTwentyNinePage: React.FC = () => {
                                                       className="text-base text-black-900 tracking-[0.50px] w-auto"
                                                       size="txtAsapRegular16"
                                                     >
-                                                      All day
+                                                      {profileData?.profile
+                                                        ?.availability?.saturday
+                                                        ? "All day"
+                                                        : "unavailable"}
                                                     </Text>
                                                   </div>
                                                 </div>
                                               </div>
                                             </div>
-                                            <div className="flex flex-1 flex-col items-start justify-start pb-[7px] w-full">
-                                              <div className="flex flex-col items-end justify-start w-auto sm:w-full">
+                                            <div className="flex md:flex-1 flex-col items-start justify-start pb-[7px] pr-[7px] w-[92%] md:w-full">
+                                              <div className="flex sm:flex-col flex-row sm:gap-10 gap-[25px] items-end justify-between w-auto sm:w-full">
                                                 <div className="flex flex-col h-[41px] md:h-auto items-start justify-start pb-[19px]">
                                                   <h3>Sunday</h3>
+                                                </div>
+                                                <div className="flex flex-col h-[41px] md:h-auto items-start justify-start">
+                                                  <div className="flex flex-col items-start justify-start md:pr-10 sm:pr-5 w-full">
+                                                    <Text
+                                                      className="text-base text-black-900 tracking-[0.50px] w-auto"
+                                                      size="txtAsapRegular16"
+                                                    >
+                                                      {profileData?.profile
+                                                        ?.availability?.sunday
+                                                        ? "All day"
+                                                        : "unavailable"}
+                                                    </Text>
+                                                  </div>
                                                 </div>
                                               </div>
                                             </div>
@@ -1643,7 +1671,7 @@ const DesktopTwentyNinePage: React.FC = () => {
                       className="text-base text-blue_gray-900_02"
                       size="txtMontserratMedium16Bluegray90002"
                     >
-                      Tekena west
+                      {user?.workingName || user?.firstName}
                     </Text>
                   </div>
                   <div className="flex flex-col items-start justify-start w-full">
@@ -1909,7 +1937,7 @@ const DesktopTwentyNinePage: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col font-montserrat items-center justify-start max-w-[1349px] mt-[59px] mx-auto md:px-5 w-full">
+        <div className="flex flex-col mt[-500px] font-montserrat items-center justify-start max-w-[1349px] mx-auto md:px-5 w-full">
           <div className="flex flex-col items-center justify-end p-[50px] md:px-10 sm:px-5 w-full">
             <div className="flex flex-col items-center justify-start mt-7 pb-[98px] w-[84%] md:w-full">
               <div className="flex md:flex-col flex-row md:gap-10 items-center justify-between w-full">
