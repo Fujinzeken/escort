@@ -181,8 +181,8 @@ const SignupPage: React.FC = () => {
                             />
                           </div>
                           <div className=" gen-container absolute flex flex-col md:gap-10 gap-5 h-max inset-y-[0] justify-start my-auto right-[0] w-[94%]">
-                            <div className="flex flex-col items-start justify-start md:ml-[0] ml-[11px] w-[88%] md:w-full">
-                              <div className="flex flex-col items-start justify-start w-full">
+                            <div className="flex flex-col items-start justify-start md:ml-[0] ml-[11px] w-[88%] md:w-full sm:px-3">
+                              <div className="flex flex-col items-start justify-start w-full sm:invisible">
                                 <Text
                                   className="sm:text-[38px] md:text-[44px] text-[52px] text-white-A700"
                                   size="txtMontserratSemiBold52WhiteA700"
@@ -191,7 +191,7 @@ const SignupPage: React.FC = () => {
                                 </Text>
                               </div>
                               <Text
-                                className="text-2xl md:text-[22px] text-gray-50 sm:text-xl"
+                                className="text-2xl md:text-[22px] text-gray-50 sm:text-md sm:mt-[-150px]"
                                 size="txtMontserratRegular24Gray50"
                               >
                                 Sign up to get started finding your partner!
@@ -314,54 +314,23 @@ const SignupPage: React.FC = () => {
                                   </div>
                                 </div>
                               </div>
-                              <div className="flex md:flex-col flex-row md:gap-5 items-centeer justify-space-between mt-5 pr-0.5 py-0.5 w-[88%] md:w-full">
+                              <div className="sm:flex sm:px-4 sm:mt-0 sm:items-center flex items-center justify-space-between mt-5 pr-0.5 w-[88%] md:w-full">
                                 <input
                                   type="checkbox"
                                   autoComplete="off"
                                   className="border-2 check border-gray-500 mr-2 border-solid h-4 md:mt-0 mt-[3px] rounded-sm w-4"
                                 ></input>
                                 <Text
-                                  className="md:ml-[0] md:mt-0  text-base text-gray-200_02"
+                                  className="md:ml-[0] md:mt-0  text-base text-gray-200_02 sm:text-sm"
                                   size="txtMontserratRegular16Gray20002"
                                 >
-                                  By creating your account, you agree to our{" "}
+                                  By creating your account, you agree to our
+                                  Terms of use & Privacy Policy
                                 </Text>
-                                <div className="md:h-[21px] h-fit md:ml-[0] ml-[3px] relative w-[17%] md:w-full">
-                                  <Text
-                                    className="inset-x-[0] mx-auto text-base text-white-A700 top-[0] w-max"
-                                    size="txtMontserratRegular16WhiteA700"
-                                  >
-                                    Terms of use
-                                  </Text>
-                                </div>
-                                <Text
-                                  className="md:ml-[0] ml-[3px] md:mt-0 text-base text-gray-200_02"
-                                  size="txtMontserratRegular16Gray20002"
-                                >
-                                  {" "}
-                                  &{" "}
-                                </Text>
-                                <div className="h-[22px] md:ml-[0] ml-[3px] md:mt-0  relative w-[18%] md:w-full">
-                                  <a
-                                    href="javascript:"
-                                    className="h-max inset-[0] justify-center m-auto text-base text-white-A700 w-max"
-                                  >
-                                    <Text size="txtMontserratRegular16WhiteA700">
-                                      Privacy Policy
-                                    </Text>
-                                  </a>
-                                </div>
                               </div>
-                              <div className="flex sm:flex-col flex-row sm:gap-10 items-center justify-between mt-[50px] w-[87%] md:w-full">
-                                <div>
-                                  {/* Display error messages */}
-                                  {/* {errors.username && <p className="error-text">{errors.username}</p>}
-            {errors.email && <p className="error-text">{errors.email}</p>}
-            {errors.password && <p className="error-text">{errors.password}</p>}
-           */}
-                                </div>
+                              <div className="flex sm:flex-col sm:mt-5 sm:gap-3 items-center justify-between mt-[50px] w-[87%] md:w-full">
                                 <Button
-                                  className="capitalize cursor-pointer min-w-[150px] rounded-[30px] pod text-center text-xl tracking-[0.50px]"
+                                  className=" capitalize cursor-pointer min-w-[150px] rounded-[30px] pod text-center text-xl tracking-[0.50px]"
                                   color="orange_600_90"
                                   size="2xl"
                                   variant="fill"
@@ -376,7 +345,7 @@ const SignupPage: React.FC = () => {
                                     </div>
                                   )}
                                 </Button>
-                                <div className="flex sm:flex-col flex-row font-roboto mr7 gap-[5px] items-start justify-center">
+                                <div className="flex sm:flex-col flex-row font-roboto gap-[5px] items-start justify-center">
                                   <a
                                     href="javascript:"
                                     className="text-sm text-white-A700"

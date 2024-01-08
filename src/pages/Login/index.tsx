@@ -249,7 +249,7 @@ const LoginPage: React.FC = () => {
                                       </div>
                                     </div>
                                   </div>
-                                  <div className="flex flex-1 flex-row sm:gap-10 items-center justify-between my-0 w-full">
+                                  <div className="flex flex-1 flex-row sm:gap-4 sm:flex-col items-center justify-between my-0 w-full">
                                     <Button
                                       className="capitalize cursor-pointer log min-w-[150px] rounded-[30px] text-center text-xl tracking-[0.50px]"
                                       color="orange_600"
@@ -339,7 +339,7 @@ const LoginPage: React.FC = () => {
                     </div>
                   </div>
                 </div>
-                <div className="absolute bottom-[15%] flex flex-col font-roboto inset-x-[0] items-center justify-end mx-auto">
+                <div className="absolute bottom-[15%] sm:bottom-[10%] flex flex-col font-roboto inset-x-[0] items-center justify-end mx-auto">
                   <Text
                     className="text-center text-sm text-white-A700"
                     size="txtRobotoRegular14"

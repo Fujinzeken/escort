@@ -100,6 +100,13 @@ const DashboardPage: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
 
+    if (token) {
+      if (user?.profile) {
+        account("/EscortDashboard");
+      }
+    } else {
+      account("/login");
+    }
     fetchHomeData();
   }, []);
   return (

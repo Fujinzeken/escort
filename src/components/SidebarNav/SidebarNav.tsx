@@ -29,12 +29,16 @@ const SidebarNav = ({ pageOn }) => {
           isHidden
             ? "hidden"
             : "flex w-4/5 absolute left-[0] ml-[-20px] top-[5%] z-10"
-        } flex gap-[31px] items-center w-[100%]  md:${
-          isHidden ? "hidden" : "w-4/5 flex-col"
+        } flex gap-[31px] items-center md:${
+          isHidden
+            ? "hidden"
+            : "flex w-4/5 absolute left-[0] ml-[-20px] top-[5%] z-10"
         }`}
       >
         <div className="flex flex-col items-end justify-start sm:pl-5 pl-[22px] w-full md:w-full">
-          <div className="bg-white-A700 flex flex-col gap-[15px] items-center justify-start mb-2 p-[25px] sm:px-5 rounded-[15px] shadow-bs7 w-full">
+          <div
+            className={`bg-white-A700 flex flex-col gap-[15px] items-center justify-start mb-2 p-[25px] sm:px-5 rounded-[15px] shadow-bs7 w-full`}
+          >
             <div className="flex flex-col items-start justify-start w-full">
               <div className="flex flex-col items-start justify-start w-full md:w-full">
                 <div

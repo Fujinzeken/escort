@@ -24,7 +24,7 @@ const LadiesStar: React.FC = () => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       console.log(res.data);
-      setLadies(res?.data?.escorts);
+      setLadies(res?.data?.users);
     } catch (err) {
       console.log(err);
       catchErrorFunc(err, navigate);
@@ -44,6 +44,9 @@ const LadiesStar: React.FC = () => {
       return lady;
     }
   });
+
+  console.log(filterdLadies);
+  console.log(ladies);
 
   const ladyClicked = (id) => {
     navigate(`/ladies-star/${id}`);

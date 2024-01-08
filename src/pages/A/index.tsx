@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Button, Img, Input, Line, List, Text } from "components";
 import Header1 from "components/Header1";
@@ -52,11 +52,17 @@ const APage: React.FC = () => {
     transform: isrotate ? "rotate(180deg)" : "rotate(0deg)",
     transition: "all .5s ease-in-out",
   };
+
+  useEffect(() => {
+    if (!token) {
+      account("/login");
+    }
+  }, []);
   return (
     <>
       <div className="bg-white-A700 flex flex-col font-roboto gap-[42px] items-center justify-start mx-auto w-full">
         <div className="sm:h-[1265px] h-[1510px] md:h-[1980px] md:px-5 w-full md:w-full">
-          <div className="advert absolute bottom-[0] flex flex-col items-center justify-start right-[0] w-[79%] md:w-full">
+          <div className="advert absolute bottom-[0] left-[23%] flex flex-col items-center justify-center  w-[79%] md:w-full sm:w-full sm:left-[10%]">
             <div className="flex flex-col gap-[34px] items-center justify-start w-full">
               <div className="flex flex-col gap-6 items-center justify-start w-full">
                 <div className="flex flex-col items-start justify-start w-full">
@@ -77,7 +83,7 @@ const APage: React.FC = () => {
                 </div>
                 <Line className="bg-black-900_1e h-px w-full" />
               </div>
-              <div className="flex flex-col justify-start w-[97%] md:w-full">
+              <div className="flex flex-col justify-start w-[97%] md:w-full sm:w-[100%]">
                 <div className="flex flex-col gap-2 items-center justify-start ml-3 md:ml-[0] w-[99%] md:w-full">
                   <div className="flex flex-col items-start justify-start pr-[5px] py-[5px] w-full">
                     <Text
@@ -87,7 +93,7 @@ const APage: React.FC = () => {
                       Status of the ad-free feature
                     </Text>
                   </div>
-                  <div className="flex flex-col items-start justify-end w-full">
+                  <div className="flex flex-col items-start justify-end w-full sm:w-[90%]">
                     <Text
                       className="text-gray-600_01 text-sm"
                       size="txtRobotoRegular14Gray60001"
@@ -99,12 +105,12 @@ const APage: React.FC = () => {
                   </div>
                 </div>
                 <div className="flex flex-col items-start justify-start mt-1 w-full">
-                  <div className="flex flex-col items-start justify-start w-[84%] md:w-full">
+                  <div className="flex flex-col items-start justify-start w-[84%] md:w-full sm:w-[80%]">
                     <div className="flex flex-col items-center justify-end pt-3 px-3 w-[73%] md:w-full">
                       <Input
                         name="alert"
                         placeholder="The ad-free feature is not activated"
-                        className="p-0 placeholder:text-red-A700_01 text-left text-sm w-full"
+                        className="p-0 placeholder:text-red-A700_01 text-left text-sm w-full sm:w-[80%]"
                         wrapClassName="flex rounded-[3px] w-full"
                         prefix={
                           <Img
@@ -131,124 +137,97 @@ const APage: React.FC = () => {
                           Select ad-free feature duration
                         </Text>
                       </div>
-                      <div className="flex flex-col items-center justify-start pb-3.5 w-full">
-                        <div className="flex flex-col items-center justify-start pb-[7px] w-full">
-                          <div className="flex flex-col items-center justify-start w-full">
-                            <List
-                              className="flex flex-col gap-[5px] items-center w-full"
-                              orientation="vertical"
+                      <div className="flex flex-col w-full gap-4">
+                        <div className="flex items-center w-[100%] gap-5 px-2">
+                          <input
+                            type="radio"
+                            id="myRadioButton"
+                            className="hidden"
+                          />
+
+                          <label
+                            htmlFor="myRadioButton"
+                            className="inline-block checkmark rounded cursor-pointer transition-all duration-300 ease-in-out hover:bg-blue-500 checked:bg-blue-500"
+                          ></label>
+
+                          <div className="w-[100%] border px-4 border-gray-600_03 border-solid flex md:gap-5 items-start justify-between p-[9px] rounded-[3px] sm:flex sm:w-[100%] sm:mr-[70px]">
+                            <Text
+                              className="mb-[3px] md:text-3xl sm:text-[18px] text-[32px] text-gray-600_01"
+                              size="txtRobotoLight32"
                             >
-                              <div className="flex flex-1 flex-col items-start justify-start my-0 pb-[23px] sm:pr-5 pr-[23px] w-full">
-                                <div className="flex md:flex-col flex-row md:gap-5 items-center justify-start w-[98%] md:w-full">
-                                  <label className="container">
-                                    <input type="radio" name="radio" />
-                                    <span className="checkmark"></span>
-                                  </label>
-                                  <div className="flex flex-col items-center justify-start w-[1000%] pr-[6remm] md:w-full">
-                                    <div className="border h-[80px] border-gray-600_03 border-solid flex md:flex-col flex-row md:gap-5 items-start justify-start p-[9px] rounded-[3px] w-full">
-                                      <div className="flex md:flex-1 flex-col items-start justify-start ml-6 md:ml-[0] w-[61%] md:w-full">
-                                        <div className="flex flex-col items-center justify-start py-2">
-                                          <Text
-                                            className="mb-[3px] md:text-3xl sm:text-[28px] text-[32px] text-gray-600_01"
-                                            size="txtRobotoLight32"
-                                          >
-                                            1 month
-                                          </Text>
-                                        </div>
-                                      </div>
-                                      {/* <label className="container">
-                                        <input type="radio" name="radio" />
-                                        <span className="checkmark"></span>
-                                      </label> */}
-                                      <div className="flex md:flex-1 flex-col items-center justify-start md:px-10 sm:px-5 w-[26%] md:w-full">
-                                        <div className="flex flex-col items-center justify-start py-2">
-                                          <Text
-                                            className="mb-0.5 md:text-3xl sm:text-[28px] text-[32px] text-gray-600_01"
-                                            size="txtRobotoBold32"
-                                          >
-                                            2.95 €
-                                          </Text>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="flex flex-1 flex-col items-start justify-start my-0 pb-[23px] sm:pr-5 pr-[23px] w-full">
-                                <div className="flex md:flex-col flex-row md:gap-5 items-center justify-start w-[98%] md:w-full">
-                                  <label className="container">
-                                    <input type="radio" name="radio" />
-                                    <span className="checkmark"></span>
-                                  </label>
-                                  <div className="flex flex-col items-center justify-start w-[1000%] pr-[6remm] md:w-full">
-                                    <div className="border h-[80px] border-gray-600_03 border-solid flex md:flex-col flex-row md:gap-5 items-start justify-start p-[9px] rounded-[3px] w-full">
-                                      <div className="flex md:flex-1 flex-col items-start justify-start ml-6 md:ml-[0] w-[61%] md:w-full">
-                                        <div className="flex flex-col items-center justify-start py-2">
-                                          <Text
-                                            className="mb-[3px] md:text-3xl sm:text-[28px] text-[32px] text-gray-600_01"
-                                            size="txtRobotoLight32"
-                                          >
-                                            3 month
-                                          </Text>
-                                        </div>
-                                      </div>
+                              1 month
+                            </Text>
 
-                                      <div className="flex md:flex-1 flex-col items-center justify-start md:px-10 sm:px-5 w-[26%] md:w-full">
-                                        <div className="flex flex-col items-center justify-start py-2">
-                                          <Text
-                                            className="mb-0.5 md:text-3xl sm:text-[28px] text-[32px] text-gray-600_01"
-                                            size="txtRobotoBold32"
-                                          >
-                                            7.95 €
-                                          </Text>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="flex flex-1 flex-col items-start justify-start my-0 pb-[23px] sm:pr-5 pr-[23px] w-full">
-                                <div className="flex md:flex-col flex-row md:gap-5 items-center justify-start w-[98%] md:w-full">
-                                  <label className="container">
-                                    <input type="radio" name="radio" />
-                                    <span className="checkmark"></span>
-                                  </label>
-                                  <div className="flex flex-col items-center justify-start w-[1000%] pr-[6remm] md:w-full">
-                                    <div className="border h-[80px] border-gray-600_03 border-solid flex md:flex-col flex-row md:gap-5 items-start justify-start p-[9px] rounded-[3px] w-full">
-                                      <div className="flex md:flex-1 flex-col items-start justify-start ml-6 md:ml-[0] w-[61%] md:w-full">
-                                        <div className="flex flex-col items-center justify-start py-2">
-                                          <Text
-                                            className="mb-[3px] md:text-3xl sm:text-[28px] text-[32px] text-gray-600_01"
-                                            size="txtRobotoLight32"
-                                          >
-                                            1 year
-                                          </Text>
-                                        </div>
-                                      </div>
+                            <Text
+                              className="mb-0.5 md:text-3xl sm:text-[18px] text-[32px] text-gray-600_01"
+                              size="txtRobotoBold32"
+                            >
+                              2.95 €
+                            </Text>
+                          </div>
+                        </div>
+                        <div className="flex items-center w-[100%] gap-5 px-2">
+                          <input
+                            type="radio"
+                            id="myRadioButton"
+                            className="hidden"
+                          />
 
-                                      <div className="flex md:flex-1 flex-col items-center justify-start md:px-10 sm:px-5 w-[26%] md:w-full">
-                                        <div className="flex flex-col items-center justify-start py-2">
-                                          <Text
-                                            className="mb-0.5 md:text-3xl sm:text-[28px] text-[32px] text-gray-600_01"
-                                            size="txtRobotoBold32"
-                                          >
-                                            29.95 €
-                                          </Text>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </List>
+                          <label
+                            htmlFor="myRadioButton"
+                            className="inline-block checkmark rounded cursor-pointer transition-all duration-300 ease-in-out hover:bg-blue-500 checked:bg-blue-500"
+                          ></label>
+
+                          <div className="w-[100%] border px-4 border-gray-600_03 border-solid flex md:gap-5 items-start justify-between p-[9px] rounded-[3px] sm:flex sm:w-[100%] sm:mr-[70px]">
+                            <Text
+                              className="mb-[3px] md:text-3xl sm:text-[18px] text-[32px] text-gray-600_01"
+                              size="txtRobotoLight32"
+                            >
+                              3 months
+                            </Text>
+
+                            <Text
+                              className="mb-0.5 md:text-3xl sm:text-[18px] text-[32px] text-gray-600_01"
+                              size="txtRobotoBold32"
+                            >
+                              72.95 €
+                            </Text>
+                          </div>
+                        </div>
+                        <div className="flex items-center w-[100%] gap-5 px-2">
+                          <input
+                            type="radio"
+                            id="myRadioButton"
+                            className="hidden"
+                          />
+
+                          <label
+                            htmlFor="myRadioButton"
+                            className="inline-block checkmark rounded cursor-pointer transition-all duration-300 ease-in-out hover:bg-blue-500 checked:bg-blue-500"
+                          ></label>
+
+                          <div className="w-[100%] border px-4 border-gray-600_03 border-solid flex md:gap-5 items-start justify-between p-[9px] rounded-[3px] sm:flex sm:w-[100%] sm:mr-[70px]">
+                            <Text
+                              className="mb-[3px] md:text-3xl sm:text-[18px] text-[32px] text-gray-600_01"
+                              size="txtRobotoLight32"
+                            >
+                              1 year
+                            </Text>
+
+                            <Text
+                              className="mb-0.5 md:text-3xl sm:text-[18px] text-[32px] text-gray-600_01"
+                              size="txtRobotoBold32"
+                            >
+                              229.95 €
+                            </Text>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div className="flex flex-col items-start justify-start w-[96%] md:w-full">
-                      <div className="flex flex-col items-center justify-start pl-3 py-3 w-[50%] md:w-full">
+                    <div className="flex flex-col items-start justify-start w-[96%] md:w-full sm:w-4/5 sm:items-center sm:justify-center">
+                      <div className="flex flex-col items-center justify-start pl-3 py-3 w-[50%] md:w-full sm:w-full sm:flex sm:items-center sm:justify-center">
                         <Button
-                          className="border border-orange-600 border-solid cursor-pointer ml-[70px] leading-[normal] w-[80%] sm:min-w-full rounded-[3px] text-center text-sm"
+                          className="border border-orange-600 border-solid cursor-pointer leading-[normal] w-[80%] sm:min-w-full rounded-[3px] text-center text-sm sm:ml-8"
                           shape="round"
                           color="orange_600"
                           size="md"
@@ -268,113 +247,53 @@ const APage: React.FC = () => {
                       Your advantages:
                     </Text>
                   </div>
-                  <div className="flex mt-1 md:pr-10 pr-11 sm:pr-5 relative w-full">
-                    <div className="h-[442px] w-[50%] md:h-[448px] my-auto w-[64%] md:w-full">
-                      <div className="absolute flex flex-col h-max inset-y-[0] items-center justify-start left-[0] my-auto p-[7px] w-[53%]">
-                        <div className="flex flex-col items-start justify-end my-[17px] pt-[21px] w-[99%] md:w-full">
-                          <div className="flex flex-col items-center justify-start md:ml-[0] ml-[5px] w-[79%] md:w-full">
-                            <Img
-                              className="h-[138px] md:h-auto object-cover w-full"
-                              src="images/img_divvimageimage_138x285.png"
-                              alt="divvimageimage"
-                            />
-                          </div>
-                          <div className="flex flex-col items-center justify-end pt-6 w-full">
-                            <div className="flex flex-col gap-[7px] items-start justify-start pb-[95px] w-full">
-                              <div className="flex flex-col items-start justify-end md:ml-[0] ml-[5px] pr-[3px] py-[3px]">
-                                <Text
-                                  className="text-gray-600_01 text-sm"
-                                  size="txtRobotoBold14Gray60001"
-                                >
-                                  Enjoy Ladies.de ad-free
-                                </Text>
-                              </div>
-                              <div className="flex flex-col items-start justify-start pr-4 pt-4">
-                                <Text
-                                  className="leading-[25.00px] mt-[9px] text-gray-600_01 text-sm w-full"
-                                  size="txtRobotoRegular14Gray60001"
-                                >
-                                  Enjoy Ladies.de without annoying ads! You will
-                                  no longer see webcam, sex chat, phone sex ads,
-                                  third-party ads or national banners.
-                                </Text>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="absolute flex flex-col hidden h-max inset-y-[0] items-center justify-start my-auto p-[11px] right-[0] w-[53%]">
-                        <div className="flex flex-col items-start justify-end my-3 pt-[23px] w-full">
-                          <div className="flex flex-col items-center justify-start w-[87%] md:w-full">
-                            <Img
-                              className="h-[136px] md:h-auto object-cover w-full"
-                              src="images/img_divvimageimage_136x308.png"
-                              alt="divvimageimage_One"
-                            />
-                          </div>
-                          <div className="flex flex-col items-center justify-end pt-6 w-full">
-                            <div className="flex flex-col gap-2 items-center justify-start pb-[95px] w-full">
-                              <div className="flex flex-col items-start justify-end pr-[3px] py-[3px] w-full">
-                                <Text
-                                  className="text-gray-600_01 text-sm"
-                                  size="txtRobotoBold14Gray60001"
-                                >
-                                  Simply transparent prices
-                                </Text>
-                              </div>
-                              <div className="flex flex-col items-start justify-start pr-4 pt-4 w-full">
-                                <Text
-                                  className="leading-[25.00px] text-gray-600_01 text-sm w-[92%] sm:w-full"
-                                  size="txtRobotoRegular14Gray60001"
-                                >
-                                  No subscription, no automatic renewal, no
-                                  hidden costs! Your advertising freedom is
-                                  available with different, fixed terms from one
-                                  to twelve months. You have the choice!
-                                </Text>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                  <div className="flex gap-5 px-4 mt-7 sm:justify-center sm:flex-col sm:gap-6">
+                    <div className="flex flex-col gap-4 w-1/2 px-5 sm:w-[80%] ">
+                      <Img
+                        className="h-[138px] md:h-auto object-cover w-full"
+                        src="images/img_divvimageimage_138x285.png"
+                        alt="divvimageimage"
+                      />
+
+                      <Text
+                        className="text-gray-600_01 text-sm"
+                        size="txtRobotoBold14Gray60001"
+                      >
+                        Enjoy Ladies.de ad-free
+                      </Text>
+
+                      <Text
+                        className="leading-[25.00px] mt-[9px] text-gray-600_01 text-sm w-full"
+                        size="txtRobotoRegular14Gray60001"
+                      >
+                        Enjoy Ladies.de without annoying ads! You will no longer
+                        see webcam, sex chat, phone sex ads, third-party ads or
+                        national banners.
+                      </Text>
                     </div>
-                    <div className="flex flex-col items-center justify-start ml-[-12.33px] my-auto p-3 w-[50%] z-[1]">
-                      <div className="flex flex-col items-start justify-end my-3 pt-[17px] w-full">
-                        <div className="flex flex-col items-center justify-start w-[87%] md:w-full">
-                          <Img
-                            className="h-[142px] md:h-auto object-cover w-full"
-                            src="images/img_divvimageimage_142x310.png"
-                            alt="divvimageimage_Two"
-                          />
-                        </div>
-                        <div className="flex flex-col items-center justify-end pt-6 w-full">
-                          <div className="flex flex-col gap-7 items-start justify-end w-full">
-                            <div className="flex flex-col items-start justify-start pr-[3px] py-[3px] w-full">
-                              <Text
-                                className="text-gray-600_01 text-sm"
-                                size="txtRobotoBold14Gray60001"
-                              >
-                                Your data - secure and discreet
-                              </Text>
-                            </div>
-                            <Text
-                              className="leading-[25.00px] text-gray-600_01 text-sm"
-                              size="txtRobotoRegular14Gray60001"
-                            >
-                              <>
-                                We treat your personal data with the highest
-                                security and utmost discretion. Invoice items
-                                are always formulated neutrally. Payment
-                                transactions use encrypted and official
-                                interfaces to the providers. Age verification is
-                                <br />
-                                done via world-renowned Webident and Bankident
-                                procedures, without giving us access to details.
-                              </>
-                            </Text>
-                          </div>
-                        </div>
-                      </div>
+                    <div className="flex flex-col gap-4 w-1/2 px-5 sm:w-[80%] ">
+                      <Img
+                        className="h-[136px] md:h-auto object-cover w-full"
+                        src="images/img_divvimageimage_136x308.png"
+                        alt="divvimageimage_One"
+                      />
+
+                      <Text
+                        className="text-gray-600_01 text-sm"
+                        size="txtRobotoBold14Gray60001"
+                      >
+                        Simply transparent prices
+                      </Text>
+
+                      <Text
+                        className="leading-[25.00px] text-gray-600_01 text-sm w-[92%] sm:w-full"
+                        size="txtRobotoRegular14Gray60001"
+                      >
+                        No subscription, no automatic renewal, no hidden costs!
+                        Your advertising freedom is available with different,
+                        fixed terms from one to twelve months. You have the
+                        choice!
+                      </Text>
                     </div>
                   </div>
                 </div>
@@ -404,7 +323,11 @@ const APage: React.FC = () => {
                     Menu
                   </button>
                   <div
-                    className={` sm:${isHidden ? "hidden" : "w-4/5 "} md:${
+                    className={` sm:${
+                      isHidden
+                        ? "hidden"
+                        : "w-4/5 absolute left-0 top-[10%] ml-[-20px]"
+                    } md:${
                       isHidden ? "hidden" : "w-4/5 md:flex-col md:gap-12"
                     }flex flex-row items-start justify-between w-full`}
                   >
@@ -689,7 +612,7 @@ const APage: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col font-montserrat items-center justify-start max-w-[1349px] mx-auto md:px-5 w-full">
+        <div className="flex flex-col font-montserrat items-center justify-start max-w-[1349px] mx-auto md:px-5 w-full sm:mt-[300px]">
           <div className="flex flex-col items-center justify-end p-[50px] md:px-10 sm:px-5 w-full">
             <div className="flex flex-col items-center justify-start mt-7 pb-[98px] w-[84%] md:w-full">
               <div className="flex md:flex-col flex-row md:gap-10 items-center justify-between w-full">

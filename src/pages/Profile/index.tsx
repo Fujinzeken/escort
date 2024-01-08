@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import catchErrorFunc from "utils/authErrorHandler";
+import Footer from "components/Footer/Footer";
 
 const ProfilePage: React.FC = () => {
   const [username, setUsername] = useState("");
@@ -86,12 +87,12 @@ const ProfilePage: React.FC = () => {
   };
 
   useEffect(() => {
-    // getClientSettings();
+    getClientSettings();
   }, []);
   return (
     <>
       <div className="bg-white-A700 flex flex-col font-montserrat sm:gap-10 md:gap-10 gap-[836px] items-center justify-start mx-auto pb-[83px] w-full">
-        <div className="md:h-[1046px] h-[1200px] md:px-5 relative w-full">
+        <div className="md:h-[1046px] h-[1200px] md:px-5 relative w-full sm:h-[1500px]">
           <div className="md:h-[1046px] h-[1200px] m-auto w-full">
             <div
               className="absolute bg-cover bg-no-repeat flex flex-col font-poppins h-[1010px] inset-x-[0] items-end justify-start mx-auto p-[30px] sm:px-5 top-[5%] w-full"
@@ -228,7 +229,7 @@ const ProfilePage: React.FC = () => {
                             />
                           </div>
                         </div>
-                        <div className="flex gap-5">
+                        <div className="flex gap-5 ">
                           <div className="w-1/2 items-center">
                             <div className="flex justify-between items-center">
                               <Text
@@ -266,9 +267,9 @@ const ProfilePage: React.FC = () => {
                             />
                           </div>
                         </div>
-                        <div className="flex gap-5 mt-8">
+                        <div className="flex gap-5 mt-8 sm:flex-col">
                           <div className="w-1/2 items-center">
-                            <div className="flex justify-between items-center">
+                            <div className="flex justify-between items-center sm:gap-5">
                               <Text
                                 size="txtMontserratRegular18Gray70003"
                                 className="pl-3"
@@ -284,6 +285,7 @@ const ProfilePage: React.FC = () => {
                               </Button>
                             </div>
                             <input
+                              disabled
                               type="text"
                               placeholder="Not verified"
                               className="border-none rounded-full border-b border-gray-500 placeholder-red-500"
@@ -292,7 +294,7 @@ const ProfilePage: React.FC = () => {
                             />
                           </div>
                           <div className="w-1/2 items-center">
-                            <div className="flex justify-between items-center">
+                            <div className="flex justify-between items-center sm:gap-5">
                               <Text
                                 size="txtMontserratRegular18Gray70003"
                                 className="pl-3"
@@ -308,6 +310,7 @@ const ProfilePage: React.FC = () => {
                               </Button>
                             </div>
                             <input
+                              disabled
                               type="text"
                               placeholder="no ad-free"
                               className="border-none rounded-full border-b border-gray-500  placeholder-red-500"
@@ -693,7 +696,7 @@ const ProfilePage: React.FC = () => {
               </div>
             </header>
             <Text
-              className="absolute bg-white-A700 bottom-[7%] h-[17px] justify-center left-[5%] pl-[9px] pr-3 text-[13px] text-gray-700_04 w-[86px]"
+              className="sm:hidden absolute bg-white-A700 bottom-[7%] h-[17px] justify-center left-[5%] pl-[9px] pr-3 text-[13px] text-gray-700_04 w-[86px]"
               size="txtMontserratRegular13"
             >
               About Me
