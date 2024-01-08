@@ -31,13 +31,15 @@ const LadiesStar: React.FC = () => {
     }
   };
 
-  const filterdLadies = ladies.filter((lady) => {
+  const filterdLadies = ladies?.filter((lady) => {
     if (locationFilter === "") {
       return lady;
     }
 
     if (
-      lady.location.incall.toLowerCase().includes(locationFilter.toLowerCase())
+      lady?.location?.incall
+        ?.toLowerCase()
+        .includes(locationFilter?.toLowerCase())
     ) {
       return lady;
     }
@@ -48,11 +50,7 @@ const LadiesStar: React.FC = () => {
   };
 
   useEffect(() => {
-    if (token) {
-      if (!user?.profile) {
-        navigate("/dashboard");
-      }
-    } else {
+    if (!token) {
       navigate("/login");
     }
     window.scrollTo(0, 0);
@@ -126,7 +124,7 @@ const LadiesStar: React.FC = () => {
                 style={{ background: "#E3E3E3" }}
               >
                 <p style={{ fontSize: "15px" }}>
-                  {filterdLadies.length} LadiesSTARS in{" "}
+                  {filterdLadies?.length} LadiesSTARS in{" "}
                   {locationFilter || "All Regions"}
                 </p>
                 <div className="flex gap-2">
@@ -138,8 +136,8 @@ const LadiesStar: React.FC = () => {
           </div>
           <div className="flex flex-wrap mt-5 rounded-2xl border border-whiteA700 bg-white-A700 p-5">
             <div className="flex flex-wrap mb-8 sm:flex-col md:flex-col">
-              {filterdLadies.length > 0 &&
-                filterdLadies.map((item, i) => (
+              {filterdLadies?.length > 0 &&
+                filterdLadies?.map((item, i) => (
                   <div
                     className="flex flex-col w-1/2 gap-3 sm:w-full md:w-full"
                     onClick={() => ladyClicked(item?.id)}

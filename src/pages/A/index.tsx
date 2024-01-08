@@ -6,7 +6,13 @@ import { Link, useNavigate } from "react-router-dom";
 
 const APage: React.FC = () => {
   const account = useNavigate();
+  const token = localStorage.getItem("token");
+  const [isHidden, setisHidden] = useState(true);
+  const user = JSON.parse(localStorage.getItem("user"));
 
+  const handleToggle = () => {
+    setisHidden(!isHidden);
+  };
   const AccountPage = () => {
     account("/profile");
   };
@@ -49,12 +55,12 @@ const APage: React.FC = () => {
   return (
     <>
       <div className="bg-white-A700 flex flex-col font-roboto gap-[42px] items-center justify-start mx-auto w-full">
-        <div className="sm:h-[1265px] h-[1510px] md:h-[1980px] md:px-5 z-50 w-full">
-          <div className="advert absolute bottom-[0] flex flex-col items-center justify-start right-[0] w-[79%]">
+        <div className="sm:h-[1265px] h-[1510px] md:h-[1980px] md:px-5 w-full md:w-full">
+          <div className="advert absolute bottom-[0] flex flex-col items-center justify-start right-[0] w-[79%] md:w-full">
             <div className="flex flex-col gap-[34px] items-center justify-start w-full">
               <div className="flex flex-col gap-6 items-center justify-start w-full">
                 <div className="flex flex-col items-start justify-start w-full">
-                  <div className="flex flex-row gap-3 items-end justify-start w-[50%] md:w-full">
+                  <div className="flex flex-row gap-3 items-end justify-start w-[50%] md:w-full sm:w-full">
                     <Text
                       className="md:text-2xl sm:text-[22px] text-[26px] text-gray-600_01"
                       size="txtRobotoBold26"
@@ -150,10 +156,10 @@ const APage: React.FC = () => {
                                           </Text>
                                         </div>
                                       </div>
-                                      <label className="container">
+                                      {/* <label className="container">
                                         <input type="radio" name="radio" />
                                         <span className="checkmark"></span>
-                                      </label>
+                                      </label> */}
                                       <div className="flex md:flex-1 flex-col items-center justify-start md:px-10 sm:px-5 w-[26%] md:w-full">
                                         <div className="flex flex-col items-center justify-start py-2">
                                           <Text
@@ -168,15 +174,15 @@ const APage: React.FC = () => {
                                   </div>
                                 </div>
                               </div>
-                              <div className="flex flex-1 flex-col items-center justify-start my-0 pb-6 w-full">
-                                <div className="flex md:flex-col flex-row md:gap-5 items-center justify-evenly w-full">
+                              <div className="flex flex-1 flex-col items-start justify-start my-0 pb-[23px] sm:pr-5 pr-[23px] w-full">
+                                <div className="flex md:flex-col flex-row md:gap-5 items-center justify-start w-[98%] md:w-full">
                                   <label className="container">
                                     <input type="radio" name="radio" />
                                     <span className="checkmark"></span>
                                   </label>
-                                  <div className="flex md:flex-1 flex-col items-start pr-[4.5rem] justify-start w-[1000%] md:w-full">
-                                    <div className="border h-[80px] border-gray-600_03 border-solid flex md:flex-col flex-row md:gap-5 items-start justify-start p-2 rounded-[3px] w-[97%] md:w-full">
-                                      <div className="flex flex-col items-start justify-start ml-6 md:ml-[0] w-[61%] md:w-full">
+                                  <div className="flex flex-col items-center justify-start w-[1000%] pr-[6remm] md:w-full">
+                                    <div className="border h-[80px] border-gray-600_03 border-solid flex md:flex-col flex-row md:gap-5 items-start justify-start p-[9px] rounded-[3px] w-full">
+                                      <div className="flex md:flex-1 flex-col items-start justify-start ml-6 md:ml-[0] w-[61%] md:w-full">
                                         <div className="flex flex-col items-center justify-start py-2">
                                           <Text
                                             className="mb-[3px] md:text-3xl sm:text-[28px] text-[32px] text-gray-600_01"
@@ -186,12 +192,8 @@ const APage: React.FC = () => {
                                           </Text>
                                         </div>
                                       </div>
-                                      <Img
-                                        className="h-[49px]"
-                                        src="images/img_thumbsup_black_900.svg"
-                                        alt="thumbsup"
-                                      />
-                                      <div className="flex flex-col items-center justify-start md:px-10 sm:px-5 w-[27%] md:w-full">
+
+                                      <div className="flex md:flex-1 flex-col items-center justify-start md:px-10 sm:px-5 w-[26%] md:w-full">
                                         <div className="flex flex-col items-center justify-start py-2">
                                           <Text
                                             className="mb-0.5 md:text-3xl sm:text-[28px] text-[32px] text-gray-600_01"
@@ -205,36 +207,34 @@ const APage: React.FC = () => {
                                   </div>
                                 </div>
                               </div>
-                              <div className="flex flex-1 md:flex-col flex-row md:gap-5 items-center justify-start my-0 sm:pr-5 pr-[37px] w-full">
-                                <label className="container">
-                                  <input type="radio" name="radio" />
-                                  <span className="checkmark"></span>
-                                </label>
-                                <div className="flex md:flex-1 flex-col items-center justify-start w-[1000%] pr-[3.5rem] md:w-full">
-                                  <div className="border h-[80px] border-gray-600_03 border-solid flex md:flex-col flex-row md:gap-5 items-start justify-start p-[9px] rounded-[3px] w-full">
-                                    <div className="flex md:flex-1 flex-col items-start justify-start ml-6 md:ml-[0] w-[61%] md:w-full">
-                                      <div className="flex flex-col items-center justify-end py-[7px]">
-                                        <Text
-                                          className="mt-1 md:text-3xl sm:text-[28px] text-[32px] text-gray-600_01"
-                                          size="txtRobotoLight32"
-                                        >
-                                          1 year
-                                        </Text>
+                              <div className="flex flex-1 flex-col items-start justify-start my-0 pb-[23px] sm:pr-5 pr-[23px] w-full">
+                                <div className="flex md:flex-col flex-row md:gap-5 items-center justify-start w-[98%] md:w-full">
+                                  <label className="container">
+                                    <input type="radio" name="radio" />
+                                    <span className="checkmark"></span>
+                                  </label>
+                                  <div className="flex flex-col items-center justify-start w-[1000%] pr-[6remm] md:w-full">
+                                    <div className="border h-[80px] border-gray-600_03 border-solid flex md:flex-col flex-row md:gap-5 items-start justify-start p-[9px] rounded-[3px] w-full">
+                                      <div className="flex md:flex-1 flex-col items-start justify-start ml-6 md:ml-[0] w-[61%] md:w-full">
+                                        <div className="flex flex-col items-center justify-start py-2">
+                                          <Text
+                                            className="mb-[3px] md:text-3xl sm:text-[28px] text-[32px] text-gray-600_01"
+                                            size="txtRobotoLight32"
+                                          >
+                                            1 year
+                                          </Text>
+                                        </div>
                                       </div>
-                                    </div>
-                                    <Img
-                                      className="h-[49px]"
-                                      src="images/img_thumbsup_black_900.svg"
-                                      alt="thumbsup"
-                                    />
-                                    <div className="flex md:flex-1 flex-col items-center justify-start md:px-10 sm:px-5 w-[27%] md:w-full">
-                                      <div className="flex flex-col items-center justify-start py-2">
-                                        <Text
-                                          className="mb-0.5 md:text-3xl sm:text-[28px] text-[32px] text-gray-600_01"
-                                          size="txtRobotoBold32"
-                                        >
-                                          29.95 €
-                                        </Text>
+
+                                      <div className="flex md:flex-1 flex-col items-center justify-start md:px-10 sm:px-5 w-[26%] md:w-full">
+                                        <div className="flex flex-col items-center justify-start py-2">
+                                          <Text
+                                            className="mb-0.5 md:text-3xl sm:text-[28px] text-[32px] text-gray-600_01"
+                                            size="txtRobotoBold32"
+                                          >
+                                            29.95 €
+                                          </Text>
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
@@ -246,9 +246,9 @@ const APage: React.FC = () => {
                       </div>
                     </div>
                     <div className="flex flex-col items-start justify-start w-[96%] md:w-full">
-                      <div className="flex flex-col items-center justify-start pl-3 py-3 w-[48%] md:w-full">
+                      <div className="flex flex-col items-center justify-start pl-3 py-3 w-[50%] md:w-full">
                         <Button
-                          className="border border-orange-600 border-solid cursor-pointer leading-[normal] w-[80%] sm:min-w-full rounded-[3px] text-center text-sm"
+                          className="border border-orange-600 border-solid cursor-pointer ml-[70px] leading-[normal] w-[80%] sm:min-w-full rounded-[3px] text-center text-sm"
                           shape="round"
                           color="orange_600"
                           size="md"
@@ -392,12 +392,24 @@ const APage: React.FC = () => {
                   <div className="md:h-[155px] sm:h-[69px] h-[76px] relative w-[98%] md:w-full">
                     <Header1 className="absolute bg-white-A700 border-b border-gray-200_03 top-[25%] border-solid bottom-[0] flex flex-col inset-x-[0] items-center justify-center mx-auto w-full" />
                   </div>
-                  <div className="flex md:flex-col flex-row md:gap-12 items-start justify-between w-full">
+                  <button
+                    className={`hidden sm:flex absolute top-[60px] left-[5px] flex items-center justify-center w-[10%] border p-3 rounded-full`}
+                    style={{
+                      background: "#FD00B3",
+                      border: "1px solid #FD00B3",
+                      color: "#fff",
+                    }}
+                    onClick={handleToggle}
+                  >
+                    Menu
+                  </button>
+                  <div
+                    className={` sm:${isHidden ? "hidden" : "w-4/5 "} md:${
+                      isHidden ? "hidden" : "w-4/5 md:flex-col md:gap-12"
+                    }flex flex-row items-start justify-between w-full`}
+                  >
                     <div className="md:h-[917px] h-[952px] relative w-[22%] md:w-full">
-                      <div
-                        style={{ boxShadow: "1px 2px 11px lightgrey" }}
-                        className="absolute bg-white-A700 flex flex-col h-max inset-[0] items-center justify-center m-auto p-[25px] sm:px-5 rounded-[15px] shadow-bs7 w-[93%]"
-                      >
+                      <div className="absolute bg-white-A700 flex flex-col h-max inset-[0] items-center justify-center m-auto p-[25px] sm:px-5 rounded-[15px] shadow-bs7 w-[93%]">
                         <div className="flex flex-col items-start justify-start mb-[674px] w-full">
                           <div className="flex flex-col items-start justify-start w-[34%] md:w-full">
                             <div
@@ -420,7 +432,7 @@ const APage: React.FC = () => {
                                 className="text-base text-blue_gray-900_02"
                                 size="txtMontserratMedium16Bluegray90002"
                               >
-                                Tekena west
+                                {user?.firstName}
                               </Text>
                             </div>
                             <div className="flex flex-col items-start justify-start w-full">
@@ -629,25 +641,7 @@ const APage: React.FC = () => {
                               </div>
                             </div>
                           </div>
-                          {/* <div className="leftNav flex flex-1 flex-row items-center justify-start px-4 w-full">
-                            <Img
-                              className="h-14 w-[55px]"
-                              src="images/img_divvlistitemiconmargin_gray_600_01_56x55.svg"
-                              alt="divvlistitemico"
-                            />
-                            <div className="flex flex-col items-center justify-start py-4 w-[79%]">
-                              <div className="flex flex-col items-start justify-start w-full">
-                                <div className="flex flex-col items-center justify-start">
-                                  <Text
-                                    className="text-base text-gray-600_01"
-                                    size="txtRobotoRegular16"
-                                  >
-                                    Coins
-                                  </Text>
-                                </div>
-                              </div>
-                            </div>
-                          </div> */}
+
                           <div
                             className="leftNav flex flex-1 flex-col font-montserrat items-center justify-end p-[5px] w-full"
                             onClick={liveVid}

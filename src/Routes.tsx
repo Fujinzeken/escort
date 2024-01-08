@@ -38,7 +38,7 @@ import ProfileEditPage from "pages/ProfileEdit";
 import Checkout from "pages/Checkout";
 import Payment from "pages/Payment";
 import DesktopFourtyEight from "pages/DesktopFourtyEight/Index";
-import DashboardPage from "pages/DesktopThirtyThree";
+import DashboardPage from "pages/DashboardPage";
 
 const ProjectRoutes = () => {
   return (

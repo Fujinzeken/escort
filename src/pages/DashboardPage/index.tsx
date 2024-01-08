@@ -2,9 +2,61 @@ import React, { useState, useEffect } from "react";
 
 import { Button, CheckBox, Img, Input, Line, List, Text } from "components";
 import { useNavigate } from "react-router-dom";
+import catchErrorFunc from "utils/authErrorHandler";
+import axios from "axios";
 
 const DashboardPage: React.FC = () => {
   const account = useNavigate();
+  const token = localStorage.getItem("token");
+  const user = JSON.parse(localStorage.getItem("user"));
+  const [girlsData, setGirlsData] = useState(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const [isrotate, setRotate] = useState(false);
+  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
+  const [gender, setGender] = useState("");
+  const [ageFrom, setAgeFrom] = useState(null);
+  const [ageTo, setAgeTo] = useState(null);
+  const [distance, setDistance] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [showFilter, setShowFilter] = useState(false);
+
+  const fetchHomeData = async () => {
+    try {
+      const res = await axios.get(
+        `https://lazer-escort.onrender.com/client/getUsers`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      console.log(res?.data);
+      setGirlsData(res?.data);
+    } catch (err) {
+      console.log(err);
+      catchErrorFunc(err, account);
+    }
+  };
+
+  const handleSearch = async () => {
+    try {
+      const res = await axios.post(
+        `https://lazer-escort.onrender.com/client/findMatches`,
+        {
+          gender,
+          ageStart: ageFrom,
+          ageEnd: ageTo,
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      console.log(res?.data);
+      setGirlsData(res?.data);
+    } catch (err) {
+      console.log(err);
+      catchErrorFunc(err, account);
+    }
+  };
+
+  const handleFilter = (filter) => {};
 
   const ratedPage = () => {
     account("/dashboard");
@@ -36,9 +88,6 @@ const DashboardPage: React.FC = () => {
     account("/ladies-star");
   };
 
-  const [isVisible, setIsVisible] = useState(false);
-  const [isrotate, setRotate] = useState(false);
-
   const toggle = () => {
     setIsVisible(!isVisible);
     setRotate(!isrotate);
@@ -50,6 +99,8 @@ const DashboardPage: React.FC = () => {
   };
   useEffect(() => {
     window.scrollTo(0, 0);
+
+    fetchHomeData();
   }, []);
   return (
     <>
@@ -219,7 +270,7 @@ const DashboardPage: React.FC = () => {
                                 className="capitalize text-[15px] pl-2 text-white-A700"
                                 size="txtMontserratMedium15WhiteA700"
                               >
-                                Hi, tekena
+                                Hi, {user?.firstName}
                               </Text>
                             </div>
                             <Img
@@ -276,7 +327,7 @@ const DashboardPage: React.FC = () => {
                           className="text-base text-blue_gray-900_02"
                           size="txtMontserratMedium16Bluegray90002"
                         >
-                          Tekena west
+                          {user?.firstName}
                         </Text>
                       </div>
                       <div className="flex flex-col items-start justify-start w-full">
@@ -558,6 +609,7 @@ const DashboardPage: React.FC = () => {
                         color="lime_800"
                         size="md"
                         variant="outline"
+                        onClick={() => ladiesStar}
                       >
                         Live Girls
                       </Button>
@@ -567,6 +619,7 @@ const DashboardPage: React.FC = () => {
                         color="lime_800"
                         size="md"
                         variant="outline"
+                        onClick={() => liveVideo}
                       >
                         Sex Cams
                       </Button>
@@ -660,6 +713,11 @@ const DashboardPage: React.FC = () => {
                                   <input
                                     className="flex text-base text-gray-700 flex-col items-start justify-start"
                                     placeholder="Name"
+                                    value={name}
+                                    onChange={(e) => {
+                                      setName(e.target.value);
+                                      handleFilter(name);
+                                    }}
                                   />
                                 </div>
                               </div>
@@ -676,6 +734,11 @@ const DashboardPage: React.FC = () => {
                                   <input
                                     className="flex flex-col items-start justify-start text-base text-gray-700"
                                     placeholder="Username"
+                                    value={username}
+                                    onChange={(e) => {
+                                      setUsername(e.target.value);
+                                      handleFilter(username);
+                                    }}
                                   />
                                 </div>
                               </div>
@@ -705,6 +768,11 @@ const DashboardPage: React.FC = () => {
                                   shape="round"
                                   color="white_A700"
                                   size="xl"
+                                  value={gender}
+                                  onChange={(e) => {
+                                    setGender(e.target.value);
+                                    handleFilter(gender);
+                                  }}
                                 ></Input>
                               </div>
                             </div>
@@ -722,11 +790,17 @@ const DashboardPage: React.FC = () => {
                                       className="border border-gray-800_04 border-solid cursor-pointer flex items-center justify-center min-w-[65px] rounded-[5px] !text-blue_gray-100_01 text-base text-left"
                                       type="number"
                                       placeholder="18"
+                                      value={ageFrom}
+                                      onChange={(e) =>
+                                        setAgeFrom(e.target.value)
+                                      }
                                     />
                                     <input
                                       className="border border-gray-800_04 border-solid cursor-pointer flex items-center justify-center min-w-[65px] rounded-[5px] !text-blue_gray-100_01 text-base text-left"
                                       type="number"
                                       placeholder="50"
+                                      value={ageTo}
+                                      onChange={(e) => setAgeTo(e.target.value)}
                                     />
                                   </div>
                                 </div>
@@ -750,6 +824,8 @@ const DashboardPage: React.FC = () => {
                                 shape="round"
                                 color="white_A700"
                                 size="md"
+                                value={distance}
+                                onChange={(e) => setDistance(e.target.value)}
                               ></Input>
                             </div>
                           </div>
@@ -763,6 +839,7 @@ const DashboardPage: React.FC = () => {
                             color="pink_700"
                             size="md"
                             variant="fill"
+                            onClick={handleSearch}
                           >
                             Search
                           </Button>
@@ -778,6 +855,7 @@ const DashboardPage: React.FC = () => {
                             color="blue_gray_400"
                             size="md"
                             variant="fill"
+                            onClick={() => setShowFilter(!showFilter)}
                           >
                             <div className="text-base text-center">
                               {" "}
@@ -785,339 +863,341 @@ const DashboardPage: React.FC = () => {
                             </div>
                           </Button>
                         </div>
-                        <div className="flex flex-col items-center justify-end mt-auto mx-auto sm:pr-5 pr-[26px] pt-[26px] w-full">
-                          <div className="flex flex-col gap-2.5 items-center justify-start w-full">
-                            <div className="type-container bg-white-A700 border border-gray-300 border-solid flex md:flex-col flex-row md:gap-5 items-center justify-start shadow-bs8 w-full">
-                              <div className="border-gray-300 border-r type-fit border-solid flex md:flex-1 flex-row items-start justify-center p-2 w-[7%] md:w-full">
-                                <Text
-                                  className="ml-2 mt-0.5 text-[15px] text-black-900 text-center"
-                                  size="txtRobotoRegular15"
-                                >
-                                  Age{" "}
-                                </Text>
-                                <Text
-                                  className="ml-0.5 mr-[9px] mt-1.5 text-[8px] text-center text-red-700"
-                                  size="txtInterRegular8"
-                                >
-                                  C
-                                </Text>
-                              </div>
-                              <div className="border-gray-300 border-r type-fit border-solid flex md:flex-1 flex-row items-center justify-center p-[9px] w-[8%] md:w-full">
-                                <Text
-                                  className="ml-2 text-[15px] text-black-900 text-center"
-                                  size="txtRobotoRegular15"
-                                >
-                                  Hair{" "}
-                                </Text>
-                                <Text
-                                  className="ml-0.5 mr-2 text-[8px] text-center text-red-700"
-                                  size="txtInterRegular8"
-                                >
-                                  C
-                                </Text>
-                              </div>
-                              <div className="border-gray-300 border-r border-solid type-fit flex md:flex-1 flex-row items-center justify-center p-[9px] w-[8%] md:w-full">
-                                <Text
-                                  className="ml-2 text-[15px] text-black-900 text-center"
-                                  size="txtRobotoRegular15"
-                                >
-                                  Rates{" "}
-                                </Text>
-                                <Text
-                                  className="ml-0.5 mr-2 text-[8px] text-center text-red-700"
-                                  size="txtInterRegular8"
-                                >
-                                  C
-                                </Text>
-                              </div>
-                              <div className="border-gray-300 border-r border-solid flex type-fit md:flex-1 flex-row items-center justify-center p-[9px] w-[9%] md:w-full">
-                                <Text
-                                  className="ml-2 text-[15px] text-black-900 text-center"
-                                  size="txtRobotoRegular15"
-                                >
-                                  Breast{" "}
-                                </Text>
-                                <Text
-                                  className="ml-0.5 mr-2 text-[8px] text-center text-red-700"
-                                  size="txtInterRegular8"
-                                >
-                                  C
-                                </Text>
-                              </div>
-                              <div className="border-gray-300 border-r border-solid flex type-fit md:flex-1 flex-row items-center justify-center p-[9px] w-[9%] md:w-full">
-                                <Text
-                                  className="ml-[7px] text-[15px] text-black-900 text-center"
-                                  size="txtRobotoRegular15"
-                                >
-                                  Travel{" "}
-                                </Text>
-                                <Text
-                                  className="ml-[3px] mr-2 text-[8px] text-center text-red-700"
-                                  size="txtInterRegular8"
-                                >
-                                  C
-                                </Text>
-                              </div>
-                              <div className="border-gray-300 border-r border-solid flex md:flex-1 type-fit flex-row items-start justify-center p-[9px] w-[9%] md:w-full">
-                                <Text
-                                  className="ml-2 text-[15px] text-black-900 text-center"
-                                  size="txtRobotoRegular15"
-                                >
-                                  Weight{" "}
-                                </Text>
-                                <Text
-                                  className="ml-0.5 mr-2 mt-1.5 text-[8px] text-center text-red-700"
-                                  size="txtInterRegular8"
-                                >
-                                  C
-                                </Text>
-                              </div>
-                              <div className="border-gray-300 border-r border-solid flex md:flex-1 flex-row type-fit items-start justify-center p-[9px] w-[9%] md:w-full">
-                                <Text
-                                  className="ml-[9px] text-[15px] text-black-900 text-center"
-                                  size="txtRobotoRegular15"
-                                >
-                                  Height{" "}
-                                </Text>
-                                <Text
-                                  className="ml-0.5 mr-2 mt-1.5 text-[8px] text-center text-red-700"
-                                  size="txtInterRegular8"
-                                >
-                                  C
-                                </Text>
-                              </div>
-                              <div className="border-gray-300 border-r border-solid flex md:flex-1 flex-row items-center type-fit justify-center p-[9px] w-[10%] md:w-full">
-                                <Text
-                                  className="ml-[7px] text-[15px] text-black-900 text-center"
-                                  size="txtRobotoRegular15"
-                                >
-                                  Services{" "}
-                                </Text>
-                                <Text
-                                  className="ml-0.5 mr-2 text-[8px] text-center text-red-700"
-                                  size="txtInterRegular8"
-                                >
-                                  C
-                                </Text>
-                              </div>
-                              <div className="border-gray-300 border-r border-solid flex md:flex-1 type-fit flex-row items-center justify-center p-[9px] w-[11%] md:w-full">
-                                <Text
-                                  className="ml-2 text-[15px] text-black-900 text-center"
-                                  size="txtRobotoRegular15"
-                                >
-                                  Eth / Nat{" "}
-                                </Text>
-                                <Text
-                                  className="ml-0.5 mr-2 text-[8px] text-center text-red-700"
-                                  size="txtInterRegular8"
-                                >
-                                  C
-                                </Text>
-                              </div>
-                              <div className="bg-gray-100_02 border-b-4 border-r border-solid flex type-fit md:flex-1 flex-row items-start justify-center p-2 red_700_gray_300_border w-[12%] md:w-full">
-                                <Text
-                                  className="ml-[9px] mt-0.5 text-[15px] text-center text-red-700"
-                                  size="txtRobotoRegular15Red700"
-                                >
-                                  Languages{" "}
-                                </Text>
-                                <Text
-                                  className="ml-0.5 mr-[9px] mt-1.5 text-[8px] text-center text-red-700"
-                                  size="txtInterRegular8"
-                                >
-                                  D
-                                </Text>
-                              </div>
-                              <div className="border-gray-300 border-r border-solid flex md:flex-1 flex-row type-fit items-center justify-center p-[9px] w-[13%] md:w-full">
-                                <Text
-                                  className="ml-2 text-[15px] text-black-900 text-center"
-                                  size="txtRobotoRegular15"
-                                >
-                                  Preferences{" "}
-                                </Text>
-                                <Text
-                                  className="ml-0.5 mr-2 text-[8px] text-center text-red-700"
-                                  size="txtInterRegular8"
-                                >
-                                  C
-                                </Text>
-                              </div>
-                            </div>
-                            <div className="flex md:flex-col checkbox flex-row md:gap-5 items-start justify-start pr-[3px] pt-[3px] w-full">
-                              <div className="bg-white-A700 border border-gray-300 border-solid flex md:flex-1 flex-col items-center justify-end shadow-bs8 w-[11%] md:w-full">
-                                <div className="flex flex-col justify-start mt-0.5 pb-0.5 pl-0.5 w-[95%] md:w-full">
-                                  <CheckBox
-                                    className="font-bold text-[9px] text-left uppercase"
-                                    inputClassName="border border-blue_gray-100_02 border-solid h-3 mr-[5px] w-3"
-                                    name="strongwithrevie"
-                                    id="strongwithrevie"
-                                    label="With reviews"
-                                    shape="square"
-                                    size="xs"
-                                  ></CheckBox>
+                        {showFilter && (
+                          <div className="flex flex-col items-center justify-end mt-auto mx-auto sm:pr-5 pr-[26px] pt-[26px] w-full">
+                            <div className="flex flex-col gap-2.5 items-center justify-start w-full">
+                              <div className="type-container bg-white-A700 border border-gray-300 border-solid flex md:flex-col flex-row md:gap-5 items-center justify-start shadow-bs8 w-full">
+                                <div className="border-gray-300 border-r type-fit border-solid flex md:flex-1 flex-row items-start justify-center p-2 w-[7%] md:w-full">
                                   <Text
-                                    className="md:ml-[0] text-[10px] text-gray-600_02 uppercase"
-                                    size="txtRobotoRegular10"
+                                    className="ml-2 mt-0.5 text-[15px] text-black-900 text-center"
+                                    size="txtRobotoRegular15"
                                   >
-                                    (3704)
+                                    Age{" "}
+                                  </Text>
+                                  <Text
+                                    className="ml-0.5 mr-[9px] mt-1.5 text-[8px] text-center text-red-700"
+                                    size="txtInterRegular8"
+                                  >
+                                    C
+                                  </Text>
+                                </div>
+                                <div className="border-gray-300 border-r type-fit border-solid flex md:flex-1 flex-row items-center justify-center p-[9px] w-[8%] md:w-full">
+                                  <Text
+                                    className="ml-2 text-[15px] text-black-900 text-center"
+                                    size="txtRobotoRegular15"
+                                  >
+                                    Hair{" "}
+                                  </Text>
+                                  <Text
+                                    className="ml-0.5 mr-2 text-[8px] text-center text-red-700"
+                                    size="txtInterRegular8"
+                                  >
+                                    C
+                                  </Text>
+                                </div>
+                                <div className="border-gray-300 border-r border-solid type-fit flex md:flex-1 flex-row items-center justify-center p-[9px] w-[8%] md:w-full">
+                                  <Text
+                                    className="ml-2 text-[15px] text-black-900 text-center"
+                                    size="txtRobotoRegular15"
+                                  >
+                                    Rates{" "}
+                                  </Text>
+                                  <Text
+                                    className="ml-0.5 mr-2 text-[8px] text-center text-red-700"
+                                    size="txtInterRegular8"
+                                  >
+                                    C
+                                  </Text>
+                                </div>
+                                <div className="border-gray-300 border-r border-solid flex type-fit md:flex-1 flex-row items-center justify-center p-[9px] w-[9%] md:w-full">
+                                  <Text
+                                    className="ml-2 text-[15px] text-black-900 text-center"
+                                    size="txtRobotoRegular15"
+                                  >
+                                    Breast{" "}
+                                  </Text>
+                                  <Text
+                                    className="ml-0.5 mr-2 text-[8px] text-center text-red-700"
+                                    size="txtInterRegular8"
+                                  >
+                                    C
+                                  </Text>
+                                </div>
+                                <div className="border-gray-300 border-r border-solid flex type-fit md:flex-1 flex-row items-center justify-center p-[9px] w-[9%] md:w-full">
+                                  <Text
+                                    className="ml-[7px] text-[15px] text-black-900 text-center"
+                                    size="txtRobotoRegular15"
+                                  >
+                                    Travel{" "}
+                                  </Text>
+                                  <Text
+                                    className="ml-[3px] mr-2 text-[8px] text-center text-red-700"
+                                    size="txtInterRegular8"
+                                  >
+                                    C
+                                  </Text>
+                                </div>
+                                <div className="border-gray-300 border-r border-solid flex md:flex-1 type-fit flex-row items-start justify-center p-[9px] w-[9%] md:w-full">
+                                  <Text
+                                    className="ml-2 text-[15px] text-black-900 text-center"
+                                    size="txtRobotoRegular15"
+                                  >
+                                    Weight{" "}
+                                  </Text>
+                                  <Text
+                                    className="ml-0.5 mr-2 mt-1.5 text-[8px] text-center text-red-700"
+                                    size="txtInterRegular8"
+                                  >
+                                    C
+                                  </Text>
+                                </div>
+                                <div className="border-gray-300 border-r border-solid flex md:flex-1 flex-row type-fit items-start justify-center p-[9px] w-[9%] md:w-full">
+                                  <Text
+                                    className="ml-[9px] text-[15px] text-black-900 text-center"
+                                    size="txtRobotoRegular15"
+                                  >
+                                    Height{" "}
+                                  </Text>
+                                  <Text
+                                    className="ml-0.5 mr-2 mt-1.5 text-[8px] text-center text-red-700"
+                                    size="txtInterRegular8"
+                                  >
+                                    C
+                                  </Text>
+                                </div>
+                                <div className="border-gray-300 border-r border-solid flex md:flex-1 flex-row items-center type-fit justify-center p-[9px] w-[10%] md:w-full">
+                                  <Text
+                                    className="ml-[7px] text-[15px] text-black-900 text-center"
+                                    size="txtRobotoRegular15"
+                                  >
+                                    Services{" "}
+                                  </Text>
+                                  <Text
+                                    className="ml-0.5 mr-2 text-[8px] text-center text-red-700"
+                                    size="txtInterRegular8"
+                                  >
+                                    C
+                                  </Text>
+                                </div>
+                                <div className="border-gray-300 border-r border-solid flex md:flex-1 type-fit flex-row items-center justify-center p-[9px] w-[11%] md:w-full">
+                                  <Text
+                                    className="ml-2 text-[15px] text-black-900 text-center"
+                                    size="txtRobotoRegular15"
+                                  >
+                                    Eth / Nat{" "}
+                                  </Text>
+                                  <Text
+                                    className="ml-0.5 mr-2 text-[8px] text-center text-red-700"
+                                    size="txtInterRegular8"
+                                  >
+                                    C
+                                  </Text>
+                                </div>
+                                <div className="bg-gray-100_02 border-b-4 border-r border-solid flex type-fit md:flex-1 flex-row items-start justify-center p-2 red_700_gray_300_border w-[12%] md:w-full">
+                                  <Text
+                                    className="ml-[9px] mt-0.5 text-[15px] text-center text-red-700"
+                                    size="txtRobotoRegular15Red700"
+                                  >
+                                    Languages{" "}
+                                  </Text>
+                                  <Text
+                                    className="ml-0.5 mr-[9px] mt-1.5 text-[8px] text-center text-red-700"
+                                    size="txtInterRegular8"
+                                  >
+                                    D
+                                  </Text>
+                                </div>
+                                <div className="border-gray-300 border-r border-solid flex md:flex-1 flex-row type-fit items-center justify-center p-[9px] w-[13%] md:w-full">
+                                  <Text
+                                    className="ml-2 text-[15px] text-black-900 text-center"
+                                    size="txtRobotoRegular15"
+                                  >
+                                    Preferences{" "}
+                                  </Text>
+                                  <Text
+                                    className="ml-0.5 mr-2 text-[8px] text-center text-red-700"
+                                    size="txtInterRegular8"
+                                  >
+                                    C
                                   </Text>
                                 </div>
                               </div>
-                              <div className="bg-white-A700 border border-gray-300 border-solid flex md:flex-1 flex-col items-center justify-end md:ml-[0] ml-[3px] shadow-bs8 w-[8%] md:w-full">
-                                <div className="flex flex-col items-center justify-start mt-0.5 pb-0.5 pl-0.5 w-[92%] md:w-full">
-                                  <CheckBox
-                                    className="font-bold text-[9px] text-left uppercase"
-                                    inputClassName="border border-blue_gray-100_02 border-solid h-3 mr-[5px] w-3"
-                                    name="strongverified"
-                                    id="strongverified"
-                                    label="Verified"
-                                    shape="square"
-                                    size="xs"
-                                  ></CheckBox>
-                                  <Text
-                                    className="text-[10px] text-gray-600_02 uppercase"
-                                    size="txtRobotoRegular10"
-                                  >
-                                    (45834)
-                                  </Text>
+                              <div className="flex md:flex-col checkbox flex-row md:gap-5 items-start justify-start pr-[3px] pt-[3px] w-full">
+                                <div className="bg-white-A700 border border-gray-300 border-solid flex md:flex-1 flex-col items-center justify-end shadow-bs8 w-[11%] md:w-full">
+                                  <div className="flex flex-col justify-start mt-0.5 pb-0.5 pl-0.5 w-[95%] md:w-full">
+                                    <CheckBox
+                                      className="font-bold text-[9px] text-left uppercase"
+                                      inputClassName="border border-blue_gray-100_02 border-solid h-3 mr-[5px] w-3"
+                                      name="strongwithrevie"
+                                      id="strongwithrevie"
+                                      label="With reviews"
+                                      shape="square"
+                                      size="xs"
+                                    ></CheckBox>
+                                    <Text
+                                      className="md:ml-[0] text-[10px] text-gray-600_02 uppercase"
+                                      size="txtRobotoRegular10"
+                                    >
+                                      (3704)
+                                    </Text>
+                                  </div>
                                 </div>
-                              </div>
-                              <div className="bg-white-A700 border border-gray-300 border-solid flex md:flex-1 flex-col items-center justify-end md:ml-[0] ml-[3px] shadow-bs8 w-[10%] md:w-full">
-                                <div className="flex flex-col justify-start mt-0.5 pb-0.5 pl-0.5 w-[94%] md:w-full">
-                                  <CheckBox
-                                    className="font-bold text-[9px] text-left uppercase"
-                                    inputClassName="border border-blue_gray-100_02 border-solid h-3 mr-[5px] w-3"
-                                    name="strongnewcomers"
-                                    id="strongnewcomers"
-                                    label="Newcomers"
-                                    shape="square"
-                                    size="xs"
-                                  ></CheckBox>
-                                  <Text
-                                    className="md:ml-[0] text-[10px] text-gray-600_02 uppercase"
-                                    size="txtRobotoRegular10"
-                                  >
-                                    (7090)
-                                  </Text>
+                                <div className="bg-white-A700 border border-gray-300 border-solid flex md:flex-1 flex-col items-center justify-end md:ml-[0] ml-[3px] shadow-bs8 w-[8%] md:w-full">
+                                  <div className="flex flex-col items-center justify-start mt-0.5 pb-0.5 pl-0.5 w-[92%] md:w-full">
+                                    <CheckBox
+                                      className="font-bold text-[9px] text-left uppercase"
+                                      inputClassName="border border-blue_gray-100_02 border-solid h-3 mr-[5px] w-3"
+                                      name="strongverified"
+                                      id="strongverified"
+                                      label="Verified"
+                                      shape="square"
+                                      size="xs"
+                                    ></CheckBox>
+                                    <Text
+                                      className="text-[10px] text-gray-600_02 uppercase"
+                                      size="txtRobotoRegular10"
+                                    >
+                                      (45834)
+                                    </Text>
+                                  </div>
                                 </div>
-                              </div>
-                              <div className="bg-white-A700 border border-gray-300 border-solid flex md:flex-1 flex-col items-center justify-end md:ml-[0] ml-[3px] shadow-bs8 w-[10%] md:w-full">
-                                <div className="flex flex-col justify-start mt-0.5 pb-0.5 pl-0.5 w-[94%] md:w-full">
-                                  <CheckBox
-                                    className="font-bold text-[9px] text-left uppercase"
-                                    inputClassName="border border-blue_gray-100_02 border-solid h-3 mr-[5px] w-3"
-                                    name="strongwithvideo"
-                                    id="strongwithvideo"
-                                    label="With videos"
-                                    shape="square"
-                                    size="xs"
-                                  ></CheckBox>
-                                  <Text
-                                    className="md:ml-[0] text-[10px] text-gray-600_02 uppercase"
-                                    size="txtRobotoRegular10"
-                                  >
-                                    (12742)
-                                  </Text>
+                                <div className="bg-white-A700 border border-gray-300 border-solid flex md:flex-1 flex-col items-center justify-end md:ml-[0] ml-[3px] shadow-bs8 w-[10%] md:w-full">
+                                  <div className="flex flex-col justify-start mt-0.5 pb-0.5 pl-0.5 w-[94%] md:w-full">
+                                    <CheckBox
+                                      className="font-bold text-[9px] text-left uppercase"
+                                      inputClassName="border border-blue_gray-100_02 border-solid h-3 mr-[5px] w-3"
+                                      name="strongnewcomers"
+                                      id="strongnewcomers"
+                                      label="Newcomers"
+                                      shape="square"
+                                      size="xs"
+                                    ></CheckBox>
+                                    <Text
+                                      className="md:ml-[0] text-[10px] text-gray-600_02 uppercase"
+                                      size="txtRobotoRegular10"
+                                    >
+                                      (7090)
+                                    </Text>
+                                  </div>
                                 </div>
-                              </div>
-                              <div className="bg-white-A700 border border-gray-300 border-solid flex md:flex-1 flex-col items-center justify-end md:ml-[0] ml-[3px] shadow-bs8 w-[9%] md:w-full">
-                                <div className="flex flex-col justify-start mt-0.5 pb-0.5 pl-0.5 w-[93%] md:w-full">
-                                  <CheckBox
-                                    className="font-bold text-[9px] text-left uppercase"
-                                    inputClassName="border border-blue_gray-100_02 border-solid h-3 mr-[5px] w-3"
-                                    name="strongpornstar"
-                                    id="strongpornstar"
-                                    label="Pornstar"
-                                    shape="square"
-                                    size="xs"
-                                  ></CheckBox>
-                                  <Text
-                                    className="md:ml-[0] text-[10px] text-gray-600_02 uppercase"
-                                    size="txtRobotoRegular10"
-                                  >
-                                    (369)
-                                  </Text>
+                                <div className="bg-white-A700 border border-gray-300 border-solid flex md:flex-1 flex-col items-center justify-end md:ml-[0] ml-[3px] shadow-bs8 w-[10%] md:w-full">
+                                  <div className="flex flex-col justify-start mt-0.5 pb-0.5 pl-0.5 w-[94%] md:w-full">
+                                    <CheckBox
+                                      className="font-bold text-[9px] text-left uppercase"
+                                      inputClassName="border border-blue_gray-100_02 border-solid h-3 mr-[5px] w-3"
+                                      name="strongwithvideo"
+                                      id="strongwithvideo"
+                                      label="With videos"
+                                      shape="square"
+                                      size="xs"
+                                    ></CheckBox>
+                                    <Text
+                                      className="md:ml-[0] text-[10px] text-gray-600_02 uppercase"
+                                      size="txtRobotoRegular10"
+                                    >
+                                      (12742)
+                                    </Text>
+                                  </div>
                                 </div>
-                              </div>
-                              <div className="bg-white-A700 border border-gray-300 border-solid flex md:flex-1 flex-col items-center justify-end md:ml-[0] ml-[3px] shadow-bs8 w-[11%] md:w-full">
-                                <div className="flex flex-col justify-start mt-0.5 pb-0.5 pl-0.5 w-[94%] md:w-full">
-                                  <CheckBox
-                                    className="font-bold text-[9px] text-left uppercase"
-                                    inputClassName="border border-blue_gray-100_02 border-solid h-3 mr-[5px] w-3"
-                                    name="strongindepende"
-                                    id="strongindepende"
-                                    label="Independent"
-                                    shape="square"
-                                    size="xs"
-                                  ></CheckBox>
-                                  <Text
-                                    className="md:ml-[0] text-[10px] text-gray-600_02 uppercase"
-                                    size="txtRobotoRegular10"
-                                  >
-                                    (56755)
-                                  </Text>
+                                <div className="bg-white-A700 border border-gray-300 border-solid flex md:flex-1 flex-col items-center justify-end md:ml-[0] ml-[3px] shadow-bs8 w-[9%] md:w-full">
+                                  <div className="flex flex-col justify-start mt-0.5 pb-0.5 pl-0.5 w-[93%] md:w-full">
+                                    <CheckBox
+                                      className="font-bold text-[9px] text-left uppercase"
+                                      inputClassName="border border-blue_gray-100_02 border-solid h-3 mr-[5px] w-3"
+                                      name="strongpornstar"
+                                      id="strongpornstar"
+                                      label="Pornstar"
+                                      shape="square"
+                                      size="xs"
+                                    ></CheckBox>
+                                    <Text
+                                      className="md:ml-[0] text-[10px] text-gray-600_02 uppercase"
+                                      size="txtRobotoRegular10"
+                                    >
+                                      (369)
+                                    </Text>
+                                  </div>
                                 </div>
-                              </div>
-                              <div className="bg-white-A700 border border-gray-300 border-solid flex md:flex-1 flex-col items-center justify-end ml-0.5 md:ml-[0] shadow-bs8 w-[12%] md:w-full">
-                                <div className="flex flex-col justify-start mt-0.5 pb-0.5 pl-0.5 w-[95%] md:w-full">
-                                  <CheckBox
-                                    className="font-bold text-[9px] text-left uppercase"
-                                    inputClassName="border border-blue_gray-100_02 border-solid h-3 mr-[5px] w-3"
-                                    name="strongseenlast"
-                                    id="strongseenlast"
-                                    label="Seen last week"
-                                    shape="square"
-                                    size="xs"
-                                  ></CheckBox>
-                                  <Text
-                                    className="md:ml-[0] text-[10px] text-gray-600_02 uppercase"
-                                    size="txtRobotoRegular10"
-                                  >
-                                    (50302)
-                                  </Text>
+                                <div className="bg-white-A700 border border-gray-300 border-solid flex md:flex-1 flex-col items-center justify-end md:ml-[0] ml-[3px] shadow-bs8 w-[11%] md:w-full">
+                                  <div className="flex flex-col justify-start mt-0.5 pb-0.5 pl-0.5 w-[94%] md:w-full">
+                                    <CheckBox
+                                      className="font-bold text-[9px] text-left uppercase"
+                                      inputClassName="border border-blue_gray-100_02 border-solid h-3 mr-[5px] w-3"
+                                      name="strongindepende"
+                                      id="strongindepende"
+                                      label="Independent"
+                                      shape="square"
+                                      size="xs"
+                                    ></CheckBox>
+                                    <Text
+                                      className="md:ml-[0] text-[10px] text-gray-600_02 uppercase"
+                                      size="txtRobotoRegular10"
+                                    >
+                                      (56755)
+                                    </Text>
+                                  </div>
                                 </div>
-                              </div>
-                              <div className="bg-white-A700 border border-gray-300 border-solid flex md:flex-1 flex-col items-center justify-end md:ml-[0] ml-[3px] shadow-bs8 w-[11%] md:w-full">
-                                <div className="flex flex-col justify-start mt-0.5 pb-0.5 pl-0.5 w-[95%] md:w-full">
-                                  <CheckBox
-                                    className="font-bold text-[9px] text-left uppercase"
-                                    inputClassName="border border-blue_gray-100_02 border-solid h-3 mr-[5px] w-3"
-                                    name="strongduowith"
-                                    id="strongduowith"
-                                    label="Duo with girl"
-                                    shape="square"
-                                    size="xs"
-                                  ></CheckBox>
-                                  <Text
-                                    className="md:ml-[0] text-[10px] text-gray-600_02 uppercase"
-                                    size="txtRobotoRegular10"
-                                  >
-                                    (471)
-                                  </Text>
+                                <div className="bg-white-A700 border border-gray-300 border-solid flex md:flex-1 flex-col items-center justify-end ml-0.5 md:ml-[0] shadow-bs8 w-[12%] md:w-full">
+                                  <div className="flex flex-col justify-start mt-0.5 pb-0.5 pl-0.5 w-[95%] md:w-full">
+                                    <CheckBox
+                                      className="font-bold text-[9px] text-left uppercase"
+                                      inputClassName="border border-blue_gray-100_02 border-solid h-3 mr-[5px] w-3"
+                                      name="strongseenlast"
+                                      id="strongseenlast"
+                                      label="Seen last week"
+                                      shape="square"
+                                      size="xs"
+                                    ></CheckBox>
+                                    <Text
+                                      className="md:ml-[0] text-[10px] text-gray-600_02 uppercase"
+                                      size="txtRobotoRegular10"
+                                    >
+                                      (50302)
+                                    </Text>
+                                  </div>
                                 </div>
-                              </div>
-                              <div className="bg-white-A700 border border-gray-300 border-solid flex md:flex-1 flex-col items-center justify-end md:ml-[0] ml-[3px] shadow-bs8 w-[8%] md:w-full">
-                                <div className="flex flex-col items-center justify-start mt-0.5 pb-0.5 pl-0.5 w-[92%] md:w-full">
-                                  <CheckBox
-                                    className="font-bold text-[9px] text-left uppercase"
-                                    inputClassName="border border-blue_gray-100_02 border-solid h-3 mr-[5px] w-3"
-                                    name="strongcouple"
-                                    id="strongcouple"
-                                    label="Couple"
-                                    shape="square"
-                                    size="xs"
-                                  ></CheckBox>
-                                  <Text
-                                    className="text-[10px] text-gray-600_02 uppercase"
-                                    size="txtRobotoRegular10"
-                                  >
-                                    (18)
-                                  </Text>
+                                <div className="bg-white-A700 border border-gray-300 border-solid flex md:flex-1 flex-col items-center justify-end md:ml-[0] ml-[3px] shadow-bs8 w-[11%] md:w-full">
+                                  <div className="flex flex-col justify-start mt-0.5 pb-0.5 pl-0.5 w-[95%] md:w-full">
+                                    <CheckBox
+                                      className="font-bold text-[9px] text-left uppercase"
+                                      inputClassName="border border-blue_gray-100_02 border-solid h-3 mr-[5px] w-3"
+                                      name="strongduowith"
+                                      id="strongduowith"
+                                      label="Duo with girl"
+                                      shape="square"
+                                      size="xs"
+                                    ></CheckBox>
+                                    <Text
+                                      className="md:ml-[0] text-[10px] text-gray-600_02 uppercase"
+                                      size="txtRobotoRegular10"
+                                    >
+                                      (471)
+                                    </Text>
+                                  </div>
+                                </div>
+                                <div className="bg-white-A700 border border-gray-300 border-solid flex md:flex-1 flex-col items-center justify-end md:ml-[0] ml-[3px] shadow-bs8 w-[8%] md:w-full">
+                                  <div className="flex flex-col items-center justify-start mt-0.5 pb-0.5 pl-0.5 w-[92%] md:w-full">
+                                    <CheckBox
+                                      className="font-bold text-[9px] text-left uppercase"
+                                      inputClassName="border border-blue_gray-100_02 border-solid h-3 mr-[5px] w-3"
+                                      name="strongcouple"
+                                      id="strongcouple"
+                                      label="Couple"
+                                      shape="square"
+                                      size="xs"
+                                    ></CheckBox>
+                                    <Text
+                                      className="text-[10px] text-gray-600_02 uppercase"
+                                      size="txtRobotoRegular10"
+                                    >
+                                      (18)
+                                    </Text>
+                                  </div>
                                 </div>
                               </div>
                             </div>
                           </div>
-                        </div>
+                        )}
                       </div>
                     </div>
                   </div>

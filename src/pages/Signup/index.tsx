@@ -19,6 +19,7 @@ const SignupPage: React.FC = () => {
   const [passwordError, setPasswordError] = useState("");
   const [usernameError, setUsernameError] = useState("");
   const [userError, setUserError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const login = () => {
     navigate("/login");
@@ -67,6 +68,7 @@ const SignupPage: React.FC = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       // Make API call using Axios
@@ -76,15 +78,17 @@ const SignupPage: React.FC = () => {
       );
 
       // Handle the response as needed
+
+      localStorage.setItem("user", JSON.stringify(response?.data));
+      setUserProfile(response?.data);
+      setLoading(false);
       if (response?.data?.profile) {
         navigate("/EscortDashboard");
       } else {
         navigate("/dashboard");
       }
-
-      localStorage.setItem("user", JSON.stringify(response?.data));
-      setUserProfile(response?.data);
     } catch (error) {
+      setLoading(false);
       console.log(error);
 
       if (error.response) {
@@ -364,7 +368,13 @@ const SignupPage: React.FC = () => {
                                   // onClick={handleValidation}
                                   onClick={() => handleFormSubmit}
                                 >
-                                  Register
+                                  {!loading ? (
+                                    "Register"
+                                  ) : (
+                                    <div className="dotWrapper">
+                                      <div className="loadingDot"></div>
+                                    </div>
+                                  )}
                                 </Button>
                                 <div className="flex sm:flex-col flex-row font-roboto mr7 gap-[5px] items-start justify-center">
                                   <a

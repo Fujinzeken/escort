@@ -86,7 +86,7 @@ const DesktopTwoPage: React.FC = () => {
         data,
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      console.log(res?.data);
+
       navigate("/dashboard");
     } catch (err) {
       console.log(err);
@@ -682,8 +682,8 @@ const DesktopTwoPage: React.FC = () => {
                               }
                             }}
                           >
-                            <option value="Yes">Yes</option>
                             <option value="No">No</option>
+                            <option value="Yes">Yes</option>
                           </select>
 
                           <Button

@@ -14,7 +14,7 @@ const SidebarNav = ({ pageOn }) => {
   return (
     <>
       <button
-        className={`hidden sm:flex absolute top-[80px] left-[5px] flex items-center justify-center w-[10%] border p-3 rounded-full`}
+        className={`hidden sm:flex absolute top-[60px] left-[5px] flex items-center justify-center w-[10%] border p-3 rounded-full`}
         style={{
           background: "#FD00B3",
           border: "1px solid #FD00B3",
@@ -28,9 +28,9 @@ const SidebarNav = ({ pageOn }) => {
         className={`sm:${
           isHidden
             ? "hidden"
-            : "flex w-full absolute left-[0] ml-[-20px] top-[5%] z-10"
+            : "flex w-4/5 absolute left-[0] ml-[-20px] top-[5%] z-10"
         } flex gap-[31px] items-center w-[100%]  md:${
-          isHidden ? "hidden" : "w-full flex-col"
+          isHidden ? "hidden" : "w-4/5 flex-col"
         }`}
       >
         <div className="flex flex-col items-end justify-start sm:pl-5 pl-[22px] w-full md:w-full">
