@@ -174,7 +174,7 @@ const DashboardPage: React.FC = () => {
                         </Text>
                       </div>
                       <div className="h-[35px] relative w-[46%]">
-                        <div className="absolute h-[29px] inset-[0] justify-center m-auto w-[99%]">
+                        {/* <div className="absolute h-[29px] inset-[0] justify-center m-auto w-[99%] cursor-pointer">
                           <div className="bg-gradient7  h-[29px] m-auto outline outline-[1px] outline-yellow-800_01 rounded-[14px] w-full"></div>
                           <Text
                             className="absolute capitalize h-max inset-y-[0] my-auto right-[8%] text-base text-white-A700"
@@ -183,8 +183,8 @@ const DashboardPage: React.FC = () => {
                             {" "}
                             Go Premium
                           </Text>
-                        </div>
-                        <Button
+                        </div> */}
+                        {/* <Button
                           className="absolute flex h-[35px] inset-y-[0] items-center justify-center left-[0] my-auto rounded-[17px] w-[35px]"
                           size="md"
                           variant="gradient"
@@ -194,10 +194,10 @@ const DashboardPage: React.FC = () => {
                             src="images/img_arrowright.svg"
                             alt="arrowright"
                           />
-                        </Button>
+                        </Button> */}
                       </div>
                     </div>
-                    <div className="flex md:flex-1 sm:flex-col flex-row sm:gap-5 items-center Dashboard-left-nav justify-center w-[38%] md:w-full">
+                    {/* <div className="flex md:flex-1 sm:flex-col flex-row sm:gap-5 items-center Dashboard-left-nav justify-center w-[38%] md:w-full">
                       <div className="flex flex-col items-center justify-end p-3 w-[32%] sm:w-full">
                         <div className=" credit-wrap border border-gray-200_03 border-solid flex flex-row items-center justify-center p-[5px] rounded-[15px] w-[97%] md:w-full">
                           <Text
@@ -288,7 +288,7 @@ const DashboardPage: React.FC = () => {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
                 <div className="absolute logo-wrap flex flex-col items-center justify-start left-[0] py-4 top-[0] w-[22%]">
@@ -323,8 +323,8 @@ const DashboardPage: React.FC = () => {
                       >
                         <Img
                           className="h-[49px] md:h-auto my-1.5 rounded-[50%] w-[49px]"
-                          src="images/img_bv7mozwnhchqrqp_49x49.png"
-                          alt="bv7mozwnhchqrqp_One"
+                          src={user?.images[0]}
+                          alt="image"
                         />
                       </div>
                     </div>
@@ -337,7 +337,7 @@ const DashboardPage: React.FC = () => {
                           {user?.firstName}
                         </Text>
                       </div>
-                      <div className="flex flex-col items-start justify-start w-full">
+                      {/* <div className="flex flex-col items-start justify-start w-full">
                         <div className="flex flex-col items-center justify-end py-[5px]">
                           <Text
                             className="text-[15px] text-gray-800"
@@ -351,15 +351,15 @@ const DashboardPage: React.FC = () => {
                             </span>
                           </Text>
                         </div>
-                      </div>
-                      <Button
+                      </div> */}
+                      {/* <Button
                         className="cursor-pointer font-medium mb-[3rem] min-w-[227px] mt-[15px] rounded-[17px] text-center text-sm"
                         color="pink_50"
                         size="md"
                         variant="outline"
                       >
                         Increase Popularity
-                      </Button>
+                      </Button> */}
                     </div>
                   </div>
                 </div>
@@ -609,7 +609,7 @@ const DashboardPage: React.FC = () => {
                         VIP Escorts
                       </Text>
                     </div>
-                    <div className="flex md:flex-1 sm:flex-col flex-row sm:gap-5 items-start justify-center w-[46%] md:w-full">
+                    <div className="flex md:flex-1 sm:flex-col flex-row sm:gap-5 items-start justify-start w-[46%] md:w-full">
                       <Button
                         className="cursor-pointer font-bold mb-0.5 min-w-[68px] text-[11px] text-center"
                         shape="square"
@@ -630,7 +630,7 @@ const DashboardPage: React.FC = () => {
                       >
                         Sex Cams
                       </Button>
-                      <Button
+                      {/* <Button
                         className="cursor-pointer font-bold mb-0.5 min-w-[83px] ml-0.5 sm:ml-[0] text-[11px] text-center"
                         shape="square"
                         color="lime_800"
@@ -665,7 +665,7 @@ const DashboardPage: React.FC = () => {
                         variant="outline"
                       >
                         Live Sex
-                      </Button>
+                      </Button> */}
                     </div>
                   </div>
                   <div className="gap-2 grid sm:grid-cols-1 md:grid-cols-2 grid-cols-3 items-start justify-start pb-[9px] pr-[9px] w-full">
