@@ -22,7 +22,11 @@ const Gallery: React.FC = () => {
   const [isToggleArrow, setToggleArrow] = useState(false);
   const [loading, setLoading] = useState(false);
   const [galleryData, setGalleryData] = useState(null);
+  const [isHidden, setisHidden] = useState(true);
 
+  const handleToggle = () => {
+    setisHidden(!isHidden);
+  };
   const Dashboard = () => {
     navigate("/EscortDashboard");
   };
@@ -46,7 +50,11 @@ const Gallery: React.FC = () => {
     setdropdown(!isDropdown);
     setToggleArrow(!isToggleArrow);
   };
-
+  const logout = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    navigate("/");
+  };
   const ArrowStyle = {
     transform: isToggleArrow ? "rotate(0deg)" : "rotate(180deg)",
     transition: "all .5s ease-in-out",
@@ -98,23 +106,25 @@ const Gallery: React.FC = () => {
             />
           </svg>
           <section
-            className="logot items-center mt-4 p- flex justify-between"
+            className="logot items-center mt-4 p- flex justify-between sm:px-2"
             style={{ width: "100%", backgroundColor: "white" }}
           >
-            <img src={logo} className="h-fit" alt="" />
-            <ul className="flex auth-list">
+            <img src={logo} className="h-fit sm:w-1/3" alt="" />
+            {/* <ul className="flex auth-list">
               <li>Home</li>
               <li>Packages</li>
               <li>Members</li>
               <li>Stones</li>
               <li>Contacts</li>
-            </ul>
+            </ul> */}
             <div className="flex">
-              <button className="mr-2 english">English</button>
+              {/* <button className="mr-2 english">English</button> */}
               <button onClick={Dashboard} className="mr-2 dahs-btn">
                 Dashboard
               </button>
-              <button className="mr-2 log">Logout</button>
+              <button className="mr-2 log" onClick={logout}>
+                Logout
+              </button>
             </div>
           </section>
         </nav>
@@ -126,8 +136,21 @@ const Gallery: React.FC = () => {
           }}
         >
           <div className="w-full flex gap-5 ">
+            <button
+              className={`hidden sm:flex absolute top-[80px] right-[5px] flex items-center justify-center w-[10%] border p-3 rounded-full`}
+              style={{
+                background: "#FD00B3",
+                border: "1px solid #FD00B3",
+                color: "#fff",
+              }}
+              onClick={handleToggle}
+            >
+              Menu
+            </button>
             <div
-              className="side-nav p-2 w-[268px] h-fit flex flex-col items-center ml-[1.5rem]"
+              className={` sm:${
+                isHidden ? "hidden" : "flex z-100 w-4/5 absolute left-0"
+              } p-2 w-[268px] h-fit flex flex-col items-center ml-[1.5rem]`}
               style={{
                 backgroundColor: "white",
                 boxShadow: "1px 2px 11px lightsteelblue",
@@ -152,7 +175,10 @@ const Gallery: React.FC = () => {
               </section>
               <section className="mt-4 w-[100%]">
                 <ul className="dashboard-lists">
-                  <li className="pb-[1.5rem] mb-2 pl-[1.5rem]">
+                  <li
+                    className="pb-[1.5rem] mb-2 pl-[1.5rem]"
+                    onClick={() => navigate("/EscortDashboard")}
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -269,7 +295,7 @@ const Gallery: React.FC = () => {
                     </svg>
                     Live videos
                   </li>
-                  <li>
+                  <li onClick={logout}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="22"
@@ -311,13 +337,13 @@ const Gallery: React.FC = () => {
                 </ul>
               </section>
             </div>
-            <div className="w-[70%]  bg-[#fff] flex flex-col gap-4 rounded-sm shadow border py-[30px]  pl-[20px] pr-[30px]">
+            <div className="sm:w-full w-[70%]  bg-[#fff] flex flex-col gap-4 rounded-sm shadow border py-[30px]  pl-[20px] pr-[30px] ">
               <div className="pt-[25px] flex flex-col gap-4  pb-[50px] pl-[15px]">
                 <h3 className="font-bold text-[1.6rem]">Gallery</h3>
-                <div className="flex flex-wrap">
+                <div className="flex flex-wrap sm:flex-col">
                   {galleryData?.images?.length > 0 &&
                     galleryData?.images?.map((data, i) => (
-                      <div className="w-1/3 p-1" key={i}>
+                      <div className="w-1/3 p-1 sm:w-full" key={i}>
                         <img
                           src={data}
                           className="h-[325px] object-cover"
@@ -328,7 +354,7 @@ const Gallery: React.FC = () => {
                     ))}
                   {galleryData?.videos?.length > 0 &&
                     galleryData?.videos?.map((data, i) => (
-                      <div className="w-1/3 p-1" key={i}>
+                      <div className="w-1/3 p-1 sm:w-full" key={i}>
                         <video
                           src={data}
                           className="h-[325px]"
@@ -351,12 +377,12 @@ const Gallery: React.FC = () => {
                   )}
                 </div>
                 <div
-                  className="flex text-[#fff] items-center rounded-full justify-center px-[10px] py-[9px] mt-[20px] w-2/4 bg-[#FD00B3] cursor-pointer"
+                  className="sm:w-full flex text-[#fff] items-center rounded-full justify-center px-[10px] py-[9px] mt-[20px] w-2/4 bg-[#FD00B3] cursor-pointer"
                   onClick={liveVideo}
                 >
                   <div className="flex items-center gap-5">
                     <span>Click to view Livecam</span>
-                    <div className="bg-[#fff] py-3 px-3 rounded-full shadow">
+                    <div className="bg-[#fff] py-3 px-3 rounded-full shadow ">
                       <img src={coloredvideo} alt="" />
                     </div>
                   </div>
