@@ -135,7 +135,7 @@ const DashboardPage: React.FC = () => {
                 <div className="absolute bg-white-A700 border-b border-gray-200_03 border-solid bottom-[0] flex flex-col inset-x-[0] items-center justify-start mx-auto w-[98%]">
                   <div className="nav-links flex md:flex-col flex-row md:gap-10 items-center justify-end px-[15px] w-full">
                     <div className="flex md:flex-1 flex-row gap-3.5 items-center justify-center pr-[18px] w-[29%] md:w-full">
-                      <div className="flex flex-row items-center justify-start p-4 shadow-bs4 w-[51%]">
+                      {/* <div className="flex flex-row items-center justify-start p-4 shadow-bs4 w-[51%]">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="24"
@@ -172,7 +172,7 @@ const DashboardPage: React.FC = () => {
                           {" "}
                           Find Matches
                         </Text>
-                      </div>
+                      </div> */}
                       <div className="h-[35px] relative w-[46%]">
                         {/* <div className="absolute h-[29px] inset-[0] justify-center m-auto w-[99%] cursor-pointer">
                           <div className="bg-gradient7  h-[29px] m-auto outline outline-[1px] outline-yellow-800_01 rounded-[14px] w-full"></div>
@@ -323,7 +323,10 @@ const DashboardPage: React.FC = () => {
                       >
                         <Img
                           className="h-[49px] md:h-auto my-1.5 rounded-[50%] w-[49px]"
-                          src={user?.images[0]}
+                          src={
+                            user?.images[0] ||
+                            "images/img_bv7mozwnhchqrqp_49x49.png"
+                          }
                           alt="image"
                         />
                       </div>

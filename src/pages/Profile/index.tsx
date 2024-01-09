@@ -523,7 +523,7 @@ const ProfilePage: React.FC = () => {
               <div className="md:h-[171px] h-[73px] m-0 sm:h-[85px] md:ml-[0] ml-[25px] mr-[57px] mt-4 relative w-[95%] md:w-full">
                 <div className="absolute bg-white-A700 border-b border-gray-200_03 border-solid bottom-[0] flex flex-col inset-x-[0] items-center justify-start mx-auto w-[98%]">
                   <div className="nav-links flex md:flex-col flex-row md:gap-10 items-center justify-end px-[15px] w-full">
-                    <div className="flex md:flex-1 flex-row gap-3.5 items-center justify-center pr-[18px] w-[29%] md:w-full">
+                    {/* <div className="flex md:flex-1 flex-row gap-3.5 items-center justify-center pr-[18px] w-[29%] md:w-full">
                       <div className="flex flex-row items-center justify-start p-4 shadow-bs4 w-[51%]">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -585,9 +585,9 @@ const ProfilePage: React.FC = () => {
                           />
                         </Button>
                       </div>
-                    </div>
+                    </div> */}
                     <div className="flex md:flex-1 sm:flex-col flex-row sm:gap-5 items-center Dashboard-left-nav justify-center w-[38%] md:w-full">
-                      <div className="flex flex-col items-center justify-end p-3 w-[32%] sm:w-full">
+                      {/* <div className="flex flex-col items-center justify-end p-3 w-[32%] sm:w-full">
                         <div className=" credit-wrap border border-gray-200_03 border-solid flex flex-row items-center justify-center p-[5px] rounded-[15px] w-[97%] md:w-full">
                           <Text
                             className="ml-2.5 text-base text-gray-800_02"
@@ -614,8 +614,8 @@ const ProfilePage: React.FC = () => {
                             0
                           </Text>
                         </div>
-                      </div>
-                      <Img
+                      </div> */}
+                      {/* <Img
                         className="h-[57px]"
                         src="images/img_user.svg"
                         alt="user"
@@ -624,8 +624,8 @@ const ProfilePage: React.FC = () => {
                         className="h-[57px]"
                         src="images/img_item.svg"
                         alt="item"
-                      />
-                      <div className="flex flex-row items-center justify-evenly w-[47%] sm:w-full">
+                      /> */}
+                      {/* <div className="flex flex-row items-center justify-evenly w-[47%] sm:w-full">
                         <section className="thunder">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -676,7 +676,7 @@ const ProfilePage: React.FC = () => {
                             />
                           </div>
                         </div>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -696,7 +696,7 @@ const ProfilePage: React.FC = () => {
               </div>
             </header>
             <Text
-              className="sm:hidden absolute bg-white-A700 bottom-[7%] h-[17px] justify-center left-[5%] pl-[9px] pr-3 text-[13px] text-gray-700_04 w-[86px]"
+              className="sm:hidden invisible absolute bg-white-A700 bottom-[7%] h-[17px] justify-center left-[5%] pl-[9px] pr-3 text-[13px] text-gray-700_04 w-[86px]"
               size="txtMontserratRegular13"
             >
               About Me
@@ -733,8 +733,11 @@ const ProfilePage: React.FC = () => {
                   >
                     <Img
                       className="h-[49px] md:h-auto my-1.5 rounded-[50%] w-[49px]"
-                      src="images/img_bv7mozwnhchqrqp_49x49.png"
-                      alt="bv7mozwnhchqrqp_One"
+                      src={
+                        user?.images[0] ||
+                        "images/img_bv7mozwnhchqrqp_49x49.png"
+                      }
+                      alt="image"
                     />
                   </div>
                 </div>
@@ -747,7 +750,7 @@ const ProfilePage: React.FC = () => {
                       {user?.firstName}
                     </Text>
                   </div>
-                  <div className="flex flex-col items-start justify-start w-full">
+                  {/* <div className="flex flex-col items-start justify-start w-full">
                     <div className="flex flex-col items-center justify-end py-[5px]">
                       <Text
                         className="text-[15px] text-gray-800"
@@ -769,7 +772,7 @@ const ProfilePage: React.FC = () => {
                     variant="outline"
                   >
                     Increase Popularity
-                  </Button>
+                  </Button> */}
                 </div>
               </div>
             </div>
